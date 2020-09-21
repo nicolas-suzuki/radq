@@ -1,0 +1,3 @@
+include ':app'
+rootProject.name = "Robô Autônomo Detector de Quedas"
+include ':openCVLibrary345'
