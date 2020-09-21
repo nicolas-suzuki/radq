@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Robô Autônomo Detector de Quedas</string>
+    <string name="yolo">YOLO</string>
 </resources>
