@@ -36,16 +36,15 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
     boolean startYolo = false;
-    boolean firstTimeYolo = false;
+    boolean firstTimeYolo = true;
     int framesParaConfirmarQueda = 0;
     Net tinyYolo;
 
     public void YOLO(View Button){
-        if (startYolo == false){
+        if (!startYolo){
             startYolo = true;
-
-            if (firstTimeYolo == false){
-                firstTimeYolo = true;
+            if (firstTimeYolo){
+                firstTimeYolo = false;
                 String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg" ;
                 String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
 
@@ -72,13 +71,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             @Override
             public void onManagerConnected(int status) {
                 super.onManagerConnected(status);
-                switch(status){
-                    case BaseLoaderCallback.SUCCESS:
-                        cameraBridgeViewBase.enableView();
-                        break;
-                    default:
-                        super.onManagerConnected(status);
-                        break;
+                if (status == BaseLoaderCallback.SUCCESS) {
+                    cameraBridgeViewBase.enableView();
+                } else {
+                    super.onManagerConnected(status);
                 }
             }
         };
@@ -88,12 +84,12 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         Mat frame = inputFrame.rgba();
 
-        if (startYolo == true) {
+        if (startYolo) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
             Mat imageBlob = Dnn.blobFromImage(frame, 0.00392, new Size(416, 416), new Scalar(0, 0, 0),/*swapRB*/false, /*crop*/false);
             tinyYolo.setInput(imageBlob);
 
-            java.util.List<Mat> result = new java.util.ArrayList<Mat>(2);
+            java.util.List<Mat> result = new java.util.ArrayList<>(2);
             List<String> outBlobNames = new java.util.ArrayList<>();
             outBlobNames.add(0, "yolo_16");
             outBlobNames.add(1, "yolo_23");
@@ -124,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                         int top = centerY - height / 2;
 
                         clsIds.add((int) classIdPoint.x);
-                        confs.add((float) confidence);
+                        confs.add(confidence);
                         rects.add(new Rect(left, top, width, height));
                     }
                 }
@@ -143,29 +139,28 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
                 // Draw result boxes:
                 int[] ind = indices.toArray();
-                for (int i = 0; i < ind.length; ++i) {
-                    int idx = ind[i];
+                for (int idx : ind) {
                     Rect box = boxesArray[idx];
                     int idGuy = clsIds.get(idx);
                     float conf = confs.get(idx);
                     int intConf = (int) (conf * 100);
 
-                    if(idGuy==0){
+                    if (idGuy == 0) {
                         // Queda detectada
                         Imgproc.putText(frame, "Queda Detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
-                        Log.i("deteccao","Queda Detectada! Precisão: " + intConf + "%");
+                        Log.i("deteccao", "Queda Detectada! Precisão: " + intConf + "%");
                         framesParaConfirmarQueda++;
                         if (framesParaConfirmarQueda > 10) {
                             framesParaConfirmarQueda = 0;
                             Log.i("deteccao", "Queda Confirmada");
                         }
-                    } else if (idGuy==1){
+                    } else if (idGuy == 1) {
                         // Pessoa detectada
                         Imgproc.putText(frame, "deteccao" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
                     } else {
-                        Log.w("deteccao","idGuy!=0||1");
+                        Log.w("deteccao", "idGuy!=0||1");
                     }
                 }
             }
@@ -175,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-        if (startYolo == true){
+        if (startYolo){
             String tinyYoloCfg = Environment.getExternalStorageDirectory() + "/dnns/yolov3-tiny.cfg" ;
             String tinyYoloWeights = Environment.getExternalStorageDirectory() + "/dnns/yolov3-tiny.weights";
             Log.i("tinyLocation2" , "Tiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
