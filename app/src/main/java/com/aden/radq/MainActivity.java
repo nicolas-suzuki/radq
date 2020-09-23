@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             public void onManagerConnected(int status) {
                 super.onManagerConnected(status);
                 if (status == BaseLoaderCallback.SUCCESS) {
+                    cameraBridgeViewBase.setCameraIndex(1);
                     cameraBridgeViewBase.enableView();
                 } else {
                     super.onManagerConnected(status);
