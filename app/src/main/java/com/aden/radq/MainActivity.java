@@ -2,17 +2,15 @@ package com.aden.radq;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -35,10 +33,11 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,14 +66,14 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        downloadNecessaryFiles();
+
+        //downloadNecessaryFiles();
 
         cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             public void onManagerConnected(int status) {
                 super.onManagerConnected(status);
                 if (status == BaseLoaderCallback.SUCCESS) {
-                    cameraBridgeViewBase.setCameraIndex(1);
+                    cameraBridgeViewBase.setCameraIndex(0); //changes from frontal to back cameras
                     cameraBridgeViewBase.enableView();
                 } else {
                     super.onManagerConnected(status);
@@ -136,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                         clsIds.add((int) classIdPoint.x);
                         confs.add(confidence);
                         rects.add(new Rect(left, top, width, height));
+                        Log.d("metrics", "height: " + height);
                     }
                 }
             }
@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                         if (framesParaConfirmarQueda > 10) {
                             framesParaConfirmarQueda = 0;
                             Log.i("deteccao", "Queda Confirmada");
+                            takeScreenshot(findViewById(R.id.CameraView));
                         }
                     } else if (idGuy == 1) {
                         // Pessoa detectada
@@ -226,8 +227,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void downloadNecessaryFiles(){
         if(checkDownloadedFiles()){ //check if files already there
             DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
@@ -251,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean checkDownloadedFiles(){
         String path = Objects.requireNonNull(getExternalFilesDir(null)).toString()+"/dnns";
         Log.d("Files", "Path: " + path);
@@ -264,6 +262,43 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             Log.d("Files", "FileName: " + file.getName());
         }
         return true;
+    }
+
+    private void takeScreenshot(View view){
+        Date date = new Date();
+        CharSequence now = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
+        String filename = getExternalFilesDir(null) + "/screenshot/" + now + ".jpg";
+
+        View root = getWindow().getDecorView();
+        root.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(root.getDrawingCache());
+        root.setDrawingCacheEnabled(false);
+
+        File file = new File(filename);
+        Objects.requireNonNull(file.getParentFile()).mkdir();
+
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+//            Uri uri = Uri.fromFile(file);
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            intent.setDataAndType(uri,"image/*");
+//            //startActivity
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void initiateAlarm(){
+
+    }
+
+    private void sendMessageToContact(){
+
     }
 
 }
