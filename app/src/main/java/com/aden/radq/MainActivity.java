@@ -1,5 +1,9 @@
 package com.aden.radq;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -8,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -29,8 +34,13 @@ import org.opencv.dnn.Net;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
     CameraBridgeViewBase cameraBridgeViewBase;
@@ -48,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg" ;
                 String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
 
-                Log.i("tinyLocation1" , "Tiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+                Log.i("tinyLocation1" , "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
                 tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
             }
         }
@@ -57,11 +67,14 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        downloadNecessaryFiles();
 
         cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
@@ -172,9 +185,9 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     public void onCameraViewStarted(int width, int height) {
         if (startYolo){
-            String tinyYoloCfg = Environment.getExternalStorageDirectory() + "/dnns/yolov3-tiny.cfg" ;
-            String tinyYoloWeights = Environment.getExternalStorageDirectory() + "/dnns/yolov3-tiny.weights";
-            Log.i("tinyLocation2" , "Tiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+            String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg" ;
+            String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
+            Log.i("tinyLocation2" , "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
             tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
         }
     }
@@ -212,4 +225,45 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             cameraBridgeViewBase.disableView();
         }
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void downloadNecessaryFiles(){
+        if(checkDownloadedFiles()){ //check if files already there
+            DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            assert downloadManager != null;
+
+            Uri uri = Uri.parse("https://drive.google.com/uc?export=download&id=1QTWqtQSASSe8AIugP6tb2480Ro7Gt2yN");
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setTitle(getString(R.string.downloading_necessary_files));
+            request.setDescription(getString(R.string.downloading_WEIGHT_File));
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3-tiny.weights"));
+            downloadManager.enqueue(request);
+
+            uri = Uri.parse("https://drive.google.com/uc?export=download&id=1Y0CX4-Z4ZrteVkuzj2B8MU6WT65qIrw0");
+            request = new DownloadManager.Request(uri);
+            request.setTitle(getString(R.string.downloading_necessary_files));
+            request.setDescription(getString(R.string.downloading_CFG_File));
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3-tiny.cfg"));
+            downloadManager.enqueue(request);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private boolean checkDownloadedFiles(){
+        String path = Objects.requireNonNull(getExternalFilesDir(null)).toString()+"/dnns";
+        Log.d("Files", "Path: " + path);
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        assert files != null;
+        Log.d("Files", "Size: " + files.length);
+
+        for (File file : files) {
+            Log.d("Files", "FileName: " + file.getName());
+        }
+        return true;
+    }
+
 }
