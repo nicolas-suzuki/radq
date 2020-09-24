@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Robô Autônomo Detector de Quedas</string>
     <string name="yolo">YOLO</string>
+    <string name="downloading_necessary_files">Baixando arquivos necessários do RADQ</string>
+    <string name="downloading_CFG_File">Arquivo \'cfg\' da identificação visual</string>
+    <string name="downloading_WEIGHT_File">Arquivo \'weights\' da identificação visual</string>
 </resources>

@@ -1,5 +1,9 @@
 package com.aden.radq;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -8,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -29,27 +34,31 @@ import org.opencv.dnn.Net;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
     boolean startYolo = false;
-    boolean firstTimeYolo = false;
+    boolean firstTimeYolo = true;
     int framesParaConfirmarQueda = 0;
     Net tinyYolo;
 
     public void YOLO(View Button){
-        if (startYolo == false){
+        if (!startYolo){
             startYolo = true;
-
-            if (firstTimeYolo == false){
-                firstTimeYolo = true;
+            if (firstTimeYolo){
+                firstTimeYolo = false;
                 String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg" ;
                 String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
 
-                Log.i("tinyLocation1" , "Tiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+                Log.i("tinyLocation1" , "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
                 tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
             }
         }
@@ -58,11 +67,14 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        downloadNecessaryFiles();
 
         cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
@@ -72,13 +84,11 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             @Override
             public void onManagerConnected(int status) {
                 super.onManagerConnected(status);
-                switch(status){
-                    case BaseLoaderCallback.SUCCESS:
-                        cameraBridgeViewBase.enableView();
-                        break;
-                    default:
-                        super.onManagerConnected(status);
-                        break;
+                if (status == BaseLoaderCallback.SUCCESS) {
+                    cameraBridgeViewBase.setCameraIndex(1);
+                    cameraBridgeViewBase.enableView();
+                } else {
+                    super.onManagerConnected(status);
                 }
             }
         };
@@ -88,12 +98,12 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         Mat frame = inputFrame.rgba();
 
-        if (startYolo == true) {
+        if (startYolo) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
             Mat imageBlob = Dnn.blobFromImage(frame, 0.00392, new Size(416, 416), new Scalar(0, 0, 0),/*swapRB*/false, /*crop*/false);
             tinyYolo.setInput(imageBlob);
 
-            java.util.List<Mat> result = new java.util.ArrayList<Mat>(2);
+            java.util.List<Mat> result = new java.util.ArrayList<>(2);
             List<String> outBlobNames = new java.util.ArrayList<>();
             outBlobNames.add(0, "yolo_16");
             outBlobNames.add(1, "yolo_23");
@@ -124,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                         int top = centerY - height / 2;
 
                         clsIds.add((int) classIdPoint.x);
-                        confs.add((float) confidence);
+                        confs.add(confidence);
                         rects.add(new Rect(left, top, width, height));
                     }
                 }
@@ -143,29 +153,28 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
                 // Draw result boxes:
                 int[] ind = indices.toArray();
-                for (int i = 0; i < ind.length; ++i) {
-                    int idx = ind[i];
+                for (int idx : ind) {
                     Rect box = boxesArray[idx];
                     int idGuy = clsIds.get(idx);
                     float conf = confs.get(idx);
                     int intConf = (int) (conf * 100);
 
-                    if(idGuy==0){
+                    if (idGuy == 0) {
                         // Queda detectada
                         Imgproc.putText(frame, "Queda Detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
-                        Log.i("deteccao","Queda Detectada! Precisão: " + intConf + "%");
+                        Log.i("deteccao", "Queda Detectada! Precisão: " + intConf + "%");
                         framesParaConfirmarQueda++;
                         if (framesParaConfirmarQueda > 10) {
                             framesParaConfirmarQueda = 0;
                             Log.i("deteccao", "Queda Confirmada");
                         }
-                    } else if (idGuy==1){
+                    } else if (idGuy == 1) {
                         // Pessoa detectada
                         Imgproc.putText(frame, "deteccao" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
                     } else {
-                        Log.w("deteccao","idGuy!=0||1");
+                        Log.w("deteccao", "idGuy!=0||1");
                     }
                 }
             }
@@ -175,10 +184,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-        if (startYolo == true){
-            String tinyYoloCfg = Environment.getExternalStorageDirectory() + "/dnns/yolov3-tiny.cfg" ;
-            String tinyYoloWeights = Environment.getExternalStorageDirectory() + "/dnns/yolov3-tiny.weights";
-            Log.i("tinyLocation2" , "Tiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+        if (startYolo){
+            String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg" ;
+            String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
+            Log.i("tinyLocation2" , "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
             tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
         }
     }
@@ -216,4 +225,45 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             cameraBridgeViewBase.disableView();
         }
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void downloadNecessaryFiles(){
+        if(checkDownloadedFiles()){ //check if files already there
+            DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            assert downloadManager != null;
+
+            Uri uri = Uri.parse("https://drive.google.com/uc?export=download&id=1QTWqtQSASSe8AIugP6tb2480Ro7Gt2yN");
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setTitle(getString(R.string.downloading_necessary_files));
+            request.setDescription(getString(R.string.downloading_WEIGHT_File));
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3-tiny.weights"));
+            downloadManager.enqueue(request);
+
+            uri = Uri.parse("https://drive.google.com/uc?export=download&id=1Y0CX4-Z4ZrteVkuzj2B8MU6WT65qIrw0");
+            request = new DownloadManager.Request(uri);
+            request.setTitle(getString(R.string.downloading_necessary_files));
+            request.setDescription(getString(R.string.downloading_CFG_File));
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3-tiny.cfg"));
+            downloadManager.enqueue(request);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private boolean checkDownloadedFiles(){
+        String path = Objects.requireNonNull(getExternalFilesDir(null)).toString()+"/dnns";
+        Log.d("Files", "Path: " + path);
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        assert files != null;
+        Log.d("Files", "Size: " + files.length);
+
+        for (File file : files) {
+            Log.d("Files", "FileName: " + file.getName());
+        }
+        return true;
+    }
+
 }
