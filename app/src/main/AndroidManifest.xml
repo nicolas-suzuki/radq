@@ -29,29 +29,51 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/AppThemeNoActionBar">
+        </activity>
+
+        <!-- Camera Activity -->
+        <activity
+            android:name=".CameraActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeBlackActionBar"
+            android:parentActivityName=".MainActivity"
+            android:label="">
+        </activity>
+
+        <!-- Alarms Activity -->
+        <activity
+            android:name=".AlarmsActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/alarms_title">
+        </activity>
+
+        <!-- Notifications Activity -->
+        <activity
+            android:name=".NotificationsActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/notifications_title">
+        </activity>
+
+        <!--Settings Activity-->
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/settings_title">
+        </activity>
+
+        <!-- Loading Activity -->
+        <activity android:name=".SplashScreenActivity"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CameraActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-        <activity
-            android:name=".AlarmsActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-        <activity
-            android:name=".NotificationsActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+
     </application>
 
 </manifest>

@@ -41,20 +41,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtAlarms" />
 
-    <ImageButton
-        android:id="@+id/bttnBack"
-        android:layout_width="27dp"
-        android:layout_height="19dp"
-        app:srcCompat="@drawable/abc_vector_test"
-        tools:layout_editor_absoluteX="321dp"
-        tools:layout_editor_absoluteY="26dp" />
-
-    <TextView
-        android:id="@+id/txtBttnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/back_button_text"
-        android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="348dp"
-        tools:layout_editor_absoluteY="26dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

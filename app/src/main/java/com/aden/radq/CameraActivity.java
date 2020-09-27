@@ -50,7 +50,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     int framesParaConfirmarQueda = 0;
     Net tinyYolo;
 
-    public void YOLO(View Button){
+    public void YOLO(){
         if (!startYolo){
             startYolo = true;
             if (firstTimeYolo){
@@ -86,6 +86,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                 if (status == BaseLoaderCallback.SUCCESS) {
                     cameraBridgeViewBase.setCameraIndex(0); //changes from frontal to back cameras
                     cameraBridgeViewBase.enableView();
+                    YOLO();
                 } else {
                     super.onManagerConnected(status);
                 }

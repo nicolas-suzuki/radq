@@ -10,9 +10,11 @@
         android:id="@+id/bttnDefineSafeContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="16dp"
         android:text="@string/define_safe_contact_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSafeContactTitle" />
 
@@ -20,11 +22,12 @@
         android:id="@+id/txtSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="120dp"
         android:text="@string/settings_title"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.251"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,33 +35,28 @@
         android:id="@+id/txtSafeContactTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="20dp"
         android:text="@string/safe_contact_title"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.295"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSettings" />
 
-    <ImageButton
-        android:id="@+id/bttnBack"
-        android:layout_width="27dp"
-        android:layout_height="19dp"
-        app:srcCompat="@drawable/abc_vector_test"
-        tools:layout_editor_absoluteX="321dp"
-        tools:layout_editor_absoluteY="26dp" />
-
-    <TextView
-        android:id="@+id/txtBttnBack"
+    <Button
+        android:id="@+id/bttnSwitchCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/back_button_text"
-        android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="348dp"
-        tools:layout_editor_absoluteY="26dp" />
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="240dp"
+        android:layout_marginBottom="402dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bttnDefineSafeContact" />
 
-    <FrameLayout
-        android:id="@+id/settings"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
