@@ -360,7 +360,10 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
         if (!connectCamera(getWidth(), getHeight())) {
             AlertDialog ad = new AlertDialog.Builder(getContext()).create();
             ad.setCancelable(false); // This blocks the 'BACK' button
-            ad.setMessage("It seems that you device does not support camera (or it is locked). Application will be closed.");
+            //The following message I don't know how to un-hardcode it
+            //ad.setMessage("It seems that you device does not support camera (or it is locked). Application will be closed.");
+            //PT-BR:
+            ad.setMessage("Verifique se você permitiu o RADQ de acessar sua câmera nas configurações do Android.");
             ad.setButton(DialogInterface.BUTTON_NEUTRAL,  "OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -368,7 +371,6 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
                 }
             });
             ad.show();
-
         }
     }
 

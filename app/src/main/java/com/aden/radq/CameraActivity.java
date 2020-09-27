@@ -2,6 +2,7 @@ package com.aden.radq;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,7 +43,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class CameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
+import static com.aden.radq.SettingsActivity.SHARED_PREFS;
+import static com.aden.radq.SettingsActivity.SWITCH_CAMERA_FRONT_BACK;
+
+public class CameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
     boolean startYolo = false;
@@ -50,19 +54,18 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     int framesParaConfirmarQueda = 0;
     Net tinyYolo;
 
-    public void YOLO(){
-        if (!startYolo){
+    public void YOLO() {
+        if (!startYolo) {
             startYolo = true;
-            if (firstTimeYolo){
+            if (firstTimeYolo) {
                 firstTimeYolo = false;
-                String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg" ;
+                String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
                 String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
 
-                Log.i("tinyLocation1" , "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+                Log.i("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
                 tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
             }
-        }
-        else{
+        } else {
             startYolo = false;
         }
     }
@@ -71,20 +74,30 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_activity);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //downloadNecessaryFiles();
-        cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
+        cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
         //cameraBridgeViewBase.setMaxFrameSize(5000,5000);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        Log.i("cameraFrontBack", "Switch: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
+        if (sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false)) {
+            //Use Back Camera
+            Log.i("cameraFrontBack", "Switch Back");
+            cameraBridgeViewBase.setCameraIndex(0);
+        } else {
+            //Use Frontal Camera
+            Log.i("cameraFrontBack", "Switch Frontal");
+            cameraBridgeViewBase.setCameraIndex(1);
+        }
 
         baseLoaderCallback = new BaseLoaderCallback(this) {
             @Override
             public void onManagerConnected(int status) {
                 super.onManagerConnected(status);
                 if (status == BaseLoaderCallback.SUCCESS) {
-                    cameraBridgeViewBase.setCameraIndex(0); //changes from frontal to back cameras
                     cameraBridgeViewBase.enableView();
                     YOLO();
                 } else {
@@ -195,10 +208,10 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-        if (startYolo){
-            String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg" ;
+        if (startYolo) {
+            String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
             String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
-            Log.i("tinyLocation2" , "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+            Log.i("tinyLocation2", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
             tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
         }
     }
@@ -211,11 +224,9 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onResume() {
         super.onResume();
-        if (!OpenCVLoader.initDebug()){
-            Toast.makeText(getApplicationContext(),"There's a problem, yo!", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        if (!OpenCVLoader.initDebug()) {
+            Toast.makeText(getApplicationContext(), "There's a problem, yo!", Toast.LENGTH_SHORT).show();
+        } else {
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
     }
@@ -223,7 +234,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onPause() {
         super.onPause();
-        if(cameraBridgeViewBase!=null){
+        if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
 
@@ -232,13 +243,13 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (cameraBridgeViewBase!=null){
+        if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
     }
 
-    private void downloadNecessaryFiles(){
-        if(checkDownloadedFiles()){ //check if files already there
+    private void downloadNecessaryFiles() {
+        if (checkDownloadedFiles()) { //check if files already there
             DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
             assert downloadManager != null;
 
@@ -260,8 +271,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         }
     }
 
-    private boolean checkDownloadedFiles(){
-        String path = Objects.requireNonNull(getExternalFilesDir(null)).toString()+"/dnns";
+    private boolean checkDownloadedFiles() {
+        String path = Objects.requireNonNull(getExternalFilesDir(null)).toString() + "/dnns";
         Log.d("Files", "Path: " + path);
         File directory = new File(path);
         File[] files = directory.listFiles();
@@ -274,7 +285,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         return true;
     }
 
-    private void takeScreenshot(View view){
+    private void takeScreenshot(View view) {
         Date date = new Date();
         CharSequence now = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
         String filename = getExternalFilesDir(null) + "/screenshot/" + now + ".jpg";
@@ -290,7 +301,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
 
@@ -303,11 +314,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         }
     }
 
-    private void initiateAlarm(){
+    private void initiateAlarm() {
 
     }
 
-    private void sendMessageToContact(){
+    private void sendMessageToContact() {
 
     }
 
