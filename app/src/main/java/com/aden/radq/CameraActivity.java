@@ -7,12 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +16,9 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.Core;
+import org.opencv.core.CvException;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
@@ -79,7 +76,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
-        //cameraBridgeViewBase.setMaxFrameSize(5000,5000);
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         Log.i("cameraFrontBack", "Switch: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
@@ -176,23 +172,15 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         // Queda detectada
                         Imgproc.putText(frame, "Queda Detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
+
                         Log.i("deteccao", "Queda Detectada! Precisão: " + intConf + "%");
                         framesParaConfirmarQueda++;
-//                        if (framesParaConfirmarQueda > 10) {
-//                            framesParaConfirmarQueda = 0;
-//                            Log.i("deteccao", "Queda Confirmada");
-//                            //takeScreenshot(cameraBridgeViewBase);
-//
-//                            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-//                            View popupView = layoutInflater.inflate(R.layout.emergency_activity,null);
-//
-//                            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                            boolean focusable = true; //set to false in the future and add buttons to the emergency view
-//                            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//
-//                            popupWindow.showAtLocation(findViewById(R.id.CameraView),Gravity.CENTER,0,0);
-//                        }
+                        if (framesParaConfirmarQueda > 10) {
+                            takeScreenshot(frame, intConf);
+                            initiateAlarm();
+                            sendMessageToContact();
+                            framesParaConfirmarQueda = 0;
+                        }
                     } else if (idGuy == 1) {
                         // Pessoa detectada
                         Imgproc.putText(frame, "deteccao" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
@@ -285,33 +273,48 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         return true;
     }
 
-    private void takeScreenshot(View view) {
+    private void takeScreenshot(Mat frame, int intConf) {
         Date date = new Date();
         CharSequence now = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
-        String filename = getExternalFilesDir(null) + "/screenshot/" + now + ".jpg";
+        String filename = now + "_conf:" + intConf + ".jpg";
 
-//        View root = getWindow().getDecorView();
-//        root.setDrawingCacheEnabled(true);
-        view.setDrawingCacheEnabled(true);
-        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-        view.setDrawingCacheEnabled(false);
+        Bitmap bitmap = null;
+        FileOutputStream outputStream = null;
 
-        File file = new File(filename);
-        Objects.requireNonNull(file.getParentFile()).mkdir();
+        File sd = new File(getExternalFilesDir(null) + "/fall_detection_images");
+        boolean success = true;
 
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            fileOutputStream.flush();
-            fileOutputStream.close();
-
-//            Uri uri = Uri.fromFile(file);
-//            Intent intent = new Intent(Intent.ACTION_VIEW);
-//            intent.setDataAndType(uri,"image/*");
-//            //startActivity
-        } catch (IOException e) {
-            e.printStackTrace();
+        try{
+            bitmap = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(frame,bitmap);
+        } catch (CvException e){
+            Log.d("save_image", Objects.requireNonNull(e.getMessage()));
         }
+
+        if(!sd.exists()){
+            success = sd.mkdir();
+        }
+
+        if (success){
+            File destination = new File(sd,filename);
+            try{
+                outputStream = new FileOutputStream(destination);
+                assert bitmap != null;
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
+            } catch(Exception e){
+                Log.d("save_image", Objects.requireNonNull(e.getMessage()));
+            } finally {
+                try{
+                    if(outputStream != null){
+                        outputStream.close();
+                        Log.d("save_image","Saved successfully.");
+                    }
+                } catch (IOException e){
+                    Log.d("save_image","Error: " + e.getMessage());
+                }
+            }
+        }
+
     }
 
     private void initiateAlarm() {
