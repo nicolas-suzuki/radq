@@ -4,6 +4,9 @@
     <string name="downloading_necessary_files">Downloading RAQD necessary files</string>
 
 
+    <!-- Log Messages -->
+
+
     <!-- missing translations to english -->
     <string name="downloading_CFG_File">Arquivo \'cfg\' da identificação visual</string>
     <string name="downloading_WEIGHT_File">Arquivo \'weights\' da identificação visual</string>
