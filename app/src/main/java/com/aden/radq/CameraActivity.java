@@ -51,21 +51,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     int framesParaConfirmarQueda = 0;
     Net tinyYolo;
 
-    public void YOLO() {
-        if (!startYolo) {
-            startYolo = true;
-            if (firstTimeYolo) {
-                firstTimeYolo = false;
-                String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
-                String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
 
-                Log.i("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
-                tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
-            }
-        } else {
-            startYolo = false;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +186,13 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
             String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
             Log.i("tinyLocation2", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
-            tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
+            try{
+                tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
+            } catch (Exception e){
+                Log.i("tinyLocation1", "Exception: " + e);
+                Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
+                toast.show();
+            }
         }
     }
 
@@ -233,6 +225,28 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         super.onDestroy();
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
+        }
+    }
+
+    public void YOLO() {
+        if (!startYolo) {
+            startYolo = true;
+            if (firstTimeYolo) {
+                firstTimeYolo = false;
+                String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
+                String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
+
+                Log.i("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+                try{
+                    tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
+                } catch (Exception e){
+                    Log.i("tinyLocation1", "Exception: " + e);
+                    Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        } else {
+            startYolo = false;
         }
     }
 
@@ -318,7 +332,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     }
 
     private void initiateAlarm() {
-
+        
     }
 
     private void sendMessageToContact() {
