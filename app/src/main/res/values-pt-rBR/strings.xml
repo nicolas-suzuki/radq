@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fall_detected">Queda detectada</string>
+    <string name="imOkay">Estou bem!</string>
+    <string name="imNotOkay">AJUDA!</string>
+    <string name="emergency_contact_will_be_contacted">"Contato de emergência será contatado em "</string>
+    <string name="contactContact">Contato Contatado</string>
+</resources>

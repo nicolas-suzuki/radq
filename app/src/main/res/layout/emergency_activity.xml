@@ -1,21 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/emergencyLayout"
+    android:background="#FFFFFF">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="259dp"
-        android:layout_height="95dp"
-        android:text="QUEDA DETECTADA"
+        android:id="@+id/emergencyTitle"
+        android:layout_width="741dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        android:text="@string/fall_detected"
         android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textIsSelectable="false"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emergencyContactWillBeContactedTxt"
+        android:layout_width="741dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="@string/emergency_contact_will_be_contacted"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textIsSelectable="false"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emergencyTitle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/imOkay"
+        android:layout_width="320dp"
+        android:layout_height="128dp"
+        android:text="@string/imOkay"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emergencyContactWillBeContactedTxt" />
+
+    <Button
+        android:id="@+id/imNotOkay"
+        android:layout_width="320dp"
+        android:layout_height="128dp"
+        android:text="@string/imNotOkay"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.529" />
-</RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@+id/emergencyContactWillBeContactedTxt" />
+</androidx.constraintlayout.widget.ConstraintLayout>
