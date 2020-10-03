@@ -60,11 +60,9 @@ public class EmergencyActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Log.d("timer","timer finished");
-                //contact
+                sendMessageToContact();
             }
         }.start();
-
-
         imOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,14 +90,6 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private void sendMessageToContact() {
         //TODO Send Message then:
-
-        
-
-
-
-
-
-
         contactContacted();
     }
 
