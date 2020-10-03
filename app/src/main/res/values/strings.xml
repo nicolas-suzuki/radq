@@ -3,6 +3,7 @@
     <string name="app_description">Fall detector autonomous robot</string>
     <string name="downloading_necessary_files">Downloading RAQD necessary files</string>
     <string name="fall_detected">Fall detected</string>
+    <string name="contactContact">Contact Contacted</string>
 
 
     <!-- Log Messages -->
@@ -29,4 +30,5 @@
     <string name="imOkay">I\'m Okay!</string>
     <string name="imNotOkay">HELP!</string>
     <string name="emergency_contact_will_be_contacted">Emergency contact will be contacted in</string>
+    <string name="app_initials" translatable="false">RADQ</string>
 </resources>

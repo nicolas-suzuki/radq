@@ -14,8 +14,6 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String SWITCH_CAMERA_FRONT_BACK ="switchCameraFrontBack";
 
     private SwitchCompat switchCameraFrontBack;
-    private Button bttnSaveSettings;
-
     private boolean isSwitchBackChecked;
 
     @Override
@@ -24,7 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
 
         switchCameraFrontBack = findViewById(R.id.switchCameraFrontBack);
-        bttnSaveSettings = findViewById(R.id.bttnSaveSettings);
+        Button bttnSaveSettings = findViewById(R.id.bttnSaveSettings);
 
         bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
