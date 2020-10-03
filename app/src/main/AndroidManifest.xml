@@ -65,6 +65,15 @@
             android:label="@string/settings_title">
         </activity>
 
+        <!--Emergency Activity-->
+        <activity
+            android:screenOrientation="landscape"
+            android:name=".EmergencyActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/emergency_title">
+        </activity>
+
         <!-- Loading Activity -->
         <activity android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreen">

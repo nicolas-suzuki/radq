@@ -2,6 +2,7 @@
     <string name="app_name">Fall Detector Autonomous Robot</string>
     <string name="app_description">Fall detector autonomous robot</string>
     <string name="downloading_necessary_files">Downloading RAQD necessary files</string>
+    <string name="fall_detected">Fall detected</string>
 
 
     <!-- Log Messages -->
@@ -24,4 +25,8 @@
     <string name="app_logo">Uma senhora com uma muleta sendo acompanhada pelo RADQ, Robô Autônomo Detector de Quedas</string>
     <string name="save_bttn_settings">Salvar</string>
     <string name="switch_FrontBackCamera_txt">Ativar câmera traseira?</string>
+    <string name="emergency_title">Emergency</string>
+    <string name="imOkay">I\'m Okay!</string>
+    <string name="imNotOkay">HELP!</string>
+    <string name="emergency_contact_will_be_contacted">Emergency contact will be contacted in</string>
 </resources>

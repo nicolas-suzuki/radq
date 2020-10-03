@@ -18,4 +18,5 @@
     <string name="app_logo">Uma senhora com uma muleta sendo acompanhada pelo RADQ, Robô Autônomo Detector de Quedas</string>
     <string name="save_bttn_settings">Salvar</string>
     <string name="switch_FrontBackCamera_txt">Ativar câmera traseira?</string>
+    <string name="emergency_title">Emergency</string>
 </resources>

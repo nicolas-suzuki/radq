@@ -2,6 +2,7 @@ package com.aden.radq;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -332,7 +333,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     }
 
     private void initiateAlarm() {
-        
+        Intent intent = new Intent(this, EmergencyActivity.class);
+        startActivity(intent);
     }
 
     private void sendMessageToContact() {
