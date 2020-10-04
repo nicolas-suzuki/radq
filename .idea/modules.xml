@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Robô_Autônomo_Detector_de_Quedas.iml" filepath="$PROJECT_DIR$/.idea/modules/Robô_Autônomo_Detector_de_Quedas.iml" group="Robô_Autônomo_Detector_de_Quedas" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Robô Autônomo Detector de Quedas/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/openCVLibrary345/openCVLibrary345.iml" filepath="$PROJECT_DIR$/.idea/modules/openCVLibrary345/openCVLibrary345.iml" group="Robô Autônomo Detector de Quedas/openCVLibrary345" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/usbserial/usbserial.iml" filepath="$PROJECT_DIR$/.idea/modules/usbserial/usbserial.iml" group="Robô Autônomo Detector de Quedas/usbserial" />
     </modules>
   </component>
 </project>

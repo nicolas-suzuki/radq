@@ -1,0 +1,19 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml:1:1-42
+INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml:1:1-42
+INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml:1:1-42
+	package
+		ADDED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml:1:11-40
+		INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml
+		INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml:1:1-42
+uses-sdk
+INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml
+INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml
+		ADDED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml
+		INJECTED from D:\TCC\radq\usbserial\src\main\AndroidManifest.xml

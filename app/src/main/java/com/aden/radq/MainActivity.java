@@ -2,13 +2,14 @@ package com.aden.radq;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -25,36 +26,16 @@ public class MainActivity extends AppCompatActivity {
         checkPermission();
                 setContentView(R.layout.main_activity);
                 ImageButton bttnCamera = findViewById(R.id.bttnCamera);
-                bttnCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openCameraActivity();
-                    }
-                });
+                bttnCamera.setOnClickListener(v -> openCameraActivity());
 
                 ImageButton bttnAlarms = findViewById(R.id.bttnAlarms);
-                bttnAlarms.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openAlarmsActivity();
-                    }
-                });
+                bttnAlarms.setOnClickListener(v -> openAlarmsActivity());
 
                 ImageButton bttnNotifications = findViewById(R.id.bttnNotifications);
-                bttnNotifications.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openNotificationsActivity();
-                    }
-                });
+                bttnNotifications.setOnClickListener(v -> openNotificationsActivity());
 
                 ImageButton bttnSettings = findViewById(R.id.bttnSettings);
-                bttnSettings.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openSettingsActivity();
-                    }
-                });
+                bttnSettings.setOnClickListener(v -> openSettingsActivity());
 
     }
 
@@ -121,4 +102,27 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
+                    Toast.makeText(context, "USB Ready", Toast.LENGTH_SHORT).show();
+                    break;
+                case UsbService.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
+                    Toast.makeText(context, "USB Permission not granted", Toast.LENGTH_SHORT).show();
+                    break;
+                case UsbService.ACTION_NO_USB: // NO USB CONNECTED
+                    Toast.makeText(context, "No USB connected", Toast.LENGTH_SHORT).show();
+                    break;
+                case UsbService.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
+                    Toast.makeText(context, "USB disconnected", Toast.LENGTH_SHORT).show();
+                    break;
+                case UsbService.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
+                    Toast.makeText(context, "USB device not supported", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 }

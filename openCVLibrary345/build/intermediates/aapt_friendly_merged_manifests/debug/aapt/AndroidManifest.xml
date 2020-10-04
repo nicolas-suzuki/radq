@@ -4,8 +4,6 @@
     android:versionCode="3450"
     android:versionName="3.4.5" >
 
-    <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="29" />
+    <uses-sdk android:minSdkVersion="19" />
 
 </manifest>

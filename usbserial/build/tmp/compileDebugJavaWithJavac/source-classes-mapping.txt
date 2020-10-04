@@ -1,0 +1,88 @@
+com/felhr/deviceids/CP2130Ids.java
+ com.felhr.deviceids.CP2130Ids
+com/felhr/usbserial/UsbSerialDevice.java
+ com.felhr.usbserial.UsbSerialDevice
+ com.felhr.usbserial.UsbSerialDevice$1
+ com.felhr.usbserial.UsbSerialDevice$ReadThread
+ com.felhr.usbserial.UsbSerialDevice$WorkerThread
+ com.felhr.usbserial.UsbSerialDevice$WriteThread
+com/felhr/usbserial/UsbSerialInterface.java
+ com.felhr.usbserial.UsbSerialInterface
+ com.felhr.usbserial.UsbSerialInterface$UsbBreakCallback
+ com.felhr.usbserial.UsbSerialInterface$UsbCTSCallback
+ com.felhr.usbserial.UsbSerialInterface$UsbDSRCallback
+ com.felhr.usbserial.UsbSerialInterface$UsbFrameCallback
+ com.felhr.usbserial.UsbSerialInterface$UsbOverrunCallback
+ com.felhr.usbserial.UsbSerialInterface$UsbParityCallback
+ com.felhr.usbserial.UsbSerialInterface$UsbReadCallback
+com/felhr/usbserial/SerialInputStream.java
+ com.felhr.usbserial.SerialInputStream
+com/felhr/usbserial/BuildConfig.java
+ com.felhr.usbserial.BuildConfig
+com/felhr/deviceids/CP210xIds.java
+ com.felhr.deviceids.CP210xIds
+com/felhr/usbserial/CDCSerialDevice.java
+ com.felhr.usbserial.CDCSerialDevice
+com/felhr/usbserial/CP2102SerialDevice.java
+ com.felhr.usbserial.CP2102SerialDevice
+ com.felhr.usbserial.CP2102SerialDevice$1
+ com.felhr.usbserial.CP2102SerialDevice$FlowControlThread
+com/felhr/deviceids/PL2303Ids.java
+ com.felhr.deviceids.PL2303Ids
+com/felhr/deviceids/Helpers.java
+ com.felhr.deviceids.Helpers
+com/felhr/usbserial/SerialBuffer.java
+ com.felhr.usbserial.SerialBuffer
+ com.felhr.usbserial.SerialBuffer$SynchronizedBuffer
+com/felhr/usbserial/CP2130SpiDevice.java
+ com.felhr.usbserial.CP2130SpiDevice
+com/felhr/usbserial/BLED112SerialDevice.java
+ com.felhr.usbserial.BLED112SerialDevice
+com/felhr/usbserial/PL2303SerialDevice.java
+ com.felhr.usbserial.PL2303SerialDevice
+com/felhr/utils/SafeUsbRequest.java
+ com.felhr.utils.SafeUsbRequest
+com/felhr/deviceids/XdcVcpIds.java
+ com.felhr.deviceids.XdcVcpIds
+com/felhr/usbserial/UsbSpiDevice.java
+ com.felhr.usbserial.UsbSpiDevice
+ com.felhr.usbserial.UsbSpiDevice$ReadThread
+ com.felhr.usbserial.UsbSpiDevice$WriteThread
+com/felhr/deviceids/CH34xIds.java
+ com.felhr.deviceids.CH34xIds
+com/felhr/usbserial/FTDISerialDevice.java
+ com.felhr.usbserial.FTDISerialDevice
+ com.felhr.usbserial.FTDISerialDevice$FTDIUtilities
+com/felhr/utils/ProtocolBuffer.java
+ com.felhr.utils.ProtocolBuffer
+ com.felhr.utils.ProtocolBuffer$1
+ com.felhr.utils.ProtocolBuffer$SeparatorPredicate
+com/felhr/utils/HexData.java
+ com.felhr.utils.HexData
+com/felhr/usbserial/SerialOutputStream.java
+ com.felhr.usbserial.SerialOutputStream
+com/felhr/usbserial/AbstractWorkerThread.java
+ com.felhr.usbserial.AbstractWorkerThread
+com/felhr/usbserial/CH34xSerialDevice.java
+ com.felhr.usbserial.CH34xSerialDevice
+ com.felhr.usbserial.CH34xSerialDevice$1
+ com.felhr.usbserial.CH34xSerialDevice$FlowControlThread
+com/felhr/usbserial/UsbSpiInterface.java
+ com.felhr.usbserial.UsbSpiInterface
+ com.felhr.usbserial.UsbSpiInterface$UsbMISOCallback
+com/felhr/usbserial/UsbSerialDebugger.java
+ com.felhr.usbserial.UsbSerialDebugger
+com/felhr/usbserial/SerialPortCallback.java
+ com.felhr.usbserial.SerialPortCallback
+com/felhr/deviceids/FTDISioIds.java
+ com.felhr.deviceids.FTDISioIds
+com/felhr/usbserial/SerialPortBuilder.java
+ com.felhr.usbserial.SerialPortBuilder
+ com.felhr.usbserial.SerialPortBuilder$1
+ com.felhr.usbserial.SerialPortBuilder$InitSerialPortThread
+ com.felhr.usbserial.SerialPortBuilder$PendingUsbPermission
+ com.felhr.usbserial.SerialPortBuilder$UsbDeviceStatus
+com/felhr/usbserial/XdcVcpSerialDevice.java
+ com.felhr.usbserial.XdcVcpSerialDevice
+com/felhr/utils/Utils.java
+ com.felhr.utils.Utils

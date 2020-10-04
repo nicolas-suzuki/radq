@@ -1,9 +1,17 @@
 package com.aden.radq;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.widget.Toast;
@@ -33,6 +41,7 @@ import org.opencv.utils.Converters;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,20 +51,42 @@ import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 import static com.aden.radq.SettingsActivity.SWITCH_CAMERA_FRONT_BACK;
 
 public class CameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+    //TODO re-analyze the need of the following two variables and their logic
     boolean startYolo = false;
     boolean firstTimeYolo = true;
     //TODO change framesToConfirmFall name/logic
     int framesToConfirmFall = 0;
 
+    //Camera connection + detection specific variables
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
     Net tinyYolo;
+
+    //USB connection + control specific variables
+    private UsbService usbService;
+    private MyHandler mHandler;
+
+    private final ServiceConnection usbConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            usbService = ((UsbService.UsbBinder) iBinder).getService();
+            usbService.setHandler(mHandler);
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            usbService = null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_activity);
 
+        //USB Handler initialization
+        mHandler = new MyHandler(this);
+
+        //Camera initialization
         cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
@@ -88,6 +119,40 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("onCameraState","onResume()");
+        if (!OpenCVLoader.initDebug()) {
+            Toast.makeText(getApplicationContext(), "There's a problem, yo!", Toast.LENGTH_SHORT).show();
+        } else {
+            baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
+        }
+        //TODO
+        startService(usbConnection); // Start UsbService(if it was not started before) and Bind it
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("onCameraState","onPause()");
+        if (cameraBridgeViewBase != null) {
+            cameraBridgeViewBase.disableView();
+        }
+        //TODO
+        //unregisterReceiver(mUsbReceiver);
+        unbindService(usbConnection);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("onCameraState","onDestroy()");
+        if (cameraBridgeViewBase != null) {
+            cameraBridgeViewBase.disableView();
+        }
+    }
+
+    @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         Mat frame = inputFrame.rgba();
         if (startYolo) {
@@ -102,7 +167,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
             tinyYolo.forward(result, outBlobNames);
 
-            float confThreshold = 0.3f;
+            float confThreshold = 0.5f;
 
             List<Integer> clsIds = new ArrayList<>();
             List<Float> confs = new ArrayList<>();
@@ -129,13 +194,14 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         confs.add(confidence);
                         rects.add(new Rect(left, top, width, height));
                         Log.d("metrics", "height: " + height);
+                        //If 500, stop
                     }
                 }
             }
             int ArrayLength = confs.size();
 
             // Adding boxes around detection
-            if (ArrayLength >= 1) {
+            if (ArrayLength >= 1) { //if ArrayLength == 0, maybe is because nothing was detected. for that, add an else at the end of this statement
                 // Apply non-maximum suppression procedure.
                 float nmsThresh = 0.2f;
                 MatOfFloat confidences = new MatOfFloat(Converters.vector_float_to_Mat(confs));
@@ -154,20 +220,31 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                     if (idGuy == 0) {
                         // Fall detected
-                        Imgproc.putText(frame, "Queda Detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 5);
+                        Imgproc.putText(frame, "Queda Detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
 
                         Log.i("detection", "Fall detected! Precision: " + intConf + "%");
                         framesToConfirmFall++;
                         if (framesToConfirmFall > 10) {
-                            //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
-                            //takeScreenshot(frame, intConf);
-                            initiateAlarm();
-                            framesToConfirmFall = 0;
+                            //This countdown ensures that the person is really down
+//                            CountDownTimer countDownTimer = new CountDownTimer(5000,1000) {
+//                                @Override
+//                                public void onTick(long millisUntilFinished) {
+//
+//                                }
+//                                @Override
+//                                public void onFinish() {
+                                    //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
+                                    //takeScreenshot(frame, intConf);
+                                    initiateAlarm();
+                                    framesToConfirmFall = 0;
+//                                }
+//                            }.start();
+
                         }
                     } else if (idGuy == 1) {
                         // Pessoa detectada
-                        Imgproc.putText(frame, "Pessoa detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 5);
+                        Imgproc.putText(frame, "Pessoa detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
                         Log.i("detection", "Person detected! Precision: " + intConf + "%");
                     } else {
@@ -200,35 +277,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     public void onCameraViewStopped() {
         Log.d("onCameraState","onCameraViewStopped()");
         startYolo = false;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("onCameraState","onResume()");
-        if (!OpenCVLoader.initDebug()) {
-            Toast.makeText(getApplicationContext(), "There's a problem, yo!", Toast.LENGTH_SHORT).show();
-        } else {
-            baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("onCameraState","onPause()");
-        if (cameraBridgeViewBase != null) {
-            cameraBridgeViewBase.disableView();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("onCameraState","onDestroy()");
-        if (cameraBridgeViewBase != null) {
-            cameraBridgeViewBase.disableView();
-        }
     }
 
     public void YOLO() {
@@ -299,5 +347,64 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     private void initiateAlarm() {
         Intent intent = new Intent(this, EmergencyActivity.class);
         startActivity(intent);
+    }
+
+    private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (Objects.requireNonNull(intent.getAction())) {
+                case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
+                    Toast.makeText(context, "USB Ready", Toast.LENGTH_SHORT).show();
+                    break;
+                case UsbService.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
+                    Toast.makeText(context, "USB Permission not granted", Toast.LENGTH_SHORT).show();
+                    break;
+                case UsbService.ACTION_NO_USB: // NO USB CONNECTED
+                    Toast.makeText(context, "No USB connected", Toast.LENGTH_SHORT).show();
+                    break;
+                case UsbService.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
+                    Toast.makeText(context, "USB disconnected", Toast.LENGTH_SHORT).show();
+                    break;
+                case UsbService.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
+                    Toast.makeText(context, "USB device not supported", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
+    // USB Connection + Control Classes Section //
+
+    private void startService(ServiceConnection serviceConnection) {
+        if (!UsbService.SERVICE_CONNECTED) {
+            Intent startService = new Intent(this, UsbService.class);
+            startService(startService);
+        }
+        Intent bindingIntent = new Intent(this, UsbService.class);
+        bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    // This handler will be passed to UsbService. Data received from serial port is displayed through this handler
+    private static class MyHandler extends Handler {
+        private final WeakReference<CameraActivity> mActivity;
+
+        public MyHandler(CameraActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case UsbService.MESSAGE_FROM_SERIAL_PORT:
+                    String data = (String) msg.obj;
+                    //mActivity.get().display.append(data);
+                    break;
+                case UsbService.CTS_CHANGE:
+                    Toast.makeText(mActivity.get(), "CTS_CHANGE",Toast.LENGTH_LONG).show();
+                    break;
+                case UsbService.DSR_CHANGE:
+                    Toast.makeText(mActivity.get(), "DSR_CHANGE",Toast.LENGTH_LONG).show();
+                    break;
+            }
+        }
     }
 }

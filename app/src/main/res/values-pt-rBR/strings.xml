@@ -5,4 +5,24 @@
     <string name="imNotOkay">AJUDA!</string>
     <string name="emergency_contact_will_be_contacted">"Contato de emergência será contatado em "</string>
     <string name="contactContact">Contato Contatado</string>
+    <string name="app_name">Robô Autônomo Detector de Quedas</string>
+    <string name="app_description">Robô autônomo detector de quedas</string>
+    <string name="downloading_necessary_files">Baixando arquivos necessários do RADQ</string>
+    <string name="downloading_CFG_File">Arquivo \'cfg\' da identificação visual</string>
+    <string name="downloading_WEIGHT_File">Arquivo \'weights\' da identificação visual</string>
+    <string name="define_safe_contact_button">Definir contato de segurança</string>
+    <string name="settings_title">Configurações</string>
+    <string name="safe_contact_title">Contato de segurança</string>
+    <string name="back_button_text">Voltar</string>
+    <string name="alarms_title">Alarmes</string>
+    <string name="alarms_description">Configure ou adicione alarmes de medicamento</string>
+    <string name="set_alarm">Novo Alarme</string>
+    <string name="notifications_title">Notificações</string>
+    <string name="welcome_title">Bem-vindo ao RADQ</string>
+    <string name="welcome_description">Seu robô autônomo detector de quedas</string>
+    <string name="camera">Câmera</string>
+    <string name="app_logo">Uma senhora com uma muleta sendo acompanhada pelo RADQ, Robô Autônomo Detector de Quedas</string>
+    <string name="save_bttn_settings">Salvar</string>
+    <string name="switch_FrontBackCamera_txt">Ativar câmera traseira?</string>
+    <string name="emergency_title">Emergency</string>
 </resources>
