@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light">
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="64dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bttnSaveSettings"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,36 +27,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/safe_contact_title"
-            android:textColor="@android:color/black" />
-
-        <Button
-            android:id="@+id/bttnDefineSafeContact"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#5DBABE"
-            android:text="@string/define_safe_contact_button" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="16dp" />
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/bttnDefineSafeContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/buttonshape"
+            android:text="@string/define_safe_contact_button"
+            android:textColor="#FFFFFF" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchCameraFrontBack"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="11dp"
             android:text="@string/switch_FrontBackCamera_txt"
+            android:textSize="16sp"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
+
     </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <Button
         android:id="@+id/bttnSaveSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/buttonshape"
         android:text="@string/save_bttn_settings"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+</LinearLayout>

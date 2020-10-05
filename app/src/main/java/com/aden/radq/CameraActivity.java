@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,6 +82,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_activity);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //USB Handler initialization
         mHandler = new MyHandler(this);
@@ -166,7 +168,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
             tinyYolo.forward(result, outBlobNames);
 
-            float confThreshold = 0.5f;
+            float confThreshold = 0.3f;
 
             List<Integer> clsIds = new ArrayList<>();
             List<Float> confs = new ArrayList<>();

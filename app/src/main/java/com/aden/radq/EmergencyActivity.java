@@ -3,15 +3,15 @@ package com.aden.radq;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +19,8 @@ public class EmergencyActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     Button imOkay;
     Button imNotOkay;
-    ConstraintLayout currentLayout;
+    LinearLayout emergencyLayout;
+    LinearLayout layoutButtons;
     TextView emergencyContactWillBeContactedTxt;
     TextView emergencyTitle;
 
@@ -27,18 +28,20 @@ public class EmergencyActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency_activity);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //Initializing view contents
         imOkay = findViewById(R.id.imOkay);
         imNotOkay = findViewById(R.id.imNotOkay);
-        currentLayout = findViewById(R.id.emergencyLayout);
+        emergencyLayout = findViewById(R.id.emergencyLayout);
         emergencyContactWillBeContactedTxt = findViewById(R.id.emergencyContactWillBeContactedTxt);
         emergencyTitle = findViewById(R.id.emergencyTitle);
+        layoutButtons = findViewById(R.id.layoutButtons);
 
-        //TODO change string test name/logic
-        final String test = (String) emergencyContactWillBeContactedTxt.getText();
+        String emergencySubtitleTxt = getString(R.string.emergency_contact_will_be_contacted);
+        String secondsText = getString(R.string.secondsTxt);
+
         Log.d("timer", "Timer Started");
-
         countDownTimer = new CountDownTimer(30000,1000){
             boolean tick = true;
             @Override
@@ -47,13 +50,16 @@ public class EmergencyActivity extends AppCompatActivity {
 
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
 
-                String test2 = test + seconds + " seconds";
-                emergencyContactWillBeContactedTxt.setText(test2);
+                //TODO change string name/logic
+                String aux = emergencySubtitleTxt + seconds + secondsText;
+                emergencyContactWillBeContactedTxt.setText(aux);
                 if(tick){
-                    currentLayout.setBackgroundColor(Color.RED);
+                    imNotOkay.setBackgroundColor(Color.RED);
+                    imNotOkay.setTextColor(Color.WHITE);
                     tick = false;
                 } else {
-                    currentLayout.setBackgroundColor(Color.WHITE);
+                    imNotOkay.setBackgroundColor(Color.WHITE);
+                    imNotOkay.setTextColor(Color.RED);
                     tick = true;
                 }
             }
@@ -68,6 +74,7 @@ public class EmergencyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("emergency", "I'm Okay button pressed");
                 countDownTimer.cancel();
+                finish();
             }
         });
 
@@ -94,10 +101,10 @@ public class EmergencyActivity extends AppCompatActivity {
     }
 
     private void contactContacted(){
-        imOkay.setVisibility(View.INVISIBLE);
-        imNotOkay.setVisibility(View.INVISIBLE);
+        emergencyLayout.removeView(layoutButtons);
         emergencyContactWillBeContactedTxt.setVisibility(View.INVISIBLE);
-        emergencyTitle.setText(getResources().getString(R.string.contactContact));
-        currentLayout.setBackgroundColor(Color.GREEN);
+        String aux = "Fulano " + getResources().getString(R.string.contactContact);
+        emergencyTitle.setText(aux);
+        emergencyLayout.setBackgroundColor(Color.GREEN);
     }
 }
