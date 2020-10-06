@@ -280,8 +280,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     public void onCameraViewStarted(int width, int height) {
         Log.d("onCameraState","onCameraViewStarted()");
         if (startYolo) {
-            String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
-            String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
+            String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
+            String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
             Log.i("tinyLocation2", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
             try{
                 tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
@@ -304,8 +304,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             startYolo = true;
             if (firstTimeYolo) {
                 firstTimeYolo = false;
-                String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
-                String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
+                String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
+                String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
 
                 Log.i("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
                 try{

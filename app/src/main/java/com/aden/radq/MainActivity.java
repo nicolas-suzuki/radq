@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,19 +27,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkPermission();
-                setContentView(R.layout.main_activity);
-                ImageButton bttnCamera = findViewById(R.id.bttnCamera);
-                bttnCamera.setOnClickListener(v -> openCameraActivity());
+        setContentView(R.layout.main_activity);
+        workOnAdditionalFiles();
+        ImageButton bttnCamera = findViewById(R.id.bttnCamera);
+        bttnCamera.setOnClickListener(v -> openCameraActivity());
 
-                ImageButton bttnAlarms = findViewById(R.id.bttnAlarms);
-                bttnAlarms.setOnClickListener(v -> openAlarmsActivity());
+        ImageButton bttnAlarms = findViewById(R.id.bttnAlarms);
+        bttnAlarms.setOnClickListener(v -> openAlarmsActivity());
 
-                ImageButton bttnNotifications = findViewById(R.id.bttnNotifications);
-                bttnNotifications.setOnClickListener(v -> openNotificationsActivity());
+        ImageButton bttnNotifications = findViewById(R.id.bttnNotifications);
+        bttnNotifications.setOnClickListener(v -> openNotificationsActivity());
 
-                ImageButton bttnSettings = findViewById(R.id.bttnSettings);
-                bttnSettings.setOnClickListener(v -> openSettingsActivity());
-
+        ImageButton bttnSettings = findViewById(R.id.bttnSettings);
+        bttnSettings.setOnClickListener(v -> openSettingsActivity());
     }
 
     public void openCameraActivity(){
@@ -66,6 +69,64 @@ public class MainActivity extends AppCompatActivity {
         },PERMISSIONS_CODE);
     }
 
+    private void workOnAdditionalFiles(){
+        boolean isCfgHere = false;
+        boolean isWeightsHere = false;
+        Log.d("workOnAdditionalFiles", "workOnAdditionalFiles()");
+
+        String path = Objects.requireNonNull(getExternalFilesDir(null)).toString() + "/";
+
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        assert files != null;
+        for (File file : files){
+            if (file.getName().equals("yolov3-tiny.cfg")){
+                Log.d("workOnAdditionalFiles", "Configuration file here!");
+                isCfgHere = true;
+            } else if (file.getName().equals("yolov3-tiny.weights")){
+                Log.d("workOnAdditionalFiles", "Weights file here!");
+                isWeightsHere = true;
+            }
+        }
+
+        if (!isCfgHere){
+            File cfgFile = new File(path + "yolov3-tiny.cfg");
+            try{
+                Log.d("workOnAdditionalFiles", "isCfgHere try()");
+                InputStream inputStream = this.getResources().openRawResource(R.raw.yolov3_tiny_cfg);
+                FileOutputStream fileOutputStream = new FileOutputStream(cfgFile);
+                byte[] buf = new byte[1024];
+                int len;
+                while((len=inputStream.read(buf))>0){
+                    fileOutputStream.write(buf,0,len);
+                }
+                fileOutputStream.close();
+                inputStream.close();
+            } catch (Exception e) {
+                Log.d("workOnAdditionalFiles", "isCfgHere catch(): " + e);
+                e.printStackTrace();
+            }
+        }
+        if (!isWeightsHere){
+            File weightsFile = new File(path + "yolov3-tiny.weights");
+            try{
+                Log.d("workOnAdditionalFiles", "isWeightsHere try()");
+                InputStream inputStream = this.getResources().openRawResource(R.raw.yolov3_tiny_weights);
+                FileOutputStream fileOutputStream = new FileOutputStream(weightsFile);
+                byte[] buf = new byte[1024];
+                int len;
+                while((len=inputStream.read(buf))>0){
+                    fileOutputStream.write(buf,0,len);
+                }
+                fileOutputStream.close();
+                inputStream.close();
+            } catch (Exception e) {
+                Log.d("workOnAdditionalFiles", "isWeightsHere catch(): " + e);
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void downloadNecessaryFiles() {
         if (checkDownloadedFiles()) { //check if files already there
             DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
@@ -76,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             request.setTitle(getString(R.string.downloading_necessary_files));
             request.setDescription(getString(R.string.downloading_WEIGHT_File));
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3-tiny.weights"));
+            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3_tiny_weights"));
             downloadManager.enqueue(request);
 
             uri = Uri.parse("https://drive.google.com/uc?export=download&id=1Y0CX4-Z4ZrteVkuzj2B8MU6WT65qIrw0");
@@ -84,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             request.setTitle(getString(R.string.downloading_necessary_files));
             request.setDescription(getString(R.string.downloading_CFG_File));
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3-tiny.cfg"));
+            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3_tiny_cfg"));
             downloadManager.enqueue(request);
         }
     }
