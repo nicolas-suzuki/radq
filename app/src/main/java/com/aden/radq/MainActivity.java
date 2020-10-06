@@ -24,19 +24,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkPermission();
-                setContentView(R.layout.main_activity);
-                ImageButton bttnCamera = findViewById(R.id.bttnCamera);
-                bttnCamera.setOnClickListener(v -> openCameraActivity());
+        setContentView(R.layout.main_activity);
+        ImageButton bttnCamera = findViewById(R.id.bttnCamera);
+        bttnCamera.setOnClickListener(v -> openCameraActivity());
 
-                ImageButton bttnAlarms = findViewById(R.id.bttnAlarms);
-                bttnAlarms.setOnClickListener(v -> openAlarmsActivity());
+        ImageButton bttnAlarms = findViewById(R.id.bttnAlarms);
+        bttnAlarms.setOnClickListener(v -> openAlarmsActivity());
 
-                ImageButton bttnNotifications = findViewById(R.id.bttnNotifications);
-                bttnNotifications.setOnClickListener(v -> openNotificationsActivity());
+        ImageButton bttnNotifications = findViewById(R.id.bttnNotifications);
+        bttnNotifications.setOnClickListener(v -> openNotificationsActivity());
 
-                ImageButton bttnSettings = findViewById(R.id.bttnSettings);
-                bttnSettings.setOnClickListener(v -> openSettingsActivity());
-
+        ImageButton bttnSettings = findViewById(R.id.bttnSettings);
+        bttnSettings.setOnClickListener(v -> openSettingsActivity());
+        
     }
 
     public void openCameraActivity(){

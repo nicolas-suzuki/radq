@@ -1,5 +1,6 @@
 package com.aden.radq;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -10,10 +11,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
+
+import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 
 public class EmergencyActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
@@ -25,7 +27,7 @@ public class EmergencyActivity extends AppCompatActivity {
     TextView emergencyTitle;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency_activity);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -101,9 +103,11 @@ public class EmergencyActivity extends AppCompatActivity {
     }
 
     private void contactContacted(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String contactName = sharedPreferences.getString("contactName","");
         emergencyLayout.removeView(layoutButtons);
         emergencyContactWillBeContactedTxt.setVisibility(View.INVISIBLE);
-        String aux = "Fulano " + getResources().getString(R.string.contactContact);
+        String aux = contactName + " " + getResources().getString(R.string.contactContact);
         emergencyTitle.setText(aux);
         emergencyLayout.setBackgroundColor(Color.GREEN);
     }

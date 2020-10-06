@@ -81,42 +81,51 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.camera_activity);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        //USB Handler initialization
-        mHandler = new MyHandler(this);
-
-        //Camera initialization
-        cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
-        cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
-        cameraBridgeViewBase.setCvCameraViewListener(this);
-
-        //Get saved preferences: Front/Back camera
+        //Get saved preferences:
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        Log.d("cameraFrontBack", "Front/Back Camera preference: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
-        if (sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false)) {
-            //Use Back Camera
-            Log.i("cameraFrontBack", "Using Back Camera");
-            cameraBridgeViewBase.setCameraIndex(0);
-        } else {
-            //Use Frontal Camera
-            Log.i("cameraFrontBack", "Using Frontal Camera");
-            cameraBridgeViewBase.setCameraIndex(1);
-        }
+        String contactEmail = sharedPreferences.getString("contactEmail","");
+        Log.d("contactEmail", "Contact Email: " + contactEmail);
 
-        baseLoaderCallback = new BaseLoaderCallback(this) {
-            @Override
-            public void onManagerConnected(int status) {
-                super.onManagerConnected(status);
-                if (status == BaseLoaderCallback.SUCCESS) {
-                    cameraBridgeViewBase.enableView();
-                    YOLO();
-                } else {
-                    super.onManagerConnected(status);
-                }
+        if(contactEmail.isEmpty()){
+            //TODO give error message to user
+            finish();
+        } else {
+            setContentView(R.layout.camera_activity);
+
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+            //USB Handler initialization
+            mHandler = new MyHandler(this);
+
+            //Camera initialization
+            cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
+            cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
+            cameraBridgeViewBase.setCvCameraViewListener(this);
+
+            Log.d("cameraFrontBack", "Front/Back Camera preference: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
+            if (sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false)) {
+                //Use Back Camera
+                Log.i("cameraFrontBack", "Using Back Camera");
+                cameraBridgeViewBase.setCameraIndex(0);
+            } else {
+                //Use Frontal Camera
+                Log.i("cameraFrontBack", "Using Frontal Camera");
+                cameraBridgeViewBase.setCameraIndex(1);
             }
-        };
+
+            baseLoaderCallback = new BaseLoaderCallback(this) {
+                @Override
+                public void onManagerConnected(int status) {
+                    super.onManagerConnected(status);
+                    if (status == BaseLoaderCallback.SUCCESS) {
+                        cameraBridgeViewBase.enableView();
+                        YOLO();
+                    } else {
+                        super.onManagerConnected(status);
+                    }
+                }
+            };
+        }
     }
 
     @Override
@@ -350,6 +359,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         startActivity(intent);
     }
 
+    // USB Connection + Control Classes Section //
+
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -372,8 +383,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             }
         }
     };
-
-    // USB Connection + Control Classes Section //
 
     private void startService(ServiceConnection serviceConnection) {
         if (!UsbService.SERVICE_CONNECTED) {

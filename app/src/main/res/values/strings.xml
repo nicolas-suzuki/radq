@@ -14,7 +14,7 @@
     <string name="downloading_WEIGHT_File">Arquivo \'weights\' da identificação visual</string>
     <string name="define_safe_contact_button">Definir contato de segurança</string>
     <string name="settings_title">Settings</string>
-    <string name="safe_contact_title">Add a safe contact that will receive updates from RADQ</string>
+    <string name="contact_description">Add a safe contact that will receive updates from RADQ</string>
     <string name="alarms_title">Alarms</string>
     <string name="alarms_description">Configure ou adicione alarmes</string>
     <string name="set_alarm">New Alarm</string>
@@ -32,4 +32,11 @@
     <string name="app_initials" translatable="false">RADQ</string>
     <string name="notifications_description">Notificações geradas pelo RADQ</string>
     <string name="secondsTxt">" seconds"</string>
+    <string name="settings_description">Add or change your emergency contact and more!</string>
+    <string name="contactName">Name</string>
+    <string name="contactEmail">Email</string>
+    <string name="groupName">Aden Radq</string>
+    <string name="groupEmail">radq@aden.com.br</string>
+    <string name="contact_title">Contact</string>
+    <string name="save_bttn_contact">Save contact</string>
 </resources>

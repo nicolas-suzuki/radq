@@ -26,7 +26,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_description"
+                android:text="@string/contact_description"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -34,50 +34,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
 
-            <TextView
-                android:id="@+id/txtSafeContactTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/contact_description"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <Button
-                android:id="@+id/bttnDefineSafeContact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/buttonshape"
-                android:text="@string/define_safe_contact_button"
-                android:textColor="#FFFFFF" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchCameraFrontBack"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="@string/switch_FrontBackCamera_txt"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/nameTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="@string/contactName" />
+
+                <EditText
+                    android:id="@+id/contactNameEditTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/groupName"
+                    android:inputType="textPersonName"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/emailTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="@string/contactEmail" />
+
+                <EditText
+                    android:id="@+id/contactEmailEditTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/groupEmail"
+                    android:inputType="textEmailSubject"
+                    android:autofillHints="" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -86,12 +90,12 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/bttnSaveSettings"
+            android:id="@+id/bttnSaveContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/buttonshape"
-            android:text="@string/save_bttn_settings"
+            android:text="@string/save_bttn_contact"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
