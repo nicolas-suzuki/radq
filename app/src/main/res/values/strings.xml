@@ -2,8 +2,8 @@
     <string name="app_name">Fall Detector Autonomous Robot</string>
     <string name="app_description">Fall detector autonomous robot</string>
     <string name="downloading_necessary_files">Downloading RAQD necessary files</string>
-    <string name="fall_detected">Fall detected</string>
-    <string name="contactContact">contacted</string>
+    <string name="fall_detected">Fall detected!</string>
+    <string name="contactContact">" contacted"</string>
 
 
     <!-- Log Messages -->
