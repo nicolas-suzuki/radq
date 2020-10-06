@@ -1,5 +1,6 @@
 package com.aden.radq;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         switchCameraFrontBack = findViewById(R.id.switchCameraFrontBack);
         Button bttnSaveSettings = findViewById(R.id.bttnSaveSettings);
+        Button bttnDefineSafeContact = findViewById(R.id.bttnDefineSafeContact);
+
+        bttnDefineSafeContact.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openContactsActivity();
+            }
+        });
 
         bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +42,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         loadData();
         updateData();
+    }
+
+    public void openContactsActivity(){
+        Intent intent = new Intent(this, ContactActivity.class);
+        startActivity(intent);
     }
 
     public void saveData(){

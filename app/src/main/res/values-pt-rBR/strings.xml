@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fall_detected">Queda detectada</string>
+    <string name="fall_detected">Queda detectada!</string>
     <string name="imOkay">Estou bem!</string>
     <string name="imNotOkay">AJUDA!</string>
     <string name="emergency_contact_will_be_contacted">"Contato de emergência será contatado em "</string>
-    <string name="contactContact">Contato Contatado</string>
+    <string name="contactContact">" foi contatado"</string>
     <string name="app_name">Robô Autônomo Detector de Quedas</string>
     <string name="app_description">Robô autônomo detector de quedas</string>
     <string name="downloading_necessary_files">Baixando arquivos necessários do RADQ</string>
@@ -12,17 +12,25 @@
     <string name="downloading_WEIGHT_File">Arquivo \'weights\' da identificação visual</string>
     <string name="define_safe_contact_button">Definir contato de segurança</string>
     <string name="settings_title">Configurações</string>
-    <string name="safe_contact_title">Contato de segurança</string>
-    <string name="back_button_text">Voltar</string>
     <string name="alarms_title">Alarmes</string>
-    <string name="alarms_description">Configure ou adicione alarmes de medicamento</string>
+    <string name="alarms_description">Configure ou adicione alarmes</string>
     <string name="set_alarm">Novo Alarme</string>
     <string name="notifications_title">Notificações</string>
-    <string name="welcome_title">Bem-vindo ao RADQ</string>
+    <string name="welcome_title">Bem-vindo ao RADQ!</string>
     <string name="welcome_description">Seu robô autônomo detector de quedas</string>
     <string name="camera">Câmera</string>
     <string name="app_logo">Uma senhora com uma muleta sendo acompanhada pelo RADQ, Robô Autônomo Detector de Quedas</string>
     <string name="save_bttn_settings">Salvar</string>
     <string name="switch_FrontBackCamera_txt">Ativar câmera traseira?</string>
     <string name="emergency_title">Emergency</string>
+    <string name="notifications_description">Notificações geradas pelo RADQ</string>
+    <string name="secondsTxt">" segundos"</string>
+    <string name="settings_description">Adicione ou troque seu contato de segurança e mais!</string>
+    <string name="contactEmail">Email</string>
+    <string name="contactName">Nome</string>
+    <string name="groupName">Aden Radq</string>
+    <string name="groupEmail">radq@aden.com.br</string>
+    <string name="contact_description">Adicione um contato para receber notificações do RADQ</string>
+    <string name="contact_title">Contato</string>
+    <string name="save_bttn_contact">Salvar contato</string>
 </resources>
