@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,18 +67,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     private UsbService usbService;
     private MyHandler mHandler;
 
-    private final ServiceConnection usbConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            usbService = ((UsbService.UsbBinder) iBinder).getService();
-            usbService.setHandler(mHandler);
-        }
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            usbService = null;
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +92,36 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             Log.i("cameraFrontBack", "Using Frontal Camera");
             cameraBridgeViewBase.setCameraIndex(1);
         }
+            setContentView(R.layout.camera_activity);
+
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+            //USB Handler initialization
+            mHandler = new MyHandler(this);
+
+//            if (!editText.getText().toString().equals("")) {
+//                String data = editText.getText().toString();
+//                if (usbService != null) { // if UsbService was correctly binded, Send data
+//                    usbService.write(data.getBytes());
+//                }
+//            }
+
+
+            //Camera initialization
+            cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
+            cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
+            cameraBridgeViewBase.setCvCameraViewListener(this);
+
+            Log.d("cameraFrontBack", "Front/Back Camera preference: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
+            if (sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false)) {
+                //Use Back Camera
+                Log.i("cameraFrontBack", "Using Back Camera");
+                cameraBridgeViewBase.setCameraIndex(0);
+            } else {
+                //Use Frontal Camera
+                Log.i("cameraFrontBack", "Using Frontal Camera");
+                cameraBridgeViewBase.setCameraIndex(1);
+            }
 
         baseLoaderCallback = new BaseLoaderCallback(this) {
             @Override
@@ -127,6 +147,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
         //TODO
+        setFilters();
         startService(usbConnection); // Start UsbService(if it was not started before) and Bind it
     }
 
@@ -138,7 +159,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             cameraBridgeViewBase.disableView();
         }
         //TODO
-        //unregisterReceiver(mUsbReceiver);
+        unregisterReceiver(mUsbReceiver);
         unbindService(usbConnection);
     }
 
@@ -348,6 +369,20 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         startActivity(intent);
     }
 
+    // USB Connection + Control Classes Section //
+
+    private final ServiceConnection usbConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            usbService = ((UsbService.UsbBinder) iBinder).getService();
+            usbService.setHandler(mHandler);
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            usbService = null;
+        }
+    };
+
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -405,5 +440,15 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                     break;
             }
         }
+    }
+
+    private void setFilters() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
+        filter.addAction(UsbService.ACTION_NO_USB);
+        filter.addAction(UsbService.ACTION_USB_DISCONNECTED);
+        filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
+        registerReceiver(mUsbReceiver, filter);
     }
 }
