@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 
 public class ContactActivity extends AppCompatActivity {
@@ -29,9 +31,13 @@ public class ContactActivity extends AppCompatActivity {
         contactEmail = findViewById(R.id.contactEmailEditTxt);
         Button bttnSaveSettings = findViewById(R.id.bttnSaveContact);
 
+        Snackbar mySnackbar = Snackbar.make(findViewById(R.id.contactView), R.string.contact_saved, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+
         bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mySnackbar.show();
                 saveData();
             }
         });

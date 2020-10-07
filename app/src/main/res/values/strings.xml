@@ -4,14 +4,12 @@
     <string name="downloading_necessary_files">Downloading RAQD necessary files</string>
     <string name="fall_detected">Fall detected!</string>
     <string name="contactContact">" contacted"</string>
-
+    <string name="contact_saved">Contact saved!</string>
 
     <!-- Log Messages -->
 
 
     <!-- missing translations to english -->
-    <string name="downloading_CFG_File">Arquivo \'cfg\' da identificação visual</string>
-    <string name="downloading_WEIGHT_File">Arquivo \'weights\' da identificação visual</string>
     <string name="define_safe_contact_button">Definir contato de segurança</string>
     <string name="settings_title">Settings</string>
     <string name="contact_description">Add a safe contact that will receive updates from RADQ</string>
@@ -39,4 +37,5 @@
     <string name="groupEmail">radq@aden.com.br</string>
     <string name="contact_title">Contact</string>
     <string name="save_bttn_contact">Save contact</string>
+    <string name="settings_saved">Settings saved!</string>
 </resources>

@@ -8,8 +8,6 @@
     <string name="app_name">Robô Autônomo Detector de Quedas</string>
     <string name="app_description">Robô autônomo detector de quedas</string>
     <string name="downloading_necessary_files">Baixando arquivos necessários do RADQ</string>
-    <string name="downloading_CFG_File">Arquivo \'cfg\' da identificação visual</string>
-    <string name="downloading_WEIGHT_File">Arquivo \'weights\' da identificação visual</string>
     <string name="define_safe_contact_button">Definir contato de segurança</string>
     <string name="settings_title">Configurações</string>
     <string name="alarms_title">Alarmes</string>
@@ -33,4 +31,6 @@
     <string name="contact_description">Adicione um contato para receber notificações do RADQ</string>
     <string name="contact_title">Contato</string>
     <string name="save_bttn_contact">Salvar contato</string>
+    <string name="contact_saved">Contato salvo!</string>
+    <string name="settings_saved">Configurações salvas!</string>
 </resources>

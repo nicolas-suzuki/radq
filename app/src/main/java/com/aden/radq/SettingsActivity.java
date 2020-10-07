@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -25,6 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
         switchCameraFrontBack = findViewById(R.id.switchCameraFrontBack);
         Button bttnSaveSettings = findViewById(R.id.bttnSaveSettings);
         Button bttnDefineSafeContact = findViewById(R.id.bttnDefineSafeContact);
+        Snackbar mySnackbar = Snackbar.make(findViewById(R.id.settingsView), R.string.settings_saved, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
         bttnDefineSafeContact.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -36,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mySnackbar.show();
                 saveData();
             }
         });
