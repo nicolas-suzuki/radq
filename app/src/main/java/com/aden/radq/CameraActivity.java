@@ -82,8 +82,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         Log.d("contactEmail", "Contact Email: " + contactEmail);
 
         if(contactEmail.isEmpty()){
-            //TODO give error message to
-
             finish();
         } else {
             setContentView(R.layout.camera_activity);
@@ -354,8 +352,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         Intent intent = new Intent(this, EmergencyActivity.class);
         startActivity(intent);
     }
-
-
 
     // USB Connection + Control Classes Section //
 

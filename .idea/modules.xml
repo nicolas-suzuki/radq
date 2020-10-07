@@ -6,11 +6,16 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/Robô Autônomo Detector de Quedas-libraries.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/Robô Autônomo Detector de Quedas-libraries.iml" group="Robô Autônomo Detector de Quedas/libraries" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/opencv/Robô Autônomo Detector de Quedas.libraries-opencv.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/opencv/Robô Autônomo Detector de Quedas.libraries-opencv.iml" group="Robô Autônomo Detector de Quedas/libraries/opencv" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Robô_Autônomo_Detector_de_Quedas.iml" filepath="$PROJECT_DIR$/.idea/modules/Robô_Autônomo_Detector_de_Quedas.iml" group="Robô_Autônomo_Detector_de_Quedas" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TCC-radq-Robô_Autônomo_Detector_de_Quedas.iml" filepath="$PROJECT_DIR$/.idea/modules/TCC-radq-Robô_Autônomo_Detector_de_Quedas.iml" group="Robô_Autônomo_Detector_de_Quedas" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Robô Autônomo Detector de Quedas/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/usbserial/com.felhr.usbserial-usbserial.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/usbserial/com.felhr.usbserial-usbserial.iml" group="Robô Autônomo Detector de Quedas/libraries/usbserial" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/libraries.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/libraries.iml" group="Robô Autônomo Detector de Quedas/libraries" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/opencv/libraries-opencv.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/opencv/libraries-opencv.iml" group="Robô Autônomo Detector de Quedas/libraries/opencv" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/usbserial/libraries-usbserial.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/usbserial/libraries-usbserial.iml" group="Robô Autônomo Detector de Quedas/libraries/usbserial" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/opencv/opencv.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/opencv/opencv.iml" group="Robô Autônomo Detector de Quedas/libraries/opencv" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/radq-Robô_Autônomo_Detector_de_Quedas.iml" filepath="$PROJECT_DIR$/.idea/modules/radq-Robô_Autônomo_Detector_de_Quedas.iml" group="Robô_Autônomo_Detector_de_Quedas" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/radq-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/radq-app.iml" group="Robô Autônomo Detector de Quedas/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/radq-libraries.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/radq-libraries.iml" group="Robô Autônomo Detector de Quedas/libraries" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/libraries/usbserial/usbserial.iml" filepath="$PROJECT_DIR$/.idea/modules/libraries/usbserial/usbserial.iml" group="Robô Autônomo Detector de Quedas/libraries/usbserial" />
     </modules>
   </component>
