@@ -1,4 +1,4 @@
+include ':opencv'
+include ':usbserial'
 include ':app'
 rootProject.name = "Robô Autônomo Detector de Quedas"
-include ':libraries:opencv'
-include ':libraries:usbserial'
