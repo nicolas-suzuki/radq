@@ -3,7 +3,9 @@ package com.aden.radq;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -13,10 +15,15 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -66,18 +73,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     private UsbService usbService;
     private MyHandler mHandler;
 
-    private final ServiceConnection usbConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            usbService = ((UsbService.UsbBinder) iBinder).getService();
-            usbService.setHandler(mHandler);
-        }
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            usbService = null;
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,11 +82,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         Log.d("contactEmail", "Contact Email: " + contactEmail);
 
         if(contactEmail.isEmpty()){
-            //TODO give error message to user
+            //TODO give error message to
+
             finish();
         } else {
             setContentView(R.layout.camera_activity);
-
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
             //USB Handler initialization
@@ -138,6 +133,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
         //TODO
+        setFilters();
         startService(usbConnection); // Start UsbService(if it was not started before) and Bind it
     }
 
@@ -149,7 +145,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             cameraBridgeViewBase.disableView();
         }
         //TODO
-        //unregisterReceiver(mUsbReceiver);
+        unregisterReceiver(mUsbReceiver);
         unbindService(usbConnection);
     }
 
@@ -244,10 +240,10 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 //                                }
 //                                @Override
 //                                public void onFinish() {
-                                    //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
-                                    //takeScreenshot(frame, intConf);
-                                    initiateAlarm();
-                                    framesToConfirmFall = 0;
+                            //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
+                            //takeScreenshot(frame, intConf);
+                            initiateAlarm();
+                            framesToConfirmFall = 0;
 //                                }
 //                            }.start();
 
@@ -270,8 +266,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     public void onCameraViewStarted(int width, int height) {
         Log.d("onCameraState","onCameraViewStarted()");
         if (startYolo) {
-            String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
-            String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
+            String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
+            String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
             Log.i("tinyLocation2", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
             try{
                 tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
@@ -294,8 +290,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             startYolo = true;
             if (firstTimeYolo) {
                 firstTimeYolo = false;
-                String tinyYoloCfg = getExternalFilesDir(null) + "/dnns/yolov3-tiny.cfg";
-                String tinyYoloWeights = getExternalFilesDir(null) + "/dnns/yolov3-tiny.weights";
+                String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
+                String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
 
                 Log.i("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
                 try{
@@ -359,7 +355,21 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         startActivity(intent);
     }
 
+
+
     // USB Connection + Control Classes Section //
+
+    private final ServiceConnection usbConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            usbService = ((UsbService.UsbBinder) iBinder).getService();
+            usbService.setHandler(mHandler);
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            usbService = null;
+        }
+    };
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override
@@ -383,6 +393,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             }
         }
     };
+
+    // USB Connection + Control Classes Section //
 
     private void startService(ServiceConnection serviceConnection) {
         if (!UsbService.SERVICE_CONNECTED) {
@@ -416,5 +428,15 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                     break;
             }
         }
+    }
+
+    private void setFilters() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
+        filter.addAction(UsbService.ACTION_NO_USB);
+        filter.addAction(UsbService.ACTION_USB_DISCONNECTED);
+        filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
+        registerReceiver(mUsbReceiver, filter);
     }
 }

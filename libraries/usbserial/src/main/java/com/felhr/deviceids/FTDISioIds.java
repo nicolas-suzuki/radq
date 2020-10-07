@@ -3,8 +3,8 @@ package com.felhr.deviceids;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbInterface;
 
-import static com.felhr.deviceids.Helpers.createTable;
 import static com.felhr.deviceids.Helpers.createDevice;
+import static com.felhr.deviceids.Helpers.createTable;
 
 public class FTDISioIds
 {

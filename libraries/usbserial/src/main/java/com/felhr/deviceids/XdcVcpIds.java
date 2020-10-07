@@ -1,7 +1,7 @@
 package com.felhr.deviceids;
 
-import static com.felhr.deviceids.Helpers.createTable;
 import static com.felhr.deviceids.Helpers.createDevice;
+import static com.felhr.deviceids.Helpers.createTable;
 
 public class XdcVcpIds
 {

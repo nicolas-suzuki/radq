@@ -1,7 +1,5 @@
 package com.felhr.usbserial;
 
-import java.util.Arrays;
-
 import android.annotation.SuppressLint;
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
@@ -13,6 +11,8 @@ import android.os.Build;
 import android.util.Log;
 
 import com.felhr.utils.SafeUsbRequest;
+
+import java.util.Arrays;
 
 public class FTDISerialDevice extends UsbSerialDevice
 {

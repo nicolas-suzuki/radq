@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +23,7 @@ public class EmergencyActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     Button imOkay;
     Button imNotOkay;
-    LinearLayout emergencyLayout;
+    ConstraintLayout emergencyLayout;
     LinearLayout layoutButtons;
     TextView emergencyContactWillBeContactedTxt;
     TextView emergencyTitle;
@@ -105,7 +107,8 @@ public class EmergencyActivity extends AppCompatActivity {
     private void contactContacted(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String contactName = sharedPreferences.getString("contactName","");
-        emergencyLayout.removeView(layoutButtons);
+
+        ((ViewGroup) layoutButtons.getParent()).removeView(layoutButtons);
         emergencyContactWillBeContactedTxt.setVisibility(View.INVISIBLE);
         String aux = contactName + " " + getResources().getString(R.string.contactContact);
         emergencyTitle.setText(aux);

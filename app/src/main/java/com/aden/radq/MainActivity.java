@@ -1,29 +1,37 @@
 package com.aden.radq;
 
 import android.Manifest;
-import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Objects;
+
+import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_CODE = 1;
+    String contactEmail;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkPermission();
+        workOnAdditionalFiles();
+
         setContentView(R.layout.main_activity);
         ImageButton bttnCamera = findViewById(R.id.bttnCamera);
         bttnCamera.setOnClickListener(v -> openCameraActivity());
@@ -36,12 +44,18 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton bttnSettings = findViewById(R.id.bttnSettings);
         bttnSettings.setOnClickListener(v -> openSettingsActivity());
-        
     }
 
     public void openCameraActivity(){
-        Intent intent = new Intent(this, CameraActivity.class);
-        startActivity(intent);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        contactEmail = sharedPreferences.getString("contactEmail","");
+        Log.d("contactEmail", "Contact Email: " + contactEmail);
+        if(contactEmail.isEmpty()) {
+            alertDialogBox();
+        } else {
+            Intent intent = new Intent(this, CameraActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void openAlarmsActivity(){
@@ -66,47 +80,77 @@ public class MainActivity extends AppCompatActivity {
         },PERMISSIONS_CODE);
     }
 
-    private void downloadNecessaryFiles() {
-        if (checkDownloadedFiles()) { //check if files already there
-            DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-            assert downloadManager != null;
+    private void workOnAdditionalFiles(){
+        boolean isCfgHere = false;
+        boolean isWeightsHere = false;
+        Log.d("workOnAdditionalFiles", "workOnAdditionalFiles()");
 
-            Uri uri = Uri.parse("https://drive.google.com/uc?export=download&id=1QTWqtQSASSe8AIugP6tb2480Ro7Gt2yN");
-            DownloadManager.Request request = new DownloadManager.Request(uri);
-            request.setTitle(getString(R.string.downloading_necessary_files));
-            request.setDescription(getString(R.string.downloading_WEIGHT_File));
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3-tiny.weights"));
-            downloadManager.enqueue(request);
+        String path = Objects.requireNonNull(getExternalFilesDir(null)).toString() + "/";
 
-            uri = Uri.parse("https://drive.google.com/uc?export=download&id=1Y0CX4-Z4ZrteVkuzj2B8MU6WT65qIrw0");
-            request = new DownloadManager.Request(uri);
-            request.setTitle(getString(R.string.downloading_necessary_files));
-            request.setDescription(getString(R.string.downloading_CFG_File));
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationUri(Uri.parse("file://" + getExternalFilesDir(null) + "/yolov3-tiny.cfg"));
-            downloadManager.enqueue(request);
-        }
-    }
-
-    private boolean checkDownloadedFiles() {
-        String path = Objects.requireNonNull(getExternalFilesDir(null)).toString() + "/dnns";
-        Log.d("Files", "Path: " + path);
         File directory = new File(path);
         File[] files = directory.listFiles();
         assert files != null;
-        Log.d("Files", "Size: " + files.length);
-
-        for (File file : files) {
-            Log.d("Files", "FileName: " + file.getName());
+        for (File file : files){
+            if (file.getName().equals("yolov3-tiny.cfg")){
+                Log.d("workOnAdditionalFiles", "Configuration file here!");
+                isCfgHere = true;
+            } else if (file.getName().equals("yolov3-tiny.weights")){
+                Log.d("workOnAdditionalFiles", "Weights file here!");
+                isWeightsHere = true;
+            }
         }
-        return true;
+
+        if (!isCfgHere){
+            File cfgFile = new File(path + "yolov3-tiny.cfg");
+            try{
+                Log.d("workOnAdditionalFiles", "isCfgHere try()");
+                InputStream inputStream = this.getResources().openRawResource(R.raw.yolov3_tiny_cfg);
+                FileOutputStream fileOutputStream = new FileOutputStream(cfgFile);
+                byte[] buf = new byte[1024];
+                int len;
+                while((len=inputStream.read(buf))>0){
+                    fileOutputStream.write(buf,0,len);
+                }
+                fileOutputStream.close();
+                inputStream.close();
+            } catch (Exception e) {
+                Log.d("workOnAdditionalFiles", "isCfgHere catch(): " + e);
+                e.printStackTrace();
+            }
+        }
+        if (!isWeightsHere){
+            File weightsFile = new File(path + "yolov3-tiny.weights");
+            try{
+                Log.d("workOnAdditionalFiles", "isWeightsHere try()");
+                InputStream inputStream = this.getResources().openRawResource(R.raw.yolov3_tiny_weights);
+                FileOutputStream fileOutputStream = new FileOutputStream(weightsFile);
+                byte[] buf = new byte[1024];
+                int len;
+                while((len=inputStream.read(buf))>0){
+                    fileOutputStream.write(buf,0,len);
+                }
+                fileOutputStream.close();
+                inputStream.close();
+            } catch (Exception e) {
+                Log.d("workOnAdditionalFiles", "isWeightsHere catch(): " + e);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void alertDialogBox(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage("Defina um contato de segurança nas configurações do aplicativo antes de continuar.");
+        dialog.setTitle("Email de contato vazio");
+        dialog.setPositiveButton("OK", null);
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
     }
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()) {
+            switch (Objects.requireNonNull(intent.getAction())) {
                 case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
                     Toast.makeText(context, "USB Ready", Toast.LENGTH_SHORT).show();
                     break;
