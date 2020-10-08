@@ -58,6 +58,10 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     //TODO change framesToConfirmFall name/logic
     int framesToConfirmFall = 0;
 
+    //Robot control by height
+    int countHeightsDetected = 0;
+    List<Integer> listOfHeights = new ArrayList<>();
+
     String personDetectedText;
     String fallDetectedText;
 
@@ -135,7 +139,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         } else {
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
-        //TODO
         setFilters();
         startService(usbConnection); // Start UsbService(if it was not started before) and Bind it
     }
@@ -147,7 +150,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
-        //TODO
         unregisterReceiver(mUsbReceiver);
         unbindService(usbConnection);
     }
@@ -163,7 +165,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        Log.d("onCameraFrame", "new frame");
+        //Log.d("onCameraFrame", "new frame");
         Mat frame = inputFrame.rgba();
         if (startYolo) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
@@ -206,8 +208,35 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         rects.add(new Rect(left, top, width, height));
                         Log.d("onCameraFrame", "height: " + height);
 
-                        //TODO check height, control robot
-                        //If 500, stop
+                        if(usbService != null){
+                            if(countHeightsDetected<3){
+                                Log.d("onCameraFrame","countHeightsDetected<3");
+                                listOfHeights.add(height);
+                                countHeightsDetected++;
+                            } else {
+                                Log.d("onCameraFrame","countHeightsDetected>=3");
+                                countHeightsDetected = 0;
+                                double coefficientOfVariationResult = coefficientOfVariationCalculator(listOfHeights);
+                                listOfHeights.clear();
+                                Log.d("onCameraFrame", "coefficientOfVariationResult: " + coefficientOfVariationResult);
+                                String command;
+                                if(coefficientOfVariationResult < 15.0){
+                                    if(height < 500){
+                                        command = "frente";
+                                        Log.d("robotControl","Frente");
+                                        usbService.write(command.getBytes());
+                                    } else if (height > 600){
+                                        command = "tras";
+                                        Log.d("robotControl","Tras");
+                                        usbService.write(command.getBytes());
+                                    } else {
+                                        command = "parar";
+                                        Log.d("robotControl","Parar");
+                                        usbService.write(command.getBytes());
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -266,10 +295,10 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                     }
                 }
             } else {
-                Log.d("onCameraFrame", "what else? empty/non detected frame?");
+                //Log.d("onCameraFrame", "what else? empty/non detected frame?");
             }
         } //End if (startYolo)
-        Log.d("onCameraFrame", "end frame");
+        //Log.d("onCameraFrame", "end frame");
         return frame;
     }
 
@@ -446,5 +475,32 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
         filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
         registerReceiver(mUsbReceiver, filter);
+    }
+
+    private double coefficientOfVariationCalculator(List<Integer> heights){
+        double sum = 0D;
+        double summation = 0D;
+        double standardDeviation;
+        double average;
+        double coefficientOfVariation;
+
+        for(double height : heights){
+            sum += height;
+        }
+        average = sum / heights.size();
+
+        for(double height : heights){
+            double aux = height - average;
+            summation += aux * aux;
+        }
+        standardDeviation = Math.sqrt(summation/(heights.size()-1));
+
+        //Coefficient of Variation
+        // <15% homogeneous; 15% - 30%; 30%< heterogeneous
+        coefficientOfVariation = (standardDeviation/average) * 100;
+        return coefficientOfVariation;
+
+
+
     }
 }
