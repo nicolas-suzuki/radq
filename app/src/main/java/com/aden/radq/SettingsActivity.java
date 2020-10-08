@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void saveData(){
-        Log.i("settingsData", "saveData()");
+        Log.d("settingsData", "saveData()");
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, switchCameraFrontBack.isChecked());
@@ -64,13 +64,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void loadData(){
-        Log.i("settingsData", "loadData()");
+        Log.d("settingsData", "loadData()");
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         isSwitchBackChecked = sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK,false);
     }
 
     public void updateData(){
-        Log.i("settingsData", "updateData()");
+        Log.d("settingsData", "updateData()");
         switchCameraFrontBack.setChecked(isSwitchBackChecked);
     }
 }

@@ -58,6 +58,9 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     //TODO change framesToConfirmFall name/logic
     int framesToConfirmFall = 0;
 
+    String personDetectedText;
+    String fallDetectedText;
+
     //Camera connection + detection specific variables
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
@@ -70,12 +73,18 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Get saved preferences:
+        //Get saved preferences
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String contactEmail = sharedPreferences.getString("contactEmail","");
-        Log.d("contactEmail", "Contact Email: " + contactEmail);
 
+        //Initiate Strings
+        personDetectedText = getString(R.string.person_detected_text);
+        fallDetectedText = getString(R.string.fall_detected_text);
+
+        Log.d("contactEmail", "Contact Email: " + contactEmail);
         if(contactEmail.isEmpty()){
+            //This is the second counter measure to forbid the start of the cameraActivity without
+            //an emergency contact set up. First is at the MainActivity level.
             finish();
         } else {
             setContentView(R.layout.camera_activity);
@@ -89,17 +98,19 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
             cameraBridgeViewBase.setCvCameraViewListener(this);
 
+            //Check which camera will be used frontal or back. By default, frontal camera.
             Log.d("cameraFrontBack", "Front/Back Camera preference: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
             if (sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false)) {
                 //Use Back Camera
-                Log.i("cameraFrontBack", "Using Back Camera");
+                Log.d("cameraFrontBack", "Using Back Camera");
                 cameraBridgeViewBase.setCameraIndex(0);
             } else {
                 //Use Frontal Camera
-                Log.i("cameraFrontBack", "Using Frontal Camera");
+                Log.d("cameraFrontBack", "Using Frontal Camera");
                 cameraBridgeViewBase.setCameraIndex(1);
             }
 
+            //OpenCV specific
             baseLoaderCallback = new BaseLoaderCallback(this) {
                 @Override
                 public void onManagerConnected(int status) {
@@ -152,6 +163,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+        Log.d("onCameraFrame", "new frame");
         Mat frame = inputFrame.rgba();
         if (startYolo) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
@@ -165,6 +177,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
             tinyYolo.forward(result, outBlobNames);
 
+            //Detection threshold
             float confThreshold = 0.3f;
 
             List<Integer> clsIds = new ArrayList<>();
@@ -191,17 +204,18 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         clsIds.add((int) classIdPoint.x);
                         confs.add(confidence);
                         rects.add(new Rect(left, top, width, height));
-                        Log.d("metrics", "height: " + height);
+                        Log.d("onCameraFrame", "height: " + height);
+
+                        //TODO check height, control robot
                         //If 500, stop
                     }
                 }
             }
-            int ArrayLength = confs.size();
 
             // Adding boxes around detection
-            if (ArrayLength >= 1) { //if ArrayLength == 0, maybe is because nothing was detected. for that, add an else at the end of this statement
+            if (confs.size() >= 1) { //if confs.size() == 0, maybe is because nothing was detected. for that, add an else at the end of this statement
                 // Apply non-maximum suppression procedure.
-                float nmsThresh = 0.2f;
+                float nmsThresh = 0.3f;
                 MatOfFloat confidences = new MatOfFloat(Converters.vector_float_to_Mat(confs));
                 Rect[] boxesArray = rects.toArray(new Rect[0]);
                 MatOfRect boxes = new MatOfRect(boxesArray);
@@ -218,10 +232,10 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                     if (idGuy == 0) {
                         // Fall detected
-                        Imgproc.putText(frame, "Queda Detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
+                        Imgproc.putText(frame, fallDetectedText + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
 
-                        Log.i("detection", "Fall detected! Precision: " + intConf + "%");
+                        Log.d("onCameraFrame", "Fall detected! Precision: " + intConf + "%");
                         framesToConfirmFall++;
                         if (framesToConfirmFall > 10) {
                             //This countdown ensures that the person is really down
@@ -238,19 +252,24 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                             framesToConfirmFall = 0;
 //                                }
 //                            }.start();
-
                         }
+                        return frame;
                     } else if (idGuy == 1) {
                         // Pessoa detectada
-                        Imgproc.putText(frame, "Pessoa detectada" + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
+                        Imgproc.putText(frame, personDetectedText + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
-                        Log.i("detection", "Person detected! Precision: " + intConf + "%");
+                        Log.d("onCameraFrame", "Person detected! Precision: " + intConf + "%");
+                        return frame;
                     } else {
-                        Log.e("detection", "idGuy!=0||1");
+                        Log.d("onCameraFrame", "idGuy!=0||1");
+                        return frame;
                     }
                 }
+            } else {
+                Log.d("onCameraFrame", "what else? empty/non detected frame?");
             }
-        }
+        } //End if (startYolo)
+        Log.d("onCameraFrame", "end frame");
         return frame;
     }
 
@@ -260,11 +279,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         if (startYolo) {
             String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
             String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
-            Log.i("tinyLocation2", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+            Log.d("tinyLocation2", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
             try{
                 tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
             } catch (Exception e){
-                Log.i("tinyLocation1", "Exception: " + e);
+                Log.d("tinyLocation1", "Exception: " + e);
                 Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -285,11 +304,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                 String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
                 String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
 
-                Log.i("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+                Log.d("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
                 try{
                     tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
                 } catch (Exception e){
-                    Log.i("tinyLocation1", "Exception: " + e);
+                    Log.d("tinyLocation1", "Exception: " + e);
                     Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
                     toast.show();
                 }
@@ -300,6 +319,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     }
 
     private void takeScreenshot(Mat frame, int intConf) {
+        cameraBridgeViewBase.disableView();
         Date date = new Date();
         CharSequence now = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
         String filename = now + "_conf:" + intConf + ".jpg";
@@ -383,8 +403,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             }
         }
     };
-
-    // USB Connection + Control Classes Section //
 
     private void startService(ServiceConnection serviceConnection) {
         if (!UsbService.SERVICE_CONNECTED) {

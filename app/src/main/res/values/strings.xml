@@ -2,7 +2,7 @@
     <string name="app_name">Fall Detector Autonomous Robot</string>
     <string name="app_description">Fall detector autonomous robot</string>
     <string name="downloading_necessary_files">Downloading RAQD necessary files</string>
-    <string name="fall_detected">Fall detected!</string>
+    <string name="fall_detected_text">Fall detected!</string>
     <string name="contactContact">" contacted"</string>
     <string name="contact_saved">Contact saved!</string>
 
@@ -38,4 +38,8 @@
     <string name="contact_title">Contact</string>
     <string name="save_bttn_contact">Save contact</string>
     <string name="settings_saved">Settings saved!</string>
+    <string name="person_detected_text">Person detected!</string>
+    <string name="contact_alert_dialog_message">Defina um contato de segurança nas configurações do aplicativo antes de continuar.</string>
+    <string name="contact_alert_dialog_title">Email de contato vazio</string>
+    <string name="positive_button" translatable="false">OK</string>
 </resources>

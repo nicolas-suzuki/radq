@@ -24,7 +24,7 @@
             android:id="@+id/emergencyTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fall_detected"
+            android:text="@string/fall_detected_text"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textIsSelectable="false"
