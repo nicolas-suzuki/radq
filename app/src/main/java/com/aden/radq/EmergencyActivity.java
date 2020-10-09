@@ -76,7 +76,7 @@ public class EmergencyActivity extends AppCompatActivity {
         imOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("emergency", "I'm Okay button pressed");
+                Log.d("emergency", "I'm Okay button pressed");
                 countDownTimer.cancel();
                 finish();
             }
@@ -85,7 +85,7 @@ public class EmergencyActivity extends AppCompatActivity {
         imNotOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("emergency", "Not Okay button pressed");
+                Log.d("emergency", "Not Okay button pressed");
                 countDownTimer.cancel();
                 //TODO
                 sendMessageToContact();

@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         workOnAdditionalFiles();
 
         setContentView(R.layout.main_activity);
+
         ImageButton bttnCamera = findViewById(R.id.bttnCamera);
         bttnCamera.setOnClickListener(v -> openCameraActivity());
 
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openCameraActivity(){
+        //Get the saved preferences and check if there's a contact registered
+        //if not, it won't start the CameraActivity and will show up a message
         sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         contactEmail = sharedPreferences.getString("contactEmail","");
         Log.d("contactEmail", "Contact Email: " + contactEmail);
@@ -80,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
         },PERMISSIONS_CODE);
     }
 
+    //This method guarantees that the files in the /res/raw folder an extracted to the ExternalStorage
+    //ready for the app to consume
+    //TODO improve code
     private void workOnAdditionalFiles(){
         boolean isCfgHere = false;
         boolean isWeightsHere = false;
@@ -138,15 +144,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Dialog box to warn the user about not defining a contact in the application settings
     private void alertDialogBox(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setMessage("Defina um contato de segurança nas configurações do aplicativo antes de continuar.");
-        dialog.setTitle("Email de contato vazio");
-        dialog.setPositiveButton("OK", null);
+        dialog.setMessage(getString(R.string.contact_alert_dialog_message));
+        dialog.setTitle(getString(R.string.contact_alert_dialog_title));
+        dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }
 
+    // USB Connection + Control Classes Section //
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
