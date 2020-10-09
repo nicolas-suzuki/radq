@@ -208,7 +208,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         rects.add(new Rect(left, top, width, height));
                         Log.d("onCameraFrame", "height: " + height);
 
-                        if(usbService != null){
+                        if((usbService != null) && (height > width)){
                             if(countHeightsDetected<3){
                                 Log.d("onCameraFrame","countHeightsDetected<3");
                                 listOfHeights.add(height);
