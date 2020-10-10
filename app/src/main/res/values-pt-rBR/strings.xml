@@ -7,7 +7,6 @@
     <string name="contactContact">" foi contatado"</string>
     <string name="app_name">Robô Autônomo Detector de Quedas</string>
     <string name="app_description">Robô autônomo detector de quedas</string>
-    <string name="downloading_necessary_files">Baixando arquivos necessários do RADQ</string>
     <string name="define_safe_contact_button">Definir contato de segurança</string>
     <string name="settings_title">Configurações</string>
     <string name="alarms_title">Alarmes</string>
@@ -24,7 +23,7 @@
     <string name="notifications_description">Notificações geradas pelo RADQ</string>
     <string name="secondsTxt">" segundos"</string>
     <string name="settings_description">Adicione ou troque seu contato de segurança e mais!</string>
-    <string name="contactEmail">Email</string>
+    <string name="contact_email">Email</string>
     <string name="contactName">Nome</string>
     <string name="groupName">Aden Radq</string>
     <string name="groupEmail">radq@aden.com.br</string>
@@ -36,4 +35,6 @@
     <string name="person_detected_text">Pessoa detectada!</string>
     <string name="contact_alert_dialog_message">Defina um contato de segurança nas configurações do aplicativo antes de continuar.</string>
     <string name="contact_alert_dialog_title">Email de contato vazio</string>
+    <string name="contact_password">Senha</string>
+    <string name="invalid_email">Email inválido</string>
 </resources>

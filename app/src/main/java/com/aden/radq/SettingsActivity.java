@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsActivity extends AppCompatActivity {
+
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SWITCH_CAMERA_FRONT_BACK ="switchCameraFrontBack";
 

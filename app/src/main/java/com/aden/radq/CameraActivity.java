@@ -9,8 +9,10 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -57,6 +59,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     boolean firstTimeYolo = true;
     //TODO change framesToConfirmFall name/logic
     int framesToConfirmFall = 0;
+    boolean isCountDownTimerActive = false;
 
     //Robot control by height
     int countHeightsDetected = 0;
@@ -266,22 +269,27 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                         Log.d("onCameraFrame", "Fall detected! Precision: " + intConf + "%");
                         framesToConfirmFall++;
-                        if (framesToConfirmFall > 10) {
-                            //This countdown ensures that the person is really down
-//                            CountDownTimer countDownTimer = new CountDownTimer(5000,1000) {
+
+                        //This countdown ensures that the person is really down
+//                        if(!isCountDownTimerActive) {
+//                            new CountDownTimer(5000, 1000) {
 //                                @Override
 //                                public void onTick(long millisUntilFinished) {
-//
+//                                    isCountDownTimerActive = true;
 //                                }
+//
 //                                @Override
 //                                public void onFinish() {
-                            //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
-                            //takeScreenshot(frame, intConf);
-                            initiateAlarm();
-                            framesToConfirmFall = 0;
+//                                    if (framesToConfirmFall >= 5) {
+//                                        //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
+//                                        //takeScreenshot(frame, intConf);
+//                                        initiateAlarm();
+//                                    }
+//                                    isCountDownTimerActive = false;
+//                                    framesToConfirmFall = 0;
 //                                }
 //                            }.start();
-                        }
+//                        }
                         return frame;
                     } else if (idGuy == 1) {
                         // Pessoa detectada

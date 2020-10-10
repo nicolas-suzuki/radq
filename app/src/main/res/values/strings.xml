@@ -1,13 +1,10 @@
 <resources>
     <string name="app_name">Fall Detector Autonomous Robot</string>
     <string name="app_description">Fall detector autonomous robot</string>
-    <string name="downloading_necessary_files">Downloading RAQD necessary files</string>
     <string name="fall_detected_text">Fall detected!</string>
     <string name="contactContact">" contacted"</string>
     <string name="contact_saved">Contact saved!</string>
-
-    <!-- Log Messages -->
-
+    <string name="contact_password">Password</string>
 
     <!-- missing translations to english -->
     <string name="define_safe_contact_button">Definir contato de segurança</string>
@@ -32,7 +29,7 @@
     <string name="secondsTxt">" seconds"</string>
     <string name="settings_description">Add or change your emergency contact and more!</string>
     <string name="contactName">Name</string>
-    <string name="contactEmail">Email</string>
+    <string name="contact_email">Email</string>
     <string name="groupName">Aden Radq</string>
     <string name="groupEmail">radq@aden.com.br</string>
     <string name="contact_title">Contact</string>
@@ -42,4 +39,9 @@
     <string name="contact_alert_dialog_message">Defina um contato de segurança nas configurações do aplicativo antes de continuar.</string>
     <string name="contact_alert_dialog_title">Email de contato vazio</string>
     <string name="positive_button" translatable="false">OK</string>
+    <string name="wrong_password">Wrong password</string>
+    <string name="invalid_password">Weak password. Please use a stronger and longer password.</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="email_already_in_use">Email already in use</string>
+    <string name="unkown_error_contact_register">Unkown error registering the contact</string>
 </resources>

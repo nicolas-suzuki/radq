@@ -22,6 +22,7 @@ import java.util.Objects;
 import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     private static final int PERMISSIONS_CODE = 1;
     String contactEmail;
     SharedPreferences sharedPreferences;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private void workOnAdditionalFiles(){
         boolean isCfgHere = false;
         boolean isWeightsHere = false;
-        Log.d("workOnAdditionalFiles", "workOnAdditionalFiles()");
+        Log.d(TAG, "workOnAdditionalFiles()");
 
         String path = Objects.requireNonNull(getExternalFilesDir(null)).toString() + "/";
 
@@ -98,10 +99,10 @@ public class MainActivity extends AppCompatActivity {
         assert files != null;
         for (File file : files){
             if (file.getName().equals("yolov3-tiny.cfg")){
-                Log.d("workOnAdditionalFiles", "Configuration file here!");
+                Log.d(TAG, "Configuration file here!");
                 isCfgHere = true;
             } else if (file.getName().equals("yolov3-tiny.weights")){
-                Log.d("workOnAdditionalFiles", "Weights file here!");
+                Log.d(TAG, "Weights file here!");
                 isWeightsHere = true;
             }
         }
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         if (!isCfgHere){
             File cfgFile = new File(path + "yolov3-tiny.cfg");
             try{
-                Log.d("workOnAdditionalFiles", "isCfgHere try()");
+                Log.d(TAG, "isCfgHere try()");
                 InputStream inputStream = this.getResources().openRawResource(R.raw.yolov3_tiny_cfg);
                 FileOutputStream fileOutputStream = new FileOutputStream(cfgFile);
                 byte[] buf = new byte[1024];
@@ -120,14 +121,14 @@ public class MainActivity extends AppCompatActivity {
                 fileOutputStream.close();
                 inputStream.close();
             } catch (Exception e) {
-                Log.d("workOnAdditionalFiles", "isCfgHere catch(): " + e);
+                Log.d(TAG, "isCfgHere catch(): " + e);
                 e.printStackTrace();
             }
         }
         if (!isWeightsHere){
             File weightsFile = new File(path + "yolov3-tiny.weights");
             try{
-                Log.d("workOnAdditionalFiles", "isWeightsHere try()");
+                Log.d(TAG, "isWeightsHere try()");
                 InputStream inputStream = this.getResources().openRawResource(R.raw.yolov3_tiny_weights);
                 FileOutputStream fileOutputStream = new FileOutputStream(weightsFile);
                 byte[] buf = new byte[1024];
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 fileOutputStream.close();
                 inputStream.close();
             } catch (Exception e) {
-                Log.d("workOnAdditionalFiles", "isWeightsHere catch(): " + e);
+                Log.d(TAG, "isWeightsHere catch(): " + e);
                 e.printStackTrace();
             }
         }

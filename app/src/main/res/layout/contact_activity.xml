@@ -41,7 +41,7 @@
 
                 <TextView
                     android:id="@+id/nameTxt"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
@@ -49,9 +49,9 @@
 
                 <EditText
                     android:id="@+id/contactNameEditTxt"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/groupName"
@@ -66,21 +66,44 @@
 
                 <TextView
                     android:id="@+id/emailTxt"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/contactEmail" />
+                    android:text="@string/contact_email" />
 
                 <EditText
                     android:id="@+id/contactEmailEditTxt"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
+                    android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/groupEmail"
-                    android:inputType="textEmailSubject"
-                    android:autofillHints="" />
+                    android:inputType="textEmailSubject" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/contactPasswordTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="@string/contact_password" />
+
+                <EditText
+                    android:id="@+id/contactPasswordEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="text" />
             </LinearLayout>
 
         </LinearLayout>
