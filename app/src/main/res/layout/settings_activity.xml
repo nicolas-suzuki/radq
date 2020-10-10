@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/settingsView"
+    android:id="@+id/clSettings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -24,7 +24,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_description"
@@ -36,7 +35,7 @@
                 android:layout_height="20dp" />
 
             <TextView
-                android:id="@+id/txtSafeContactTitle"
+                android:id="@+id/tvSafeContactTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contact_description"
@@ -48,7 +47,7 @@
                 android:layout_height="10dp" />
 
             <Button
-                android:id="@+id/btnLoginLogout"
+                android:id="@+id/btLoginLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -60,8 +59,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
+            <Button
+                android:id="@+id/btAddContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/buttonshape"
+                android:text="Adicionar contato"
+                android:textColor="#FFFFFF" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
             <View
-                android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
@@ -71,7 +82,7 @@
                 android:layout_height="10dp" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchCameraFrontBack"
+                android:id="@+id/swCameraFrontBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -87,7 +98,7 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/bttnSaveSettings"
+            android:id="@+id/btSaveSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

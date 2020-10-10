@@ -46,4 +46,7 @@
     <string name="login_button" translatable="false">Login</string>
     <string name="default_alert_dialog_title">Alert!</string>
     <string name="create_account_button">Create account</string>
+    <string name="login_description">Sign in to connect to your safe contact. If you don\'t have an account, create one using the bottom button.</string>
+    <string name="login_title">Login</string>
+    <string name="create_account_title">Create account</string>
 </resources>

@@ -17,9 +17,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SWITCH_CAMERA_FRONT_BACK ="switchCameraFrontBack";
+    public static final String IDENTIFIER_KEY = "identifierLoggedUser";
 
-    private SwitchCompat switchCameraFrontBack;
+    private SwitchCompat swCameraFrontBack;
     private boolean isSwitchBackChecked;
+
+    Button btSaveSettings;
+    Button btLoginLogout;
+    Button buttonAddContact;
 
     Snackbar mySnackbar;
 
@@ -28,33 +33,45 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
-        switchCameraFrontBack = findViewById(R.id.switchCameraFrontBack);
-        Button bttnSaveSettings = findViewById(R.id.bttnSaveSettings);
-        Button buttonContactLogin = findViewById(R.id.btnLoginLogout);
+        swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
+        btSaveSettings = findViewById(R.id.btSaveSettings);
+        btLoginLogout = findViewById(R.id.btLoginLogout);
+        buttonAddContact = findViewById(R.id.btAddContact);
 
-        mySnackbar = Snackbar.make(findViewById(R.id.settingsView), R.string.settings_saved, Snackbar.LENGTH_SHORT)
+        mySnackbar = Snackbar.make(findViewById(R.id.clSettings), R.string.settings_saved, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
-        bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
+        buttonAddContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addContactActivity();
+            }
+        });
+
+        btSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData();
             }
         });
 
-        buttonContactLogin.setOnClickListener(new View.OnClickListener() {
+        btLoginLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openContactLoginActivity();
+                openLoginActivity();
             }
-
         });
 
         loadData();
         updateData();
     }
 
-    private void openContactLoginActivity() {
+    private void addContactActivity() {
+        Intent intent = new Intent(this, AddContactActivity.class);
+        startActivity(intent);
+    }
+
+    private void openLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
@@ -64,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
         try{
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, switchCameraFrontBack.isChecked());
+            editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, swCameraFrontBack.isChecked());
             editor.apply();
             mySnackbar.show();
         } catch (Exception e){
@@ -80,6 +97,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void updateData(){
         Log.d(TAG, "updateData()");
-        switchCameraFrontBack.setChecked(isSwitchBackChecked);
+        swCameraFrontBack.setChecked(isSwitchBackChecked);
     }
 }

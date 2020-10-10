@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 
 public class EmergencyActivity extends AppCompatActivity {
+    private static final String TAG = "EmergencyActivity";
+
     CountDownTimer countDownTimer;
     Button imOkay;
     Button imNotOkay;

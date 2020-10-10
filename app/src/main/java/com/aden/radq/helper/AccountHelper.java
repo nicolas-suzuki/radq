@@ -3,19 +3,19 @@ package com.aden.radq.helper;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
-public class Contact {
+public class AccountHelper {
     private String id;
     private String name;
     private String email;
     private String password;
 
-    public Contact(){
+    public AccountHelper(){
 
     }
 
     public void saveContact(){
         DatabaseReference databaseReference = FirebaseHelper.getFirebase();
-        databaseReference.child("contacts").child(getId()).setValue(this);
+        databaseReference.child("accounts").child(getId()).setValue(this);
     }
 
     @Exclude

@@ -9,7 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.helper.Contact;
+import com.aden.radq.helper.AccountHelper;
+import com.aden.radq.helper.Base64CustomHelper;
 import com.aden.radq.helper.FirebaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 
@@ -28,14 +28,16 @@ public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = "ContactActivity";
 
     public static final String CONTACT_NAME = "contactName";
-    EditText contactName;
+    private EditText etContactName;
 
-    EditText contactPassword;
+    private EditText etContactPassword;
 
     public static final String CONTACT_EMAIL = "contactEmail";
-    EditText contactEmail;
+    private EditText etContactEmail;
 
-    private Contact contact;
+    private AccountHelper accountHelper;
+
+    private Button btSaveContact;
 
     private Snackbar mySnackbar;
 
@@ -44,34 +46,34 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
 
-        contactName = findViewById(R.id.contactNameEditTxt);
-        contactEmail = findViewById(R.id.contactEmailEditTxt);
-        contactPassword = findViewById(R.id.contactPasswordEdit);
-        Button bttnSaveSettings = findViewById(R.id.bttnSaveContact);
+        etContactName = findViewById(R.id.etContactName);
+        etContactEmail = findViewById(R.id.etContactEmail);
+        etContactPassword = findViewById(R.id.etContactPassword);
+        btSaveContact = findViewById(R.id.btSaveContact);
 
         //Firebase
-        DatabaseReference databaseReference = FirebaseHelper.getFirebase();
+        FirebaseHelper.getFirebase();
 
-        mySnackbar = Snackbar.make(findViewById(R.id.createContactView), R.string.contact_created, Snackbar.LENGTH_SHORT)
+        mySnackbar = Snackbar.make(findViewById(R.id.clCreateContact), R.string.contact_created, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
-        bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
+        btSaveContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                contact = new Contact();
-                if(contactName.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.createContactView), "Nome vazio", Snackbar.LENGTH_LONG)
+                accountHelper = new AccountHelper();
+                if(etContactName.getText().toString().isEmpty()){
+                    Snackbar.make(findViewById(R.id.clCreateContact), "Nome vazio", Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-                } else if (contactEmail.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.createContactView), "Email vazio", Snackbar.LENGTH_LONG)
+                } else if (etContactEmail.getText().toString().isEmpty()){
+                    Snackbar.make(findViewById(R.id.clCreateContact), "Email vazio", Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-                } else if (contactPassword.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.createContactView), "Senha Vazia", Snackbar.LENGTH_LONG)
+                } else if (etContactPassword.getText().toString().isEmpty()){
+                    Snackbar.make(findViewById(R.id.clCreateContact), "Senha Vazia", Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                 } else {
-                    contact.setName(contactName.getText().toString());
-                    contact.setEmail(contactEmail.getText().toString());
-                    contact.setPassword(contactPassword.getText().toString());
+                    accountHelper.setName(etContactName.getText().toString());
+                    accountHelper.setEmail(etContactEmail.getText().toString());
+                    accountHelper.setPassword(etContactPassword.getText().toString());
                     setContact();
 //              saveData();
                 }
@@ -115,16 +117,18 @@ public class CreateAccountActivity extends AppCompatActivity {
         //contact's information can be null
         FirebaseAuth firebaseAuth = FirebaseHelper.getFirebaseAuth();
         firebaseAuth.createUserWithEmailAndPassword(
-                contact.getEmail(),
-                contact.getPassword()
+                accountHelper.getEmail(),
+                accountHelper.getPassword()
         ).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     mySnackbar.show();
                     FirebaseUser firebaseUser = task.getResult().getUser();
-                    contact.setId(firebaseUser.getUid());
-                    contact.saveContact();
+
+                    String accountIdentifier = Base64CustomHelper.encodeBase64(accountHelper.getEmail());
+                    accountHelper.setId(accountIdentifier);
+                    accountHelper.saveContact();
                 } else {
                     String exceptionError = "";
 

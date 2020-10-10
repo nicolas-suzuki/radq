@@ -43,4 +43,7 @@
     <string name="email_already_in_use">Email já em uso</string>
     <string name="unkown_error_contact_register">Erro desconhecido ao se cadastrar</string>
     <string name="create_account_button">Criar conta</string>
+    <string name="login_description">Entre com sua conta para conectar ao seu contato de emergência. Se não tiver uma conta, cadastre-se no botão abaixo.</string>
+    <string name="login_title">Login</string>
+    <string name="create_account_title">Criar conta</string>
 </resources>

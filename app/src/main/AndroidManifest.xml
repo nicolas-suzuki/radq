@@ -79,7 +79,7 @@
             android:name=".LoginActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName=".SettingsActivity"
-            android:label="@string/contact_title">
+            android:label="@string/login_title">
         </activity>
 
         <!-- Create Account Activity -->
@@ -87,7 +87,15 @@
             android:name=".CreateAccountActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName=".LoginActivity"
-            android:label="@string/contact_title">
+            android:label="@string/create_account_title">
+        </activity>
+
+        <!-- Add Contact Activity -->
+        <activity
+            android:name=".AddContactActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".SettingsActivity"
+            android:label="@string/create_account_title">
         </activity>
 
         <!-- Loading Activity -->

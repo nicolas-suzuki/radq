@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UsbService extends Service {
+public class UsbHelper extends Service {
 
     public static final String TAG = "UsbService";
     
@@ -135,7 +135,7 @@ public class UsbService extends Service {
     public void onCreate() {
         this.context = this;
         serialPortConnected = false;
-        UsbService.SERVICE_CONNECTED = true;
+        UsbHelper.SERVICE_CONNECTED = true;
         setFilter();
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         findSerialPortDevice();
@@ -160,7 +160,7 @@ public class UsbService extends Service {
         super.onDestroy();
         serialPort.close();
         unregisterReceiver(usbReceiver);
-        UsbService.SERVICE_CONNECTED = false;
+        UsbHelper.SERVICE_CONNECTED = false;
     }
 
     /*
@@ -236,8 +236,8 @@ public class UsbService extends Service {
     }
 
     public class UsbBinder extends Binder {
-        public UsbService getService() {
-            return UsbService.this;
+        public UsbHelper getService() {
+            return UsbHelper.this;
         }
     }
 
