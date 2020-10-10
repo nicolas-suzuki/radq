@@ -47,14 +47,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <Button
-                android:id="@+id/bttnDefineSafeContact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/buttonshape"
-                android:text="@string/define_safe_contact_button"
-                android:textColor="#FFFFFF" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnLoginLogout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:background="@drawable/buttonshape"
+                    android:text="@string/login_button"
+                    android:textColor="#FFFFFF" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/bttnDefineSafeContact"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:background="@drawable/buttonshape"
+                    android:text="@string/create_safe_contact_account_button"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"

@@ -3,11 +3,11 @@
     <string name="app_description">Fall detector autonomous robot</string>
     <string name="fall_detected_text">Fall detected!</string>
     <string name="contactContact">" contacted"</string>
-    <string name="contact_saved">Contact saved!</string>
+    <string name="contact_created">Contact saved!</string>
     <string name="contact_password">Password</string>
 
     <!-- missing translations to english -->
-    <string name="define_safe_contact_button">Definir contato de segurança</string>
+    <string name="create_safe_contact_account_button">Create safe contact account</string>
     <string name="settings_title">Settings</string>
     <string name="contact_description">Add a safe contact that will receive updates from RADQ</string>
     <string name="alarms_title">Alarms</string>
@@ -44,4 +44,7 @@
     <string name="invalid_email">Invalid email</string>
     <string name="email_already_in_use">Email already in use</string>
     <string name="unkown_error_contact_register">Unkown error registering the contact</string>
+    <string name="logout_button" translatable="false">Logout</string>
+    <string name="login_button" translatable="false">Login</string>
+    <string name="default_alert_dialog_title">Alert!</string>
 </resources>

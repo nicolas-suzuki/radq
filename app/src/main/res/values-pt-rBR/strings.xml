@@ -7,7 +7,7 @@
     <string name="contactContact">" foi contatado"</string>
     <string name="app_name">Robô Autônomo Detector de Quedas</string>
     <string name="app_description">Robô autônomo detector de quedas</string>
-    <string name="define_safe_contact_button">Definir contato de segurança</string>
+    <string name="create_safe_contact_account_button">Criar conta de contato de segurança</string>
     <string name="settings_title">Configurações</string>
     <string name="alarms_title">Alarmes</string>
     <string name="alarms_description">Configure ou adicione alarmes</string>
@@ -30,11 +30,12 @@
     <string name="contact_description">Adicione um contato para receber notificações do RADQ</string>
     <string name="contact_title">Contato</string>
     <string name="save_bttn_contact">Salvar contato</string>
-    <string name="contact_saved">Contato salvo!</string>
+    <string name="contact_created">Contato salvo!</string>
     <string name="settings_saved">Configurações salvas!</string>
     <string name="person_detected_text">Pessoa detectada!</string>
     <string name="contact_alert_dialog_message">Defina um contato de segurança nas configurações do aplicativo antes de continuar.</string>
     <string name="contact_alert_dialog_title">Email de contato vazio</string>
     <string name="contact_password">Senha</string>
     <string name="invalid_email">Email inválido</string>
+    <string name="default_alert_dialog_title">Alerta!</string>
 </resources>

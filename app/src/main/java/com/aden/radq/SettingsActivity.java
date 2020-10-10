@@ -13,12 +13,15 @@ import androidx.appcompat.widget.SwitchCompat;
 import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsActivity extends AppCompatActivity {
+    private static final String TAG = "SettingsActivity";
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SWITCH_CAMERA_FRONT_BACK ="switchCameraFrontBack";
 
     private SwitchCompat switchCameraFrontBack;
     private boolean isSwitchBackChecked;
+
+    Snackbar mySnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         switchCameraFrontBack = findViewById(R.id.switchCameraFrontBack);
         Button bttnSaveSettings = findViewById(R.id.bttnSaveSettings);
         Button bttnDefineSafeContact = findViewById(R.id.bttnDefineSafeContact);
-        Snackbar mySnackbar = Snackbar.make(findViewById(R.id.settingsView), R.string.settings_saved, Snackbar.LENGTH_SHORT)
+        mySnackbar = Snackbar.make(findViewById(R.id.settingsView), R.string.settings_saved, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
         bttnDefineSafeContact.setOnClickListener(new View.OnClickListener(){
@@ -41,11 +44,9 @@ public class SettingsActivity extends AppCompatActivity {
         bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mySnackbar.show();
                 saveData();
             }
         });
-
         loadData();
         updateData();
     }
@@ -56,21 +57,26 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void saveData(){
-        Log.d("settingsData", "saveData()");
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, switchCameraFrontBack.isChecked());
-        editor.apply();
+        Log.d(TAG, "saveData()");
+        try{
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, switchCameraFrontBack.isChecked());
+            editor.apply();
+            mySnackbar.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void loadData(){
-        Log.d("settingsData", "loadData()");
+        Log.d(TAG, "loadData()");
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         isSwitchBackChecked = sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK,false);
     }
 
     public void updateData(){
-        Log.d("settingsData", "updateData()");
+        Log.d(TAG, "updateData()");
         switchCameraFrontBack.setChecked(isSwitchBackChecked);
     }
 }
