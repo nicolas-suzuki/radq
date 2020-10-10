@@ -9,10 +9,8 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -20,6 +18,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.aden.radq.helper.UsbService;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -54,6 +54,8 @@ import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 import static com.aden.radq.SettingsActivity.SWITCH_CAMERA_FRONT_BACK;
 
 public class CameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+    private static final String TAG = "CameraActivity";
+
     //TODO re-analyze the need of the following two variables and their logic
     boolean startYolo = false;
     boolean firstTimeYolo = true;
@@ -82,13 +84,13 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         super.onCreate(savedInstanceState);
         //Get saved preferences
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String contactEmail = sharedPreferences.getString("contactEmail","");
+        String contactEmail = sharedPreferences.getString("contactEmail","aaaaaaa");
 
         //Initiate Strings
         personDetectedText = getString(R.string.person_detected_text);
         fallDetectedText = getString(R.string.fall_detected_text);
 
-        Log.d("contactEmail", "Contact Email: " + contactEmail);
+        Log.d(TAG, "Contact Email: " + contactEmail);
         if(contactEmail.isEmpty()){
             //This is the second counter measure to forbid the start of the cameraActivity without
             //an emergency contact set up. First is at the MainActivity level.
@@ -106,14 +108,14 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             cameraBridgeViewBase.setCvCameraViewListener(this);
 
             //Check which camera will be used frontal or back. By default, frontal camera.
-            Log.d("cameraFrontBack", "Front/Back Camera preference: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
+            Log.d(TAG, "Front/Back Camera preference: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
             if (sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false)) {
                 //Use Back Camera
-                Log.d("cameraFrontBack", "Using Back Camera");
+                Log.d(TAG, "Using Back Camera");
                 cameraBridgeViewBase.setCameraIndex(0);
             } else {
                 //Use Frontal Camera
-                Log.d("cameraFrontBack", "Using Frontal Camera");
+                Log.d(TAG, "Using Frontal Camera");
                 cameraBridgeViewBase.setCameraIndex(1);
             }
 
@@ -136,7 +138,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("onCameraState","onResume()");
+        Log.d(TAG,"onResume()");
         if (!OpenCVLoader.initDebug()) {
             Toast.makeText(getApplicationContext(), "There's a problem, yo!", Toast.LENGTH_SHORT).show();
         } else {
@@ -149,7 +151,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("onCameraState","onPause()");
+        Log.d(TAG,"onPause()");
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
@@ -160,7 +162,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("onCameraState","onDestroy()");
+        Log.d(TAG,"onDestroy()");
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
@@ -168,7 +170,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        //Log.d("onCameraFrame", "new frame");
+        //Log.d(TAG, "new frame");
         Mat frame = inputFrame.rgba();
         if (startYolo) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
@@ -209,32 +211,32 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         clsIds.add((int) classIdPoint.x);
                         confs.add(confidence);
                         rects.add(new Rect(left, top, width, height));
-                        Log.d("onCameraFrame", "height: " + height);
+                        Log.d(TAG, "height: " + height);
 
                         if((usbService != null) && (height > width)){
                             if(countHeightsDetected<3){
-                                Log.d("onCameraFrame","countHeightsDetected<3");
+                                Log.d(TAG,"countHeightsDetected<3");
                                 listOfHeights.add(height);
                                 countHeightsDetected++;
                             } else {
-                                Log.d("onCameraFrame","countHeightsDetected>=3");
+                                Log.d(TAG,"countHeightsDetected>=3");
                                 countHeightsDetected = 0;
                                 double coefficientOfVariationResult = coefficientOfVariationCalculator(listOfHeights);
                                 listOfHeights.clear();
-                                Log.d("onCameraFrame", "coefficientOfVariationResult: " + coefficientOfVariationResult);
+                                Log.d(TAG, "coefficientOfVariationResult: " + coefficientOfVariationResult);
                                 String command;
                                 if(coefficientOfVariationResult < 15.0){
                                     if(height < 500){
                                         command = "frente";
-                                        Log.d("robotControl","Frente");
+                                        Log.d(TAG,"Frente");
                                         usbService.write(command.getBytes());
                                     } else if (height > 600){
                                         command = "tras";
-                                        Log.d("robotControl","Tras");
+                                        Log.d(TAG,"Tras");
                                         usbService.write(command.getBytes());
                                     } else {
                                         command = "parar";
-                                        Log.d("robotControl","Parar");
+                                        Log.d(TAG,"Parar");
                                         usbService.write(command.getBytes());
                                     }
                                 }
@@ -267,7 +269,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         Imgproc.putText(frame, fallDetectedText + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
 
-                        Log.d("onCameraFrame", "Fall detected! Precision: " + intConf + "%");
+                        Log.d(TAG, "Fall detected! Precision: " + intConf + "%");
                         framesToConfirmFall++;
 
                         //This countdown ensures that the person is really down
@@ -295,32 +297,32 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         // Pessoa detectada
                         Imgproc.putText(frame, personDetectedText + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
-                        Log.d("onCameraFrame", "Person detected! Precision: " + intConf + "%");
+                        Log.d(TAG, "Person detected! Precision: " + intConf + "%");
                         return frame;
                     } else {
-                        Log.d("onCameraFrame", "idGuy!=0||1");
+                        Log.d(TAG, "idGuy!=0||1");
                         return frame;
                     }
                 }
             } else {
-                //Log.d("onCameraFrame", "what else? empty/non detected frame?");
+                //Log.d(TAG, "what else? empty/non detected frame?");
             }
         } //End if (startYolo)
-        //Log.d("onCameraFrame", "end frame");
+        //Log.d(TAG, "end frame");
         return frame;
     }
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-        Log.d("onCameraState","onCameraViewStarted()");
+        Log.d(TAG,"onCameraViewStarted()");
         if (startYolo) {
             String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
             String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
-            Log.d("tinyLocation2", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+            Log.d(TAG, "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
             try{
                 tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
             } catch (Exception e){
-                Log.d("tinyLocation1", "Exception: " + e);
+                Log.d(TAG, "Exception: " + e);
                 Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -329,7 +331,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     @Override
     public void onCameraViewStopped() {
-        Log.d("onCameraState","onCameraViewStopped()");
+        Log.d(TAG,"onCameraViewStopped()");
         startYolo = false;
     }
 
@@ -341,11 +343,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                 String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
                 String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
 
-                Log.d("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+                Log.d(TAG, "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
                 try{
                     tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
                 } catch (Exception e){
-                    Log.d("tinyLocation1", "Exception: " + e);
+                    Log.d(TAG, "Exception: " + e);
                     Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
                     toast.show();
                 }
@@ -371,7 +373,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             bitmap = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
             Utils.matToBitmap(frame,bitmap);
         } catch (CvException e){
-            Log.d("save_image", Objects.requireNonNull(e.getMessage()));
+            Log.d(TAG, Objects.requireNonNull(e.getMessage()));
         }
 
         if(!sd.exists()){
@@ -385,15 +387,15 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                 assert bitmap != null;
                 bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
             } catch(Exception e){
-                Log.d("save_image", Objects.requireNonNull(e.getMessage()));
+                Log.d(TAG, Objects.requireNonNull(e.getMessage()));
             } finally {
                 try{
                     if(outputStream != null){
                         outputStream.close();
-                        Log.d("save_image","Saved successfully.");
+                        Log.d(TAG,"Saved successfully.");
                     }
                 } catch (IOException e){
-                    Log.d("save_image","Error: " + e.getMessage());
+                    Log.d(TAG,"Error: " + e.getMessage());
                 }
             }
         }
@@ -507,8 +509,5 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         // <15% homogeneous; 15% - 30%; 30%< heterogeneous
         coefficientOfVariation = (standardDeviation/average) * 100;
         return coefficientOfVariation;
-
-
-
     }
 }

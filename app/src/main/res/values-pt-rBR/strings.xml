@@ -38,4 +38,9 @@
     <string name="contact_password">Senha</string>
     <string name="invalid_email">Email inválido</string>
     <string name="default_alert_dialog_title">Alerta!</string>
+    <string name="wrong_password">Senha incorreta</string>
+    <string name="invalid_password">Senha fraca</string>
+    <string name="email_already_in_use">Email já em uso</string>
+    <string name="unkown_error_contact_register">Erro desconhecido ao se cadastrar</string>
+    <string name="create_account_button">Criar conta</string>
 </resources>

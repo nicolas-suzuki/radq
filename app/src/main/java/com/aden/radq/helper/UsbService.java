@@ -1,4 +1,4 @@
-package com.aden.radq;
+package com.aden.radq.helper;
 
 import android.app.PendingIntent;
 import android.app.Service;

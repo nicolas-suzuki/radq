@@ -1,4 +1,4 @@
-package com.aden.radq;
+package com.aden.radq.helper;
 
 import android.util.Log;
 
@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public final class FirebaseHelper {
     private static final String TAG = "FirebaseHelper";
+
     private static DatabaseReference databaseReference;
     private static FirebaseAuth firebaseAuth;
 

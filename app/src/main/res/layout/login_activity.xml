@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/contactView">
+    android:id="@+id/LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,31 +33,6 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/nameTxt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/contactName" />
-
-                <EditText
-                    android:id="@+id/contactNameEditTxt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="@string/groupName"
-                    android:inputType="textPersonName"
-                    android:singleLine="true" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -97,15 +72,31 @@
                     android:text="@string/contact_password" />
 
                 <EditText
-                    android:id="@+id/contactPasswordEdit"
+                    android:id="@+id/contactPasswordEditText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:autofillHints=""
                     android:ems="10"
                     android:inputType="textPassword" />
+
             </LinearLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <Button
+                android:id="@+id/contactLoginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/buttonshape"
+                android:text="@string/login_button"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
 
         <Space
@@ -113,16 +104,13 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/bttnSaveContact"
+            android:id="@+id/createAccountButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/buttonshape"
-            android:text="@string/save_bttn_contact"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:text="@string/create_account_button"
+            android:textColor="#FFFFFF" />
 
         <Space
             android:layout_width="match_parent"

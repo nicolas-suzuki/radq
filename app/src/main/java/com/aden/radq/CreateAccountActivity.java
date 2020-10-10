@@ -9,12 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.aden.radq.helper.Contact;
+import com.aden.radq.helper.FirebaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
@@ -23,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 
-public class ContactActivity extends AppCompatActivity {
+public class CreateAccountActivity extends AppCompatActivity {
+    private static final String TAG = "ContactActivity";
+
     public static final String CONTACT_NAME = "contactName";
     EditText contactName;
 
@@ -39,7 +42,7 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.contact_activity);
+        setContentView(R.layout.create_account_activity);
 
         contactName = findViewById(R.id.contactNameEditTxt);
         contactEmail = findViewById(R.id.contactEmailEditTxt);
@@ -49,18 +52,29 @@ public class ContactActivity extends AppCompatActivity {
         //Firebase
         DatabaseReference databaseReference = FirebaseHelper.getFirebase();
 
-        mySnackbar = Snackbar.make(findViewById(R.id.contactView), R.string.contact_created, Snackbar.LENGTH_SHORT)
+        mySnackbar = Snackbar.make(findViewById(R.id.createContactView), R.string.contact_created, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
         bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 contact = new Contact();
-                contact.setName(contactName.getText().toString());
-                contact.setEmail(contactEmail.getText().toString());
-                contact.setPassword(contactPassword.getText().toString());
-                setContact();
+                if(contactName.getText().toString().isEmpty()){
+                    Snackbar.make(findViewById(R.id.createContactView), "Nome vazio", Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                } else if (contactEmail.getText().toString().isEmpty()){
+                    Snackbar.make(findViewById(R.id.createContactView), "Email vazio", Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                } else if (contactPassword.getText().toString().isEmpty()){
+                    Snackbar.make(findViewById(R.id.createContactView), "Senha Vazia", Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                } else {
+                    contact.setName(contactName.getText().toString());
+                    contact.setEmail(contactEmail.getText().toString());
+                    contact.setPassword(contactPassword.getText().toString());
+                    setContact();
 //              saveData();
+                }
             }
         });
 
@@ -69,7 +83,7 @@ public class ContactActivity extends AppCompatActivity {
     }
 
 //    private void saveData(){
-//        Log.d("settingsData", "saveData()");
+//        Log.d(TAG, "saveData()");
 //        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
 //        editor.putString(CONTACT_NAME,contactName.getText().toString());
@@ -85,7 +99,7 @@ public class ContactActivity extends AppCompatActivity {
 //    }
 //
 //    private void loadData(){
-//        Log.d("settingsData", "loadData()");
+//        Log.d(TAG, "loadData()");
 //        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
 //        getContactEmail = sharedPreferences.getString(CONTACT_EMAIL,"");
 //        getContactName = sharedPreferences.getString(CONTACT_NAME,"");
@@ -103,7 +117,7 @@ public class ContactActivity extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(
                 contact.getEmail(),
                 contact.getPassword()
-        ).addOnCompleteListener(ContactActivity.this, new OnCompleteListener<AuthResult>() {
+        ).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -119,7 +133,6 @@ public class ContactActivity extends AppCompatActivity {
                     } catch (FirebaseAuthWeakPasswordException e) {
                         exceptionError = getString(R.string.invalid_password);
                         alertDialogBox(exceptionError);
-
                     } catch (FirebaseAuthInvalidCredentialsException e) {
                         exceptionError = getString(R.string.invalid_email);
                         alertDialogBox(exceptionError);

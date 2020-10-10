@@ -74,11 +74,19 @@
             android:label="@string/emergency_title">
         </activity>
 
-        <!-- Contact Activity -->
+        <!-- Contact Login Activity -->
         <activity
-            android:name=".ContactActivity"
+            android:name=".LoginActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName=".SettingsActivity"
+            android:label="@string/contact_title">
+        </activity>
+
+        <!-- Create Account Activity -->
+        <activity
+            android:name=".CreateAccountActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".LoginActivity"
             android:label="@string/contact_title">
         </activity>
 
@@ -92,5 +100,4 @@
         </activity>
 
     </application>
-
 </manifest>

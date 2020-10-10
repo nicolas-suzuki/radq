@@ -14,6 +14,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.aden.radq.helper.UsbService;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         //Get the saved preferences and check if there's a contact registered
         //if not, it won't start the CameraActivity and will show up a message
         sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        contactEmail = sharedPreferences.getString("contactEmail","");
+        contactEmail = sharedPreferences.getString("contactEmail","aaaaaaaaa");
         Log.d("contactEmail", "Contact Email: " + contactEmail);
         if(contactEmail.isEmpty()) {
             alertDialogBox();
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
         if (!isWeightsHere){
             File weightsFile = new File(path + "yolov3-tiny.weights");
             try{

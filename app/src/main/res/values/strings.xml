@@ -5,8 +5,6 @@
     <string name="contactContact">" contacted"</string>
     <string name="contact_created">Contact saved!</string>
     <string name="contact_password">Password</string>
-
-    <!-- missing translations to english -->
     <string name="create_safe_contact_account_button">Create safe contact account</string>
     <string name="settings_title">Settings</string>
     <string name="contact_description">Add a safe contact that will receive updates from RADQ</string>
@@ -47,4 +45,5 @@
     <string name="logout_button" translatable="false">Logout</string>
     <string name="login_button" translatable="false">Login</string>
     <string name="default_alert_dialog_title">Alert!</string>
+    <string name="create_account_button">Create account</string>
 </resources>

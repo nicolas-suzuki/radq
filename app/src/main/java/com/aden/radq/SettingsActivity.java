@@ -30,16 +30,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         switchCameraFrontBack = findViewById(R.id.switchCameraFrontBack);
         Button bttnSaveSettings = findViewById(R.id.bttnSaveSettings);
-        Button bttnDefineSafeContact = findViewById(R.id.bttnDefineSafeContact);
+        Button buttonContactLogin = findViewById(R.id.btnLoginLogout);
+
         mySnackbar = Snackbar.make(findViewById(R.id.settingsView), R.string.settings_saved, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
-
-        bttnDefineSafeContact.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                openContactsActivity();
-            }
-        });
 
         bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,12 +41,21 @@ public class SettingsActivity extends AppCompatActivity {
                 saveData();
             }
         });
+
+        buttonContactLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openContactLoginActivity();
+            }
+
+        });
+
         loadData();
         updateData();
     }
 
-    public void openContactsActivity(){
-        Intent intent = new Intent(this, ContactActivity.class);
+    private void openContactLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
