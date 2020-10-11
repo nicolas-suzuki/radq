@@ -14,5 +14,6 @@ public class NotificationsActivity extends AppCompatActivity {
 
         //TODO Add sent messages to contacts here//
 
+
     }
 }

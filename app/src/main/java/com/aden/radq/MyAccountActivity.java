@@ -33,7 +33,7 @@ public class MyAccountActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.my_account_activity);
 
         etAccountEmail = findViewById(R.id.etAccountEmail);
         etAccountPassword = findViewById(R.id.etAccountPassword);

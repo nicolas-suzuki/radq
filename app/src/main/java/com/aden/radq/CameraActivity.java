@@ -283,7 +283,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 //                                    if (framesToConfirmFall >= 5) {
 //                                        //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
 //                                        //takeScreenshot(frame, intConf);
-//                                        initiateAlarm();
+                                        initiateAlarm();
 //                                    }
 //                                    isCountDownTimerActive = false;
 //                                    framesToConfirmFall = 0;

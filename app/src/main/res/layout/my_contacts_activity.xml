@@ -36,6 +36,7 @@
         </LinearLayout>
 
         <ListView
+            android:id="@+id/lvContacts"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="9">
@@ -47,7 +48,7 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/btMyContacts"
+            android:id="@+id/btAddContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

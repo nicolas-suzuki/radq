@@ -12,9 +12,20 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.aden.radq.adapter.FirebaseConnector;
+import com.aden.radq.helper.Settings;
+import com.aden.radq.model.Contact;
+import com.aden.radq.model.Notification;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static com.aden.radq.SettingsActivity.SHARED_PREFS;
@@ -23,12 +34,33 @@ public class EmergencyActivity extends AppCompatActivity {
     private static final String TAG = "EmergencyActivity";
 
     private CountDownTimer countDownTimer;
+
     private Button imOkay;
     private Button imNotOkay;
     private ConstraintLayout emergencyLayout;
     private LinearLayout layoutButtons;
     private TextView emergencyContactWillBeContactedTxt;
     private TextView emergencyTitle;
+
+    private String accountId;
+    private String message;
+
+    private ValueEventListener valueEventListenerMyContacts;
+    private DatabaseReference databaseReference;
+
+    private ArrayList<String> myContactsId;
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseReference.removeEventListener(valueEventListenerMyContacts);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        databaseReference.addValueEventListener(valueEventListenerMyContacts);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +76,18 @@ public class EmergencyActivity extends AppCompatActivity {
         emergencyTitle = findViewById(R.id.emergencyTitle);
         layoutButtons = findViewById(R.id.layoutButtons);
 
+        Settings settings = new Settings(EmergencyActivity.this);
+        accountId = settings.getIdentifier();
+
         String emergencySubtitleTxt = getString(R.string.emergency_contact_will_be_contacted);
         String secondsText = getString(R.string.secondsTxt);
 
-        Log.d("timer", "Timer Started");
+        Log.d(TAG, "Timer Started");
         countDownTimer = new CountDownTimer(30000,1000){
             boolean tick = true;
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.d("timer","tick");
+                Log.d(TAG,"tick");
 
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
 
@@ -71,14 +106,15 @@ public class EmergencyActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                Log.d("timer","timer finished");
+                Log.d(TAG,"timer finished");
                 sendMessageToContact();
             }
         }.start();
         imOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("emergency", "I'm Okay button pressed");
+                Log.d(TAG, "I'm Okay button pressed");
+                message = "I'm OKay button pressed";
                 countDownTimer.cancel();
                 finish();
             }
@@ -87,12 +123,33 @@ public class EmergencyActivity extends AppCompatActivity {
         imNotOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("emergency", "Not Okay button pressed");
+                Log.d(TAG, "Not Okay button pressed");
+                message = "I'm NOT OKay button pressed";
                 countDownTimer.cancel();
-                //TODO
                 sendMessageToContact();
             }
         });
+
+        myContactsId = new ArrayList<>();
+        databaseReference = FirebaseConnector.getFirebase().
+                child("contacts").child(accountId);
+
+        valueEventListenerMyContacts = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myContactsId.clear();
+                for(DataSnapshot data : snapshot.getChildren()){
+                    Contact contact = data.getValue(Contact.class);
+                    myContactsId.add(contact.getContactIdentifier());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
     }
 
     @Override
@@ -102,7 +159,19 @@ public class EmergencyActivity extends AppCompatActivity {
     }
 
     private void sendMessageToContact() {
-        //TODO Send Message then:
+        Notification notification = new Notification();
+        notification.setUserId(accountId);
+        notification.setNotification(message);
+
+        databaseReference = FirebaseConnector.getFirebase().child("notifications");
+
+        for (String myContactId : myContactsId) {
+            databaseReference.
+                    child(accountId).
+                    child(myContactId).
+                    push().
+                    setValue(notification);
+        }
         contactContacted();
     }
 
