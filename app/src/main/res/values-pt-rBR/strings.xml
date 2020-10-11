@@ -46,4 +46,7 @@
     <string name="login_description">Entre com sua conta para conectar ao seu contato de emergência. Se não tiver uma conta, cadastre-se no botão abaixo.</string>
     <string name="login_title">Login</string>
     <string name="create_account_title">Criar conta</string>
+    <string name="my_account">Minha conta</string>
+    <string name="my_contacts">Meus contatos</string>
+    <string name="add_contact_button">Adicione um contato</string>
 </resources>

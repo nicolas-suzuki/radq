@@ -11,22 +11,24 @@ import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.helper.AccountHelper;
-import com.aden.radq.helper.FirebaseHelper;
+import com.aden.radq.helper.Settings;
+import com.aden.radq.model.Account;
+import com.aden.radq.helper.Base64Custom;
+import com.aden.radq.adapter.FirebaseConnector;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity {
+public class MyAccountActivity extends AppCompatActivity {
     private static final String TAG = "ContactLoginActivity";
 
     private EditText contactEmail;
     private EditText contactPassword;
     private Button buttonLoginLogout;
 
-    private AccountHelper accountHelper;
+    private Account account;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!isUserConnected()){
-                    accountHelper = new AccountHelper();
+                    account = new Account();
                     if(contactEmail.getText().toString().isEmpty()){
                         Log.d(TAG,"Email Vazio");
                         Snackbar.make(findViewById(R.id.LoginActivity), "Email vazio", Snackbar.LENGTH_LONG)
@@ -54,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                         Snackbar.make(findViewById(R.id.LoginActivity), "Senha vazia", Snackbar.LENGTH_LONG)
                                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                     } else {
-                        accountHelper.setEmail(contactEmail.getText().toString());
-                        accountHelper.setPassword(contactPassword.getText().toString());
+                        account.setEmail(contactEmail.getText().toString());
+                        account.setPassword(contactPassword.getText().toString());
 
                         validateLogin();
                     }
@@ -74,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isUserConnected() {
-        FirebaseAuth firebaseAuth = FirebaseHelper.getFirebaseAuth();
+        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
         if(firebaseAuth.getCurrentUser() != null){
             contactEmail.setText(firebaseAuth.getCurrentUser().getEmail());
             contactEmail.setEnabled(false);
@@ -87,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validateLogout(){
         Log.d(TAG,"ValidateLogout()");
-        FirebaseAuth firebaseAuth = FirebaseHelper.getFirebaseAuth();
+        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
         firebaseAuth.signOut();
         Snackbar.make(findViewById(R.id.LoginActivity), "Logged out", Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
@@ -98,10 +100,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validateLogin() {
         Log.d(TAG, "ValidateLogin()");
-        FirebaseAuth firebaseAuth = FirebaseHelper.getFirebaseAuth();
+        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
         firebaseAuth.signInWithEmailAndPassword(
-                accountHelper.getEmail(),
-                accountHelper.getPassword()
+                account.getEmail(),
+                account.getPassword()
         ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -111,6 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                     contactEmail.setEnabled(false);
                     contactPassword.setEnabled(false);
                     buttonLoginLogout.setText(getText(R.string.logout_button));
+
+                    Settings settings = new Settings(MyAccountActivity.this);
+                    String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
+                    settings.saveData(accountIdentifier);
+
                 } else {
                     Snackbar.make(findViewById(R.id.LoginActivity), "Erro", Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();

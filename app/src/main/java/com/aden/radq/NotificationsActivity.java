@@ -12,5 +12,7 @@ public class NotificationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications_activity);
 
+        //TODO Add sent messages to contacts here//
+
     }
 }

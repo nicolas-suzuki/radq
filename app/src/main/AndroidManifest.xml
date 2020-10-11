@@ -32,6 +32,15 @@
             android:theme="@style/AppTheme">
         </activity>
 
+        <!-- Loading Activity -->
+        <activity android:name=".SplashScreenActivity"
+            android:theme="@style/SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <!-- Camera Activity -->
         <activity
             android:name=".CameraActivity"
@@ -39,6 +48,23 @@
             android:theme="@style/AppThemeBlackActionBar"
             android:parentActivityName=".MainActivity"
             android:label="">
+        </activity>
+
+            <!-- Emergency Activity -->
+            <activity
+                android:screenOrientation="landscape"
+                android:name=".EmergencyActivity"
+                android:theme="@style/AppTheme"
+                android:parentActivityName=".CameraActivity"
+                android:label="@string/emergency_title">
+            </activity>
+
+        <!-- Notifications Activity -->
+        <activity
+            android:name=".NotificationsActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/notifications_title">
         </activity>
 
         <!-- Alarms Activity -->
@@ -49,15 +75,8 @@
             android:label="@string/alarms_title">
         </activity>
 
-        <!-- Notifications Activity -->
-        <activity
-            android:name=".NotificationsActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/notifications_title">
-        </activity>
-
-        <!--Settings Activity-->
+        <!-- START SETTINGS Activity -->
+        <!-- Settings Activity -->
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/AppTheme"
@@ -65,47 +84,38 @@
             android:label="@string/settings_title">
         </activity>
 
-        <!--Emergency Activity-->
-        <activity
-            android:screenOrientation="landscape"
-            android:name=".EmergencyActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".CameraActivity"
-            android:label="@string/emergency_title">
-        </activity>
+            <!-- My Account Login Activity -->
+            <activity
+                android:name=".MyAccountActivity"
+                android:theme="@style/AppTheme"
+                android:parentActivityName=".SettingsActivity"
+                android:label="@string/login_title">
+            </activity>
 
-        <!-- Contact Login Activity -->
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".SettingsActivity"
-            android:label="@string/login_title">
-        </activity>
+                <!-- Create Account Activity -->
+                <activity
+                    android:name=".CreateAccountActivity"
+                    android:theme="@style/AppTheme"
+                    android:parentActivityName=".MyAccountActivity"
+                    android:label="@string/create_account_title">
+                </activity>
 
-        <!-- Create Account Activity -->
-        <activity
-            android:name=".CreateAccountActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".LoginActivity"
-            android:label="@string/create_account_title">
-        </activity>
+            <!-- Contacts Activity -->
+            <activity
+                android:name=".MyContactsActivity"
+                android:theme="@style/AppTheme"
+                android:parentActivityName=".SettingsActivity"
+                android:label="@string/create_account_title">
+            </activity>
 
-        <!-- Add Contact Activity -->
-        <activity
-            android:name=".AddContactActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".SettingsActivity"
-            android:label="@string/create_account_title">
-        </activity>
+                <!-- Add Contact Activity -->
+                <activity
+                    android:name=".AddContactActivity"
+                    android:theme="@style/AppTheme"
+                    android:parentActivityName=".MyContactsActivity"
+                    android:label="@string/create_account_title">
+                </activity>
 
-        <!-- Loading Activity -->
-        <activity android:name=".SplashScreenActivity"
-            android:theme="@style/SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+        <!-- END SETTINGS -->
     </application>
 </manifest>

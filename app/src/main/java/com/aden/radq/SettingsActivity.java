@@ -23,8 +23,8 @@ public class SettingsActivity extends AppCompatActivity {
     private boolean isSwitchBackChecked;
 
     Button btSaveSettings;
-    Button btLoginLogout;
-    Button buttonAddContact;
+    Button btMyAccount;
+    Button btMyContacts;
 
     Snackbar mySnackbar;
 
@@ -35,16 +35,16 @@ public class SettingsActivity extends AppCompatActivity {
 
         swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
         btSaveSettings = findViewById(R.id.btSaveSettings);
-        btLoginLogout = findViewById(R.id.btLoginLogout);
-        buttonAddContact = findViewById(R.id.btAddContact);
+        btMyAccount = findViewById(R.id.btMyAccount);
+        btMyContacts = findViewById(R.id.btMyContacts);
 
         mySnackbar = Snackbar.make(findViewById(R.id.clSettings), R.string.settings_saved, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
-        buttonAddContact.setOnClickListener(new View.OnClickListener() {
+        btMyContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addContactActivity();
+                myContactsActivity();
             }
         });
 
@@ -55,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        btLoginLogout.setOnClickListener(new View.OnClickListener() {
+        btMyAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openLoginActivity();
@@ -66,13 +66,13 @@ public class SettingsActivity extends AppCompatActivity {
         updateData();
     }
 
-    private void addContactActivity() {
-        Intent intent = new Intent(this, AddContactActivity.class);
+    private void myContactsActivity() {
+        Intent intent = new Intent(this, MyContactsActivity.class);
         startActivity(intent);
     }
 
     private void openLoginActivity() {
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MyAccountActivity.class);
         startActivity(intent);
     }
 

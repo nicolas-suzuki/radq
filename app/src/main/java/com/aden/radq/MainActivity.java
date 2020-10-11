@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.aden.radq.helper.UsbHelper;
+import com.aden.radq.adapter.UsbService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -164,19 +164,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             switch (Objects.requireNonNull(intent.getAction())) {
-                case UsbHelper.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
+                case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
                     Toast.makeText(context, "USB Ready", Toast.LENGTH_SHORT).show();
                     break;
-                case UsbHelper.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
+                case UsbService.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
                     Toast.makeText(context, "USB Permission not granted", Toast.LENGTH_SHORT).show();
                     break;
-                case UsbHelper.ACTION_NO_USB: // NO USB CONNECTED
+                case UsbService.ACTION_NO_USB: // NO USB CONNECTED
                     Toast.makeText(context, "No USB connected", Toast.LENGTH_SHORT).show();
                     break;
-                case UsbHelper.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
+                case UsbService.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
                     Toast.makeText(context, "USB disconnected", Toast.LENGTH_SHORT).show();
                     break;
-                case UsbHelper.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
+                case UsbService.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
                     Toast.makeText(context, "USB device not supported", Toast.LENGTH_SHORT).show();
                     break;
             }

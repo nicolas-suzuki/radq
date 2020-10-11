@@ -46,27 +46,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <Button
-                android:id="@+id/btLoginLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/buttonshape"
-                android:text="@string/login_button"
-                android:textColor="#FFFFFF" />
-
-            <Space
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <Button
-                android:id="@+id/btAddContact"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/buttonshape"
-                android:text="Adicionar contato"
-                android:textColor="#FFFFFF" />
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btMyAccount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="9"
+                    android:background="@drawable/buttonshape"
+                    android:text="@string/my_account"
+                    android:textColor="#FFFFFF" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <Button
+                    android:id="@+id/btMyContacts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="9"
+                    android:background="@drawable/buttonshape"
+                    android:text="@string/my_contacts"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"

@@ -2,7 +2,7 @@ package com.aden.radq.helper;
 
 import android.util.Base64;
 
-public class Base64CustomHelper {
+public class Base64Custom {
 
     public static String encodeBase64(String textToEncode){
         return Base64.encodeToString(textToEncode.getBytes(),Base64.DEFAULT).

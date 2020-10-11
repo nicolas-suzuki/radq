@@ -9,9 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.helper.AccountHelper;
-import com.aden.radq.helper.Base64CustomHelper;
-import com.aden.radq.helper.FirebaseHelper;
+import com.aden.radq.helper.Settings;
+import com.aden.radq.model.Account;
+import com.aden.radq.helper.Base64Custom;
+import com.aden.radq.adapter.FirebaseConnector;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -32,10 +32,10 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private EditText etContactPassword;
 
-    public static final String CONTACT_EMAIL = "contactEmail";
+    public static final String ACCOUNT_IDENTIFIER = "accountID";
     private EditText etContactEmail;
 
-    private AccountHelper accountHelper;
+    private Account account;
 
     private Button btSaveContact;
 
@@ -49,10 +49,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         etContactName = findViewById(R.id.etContactName);
         etContactEmail = findViewById(R.id.etContactEmail);
         etContactPassword = findViewById(R.id.etContactPassword);
-        btSaveContact = findViewById(R.id.btSaveContact);
+        btSaveContact = findViewById(R.id.btAddContact);
 
         //Firebase
-        FirebaseHelper.getFirebase();
+        FirebaseConnector.getFirebase();
 
         mySnackbar = Snackbar.make(findViewById(R.id.clCreateContact), R.string.contact_created, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
@@ -60,7 +60,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         btSaveContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                accountHelper = new AccountHelper();
+                account = new Account();
                 if(etContactName.getText().toString().isEmpty()){
                     Snackbar.make(findViewById(R.id.clCreateContact), "Nome vazio", Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
@@ -71,9 +71,9 @@ public class CreateAccountActivity extends AppCompatActivity {
                     Snackbar.make(findViewById(R.id.clCreateContact), "Senha Vazia", Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                 } else {
-                    accountHelper.setName(etContactName.getText().toString());
-                    accountHelper.setEmail(etContactEmail.getText().toString());
-                    accountHelper.setPassword(etContactPassword.getText().toString());
+                    account.setName(etContactName.getText().toString());
+                    account.setEmail(etContactEmail.getText().toString());
+                    account.setPassword(etContactPassword.getText().toString());
                     setContact();
 //              saveData();
                 }
@@ -115,20 +115,23 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private void setContact(){
         //contact's information can be null
-        FirebaseAuth firebaseAuth = FirebaseHelper.getFirebaseAuth();
+        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
         firebaseAuth.createUserWithEmailAndPassword(
-                accountHelper.getEmail(),
-                accountHelper.getPassword()
+                account.getEmail(),
+                account.getPassword()
         ).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     mySnackbar.show();
-                    FirebaseUser firebaseUser = task.getResult().getUser();
 
-                    String accountIdentifier = Base64CustomHelper.encodeBase64(accountHelper.getEmail());
-                    accountHelper.setId(accountIdentifier);
-                    accountHelper.saveContact();
+                    String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
+                    account.setId(accountIdentifier);
+                    account.saveContact();
+
+                    Settings settings = new Settings(CreateAccountActivity.this);
+                    settings.saveData(accountIdentifier);
+
                 } else {
                     String exceptionError = "";
 

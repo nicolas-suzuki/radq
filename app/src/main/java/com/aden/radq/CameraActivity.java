@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.helper.UsbHelper;
+import com.aden.radq.adapter.UsbService;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -76,7 +76,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     Net tinyYolo;
 
     //USB connection + control specific variables
-    private UsbHelper usbService;
+    private UsbService usbService;
     private MyHandler mHandler;
 
     @Override
@@ -411,7 +411,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     private final ServiceConnection usbConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            usbService = ((UsbHelper.UsbBinder) iBinder).getService();
+            usbService = ((UsbService.UsbBinder) iBinder).getService();
             usbService.setHandler(mHandler);
         }
         @Override
@@ -424,19 +424,19 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         @Override
         public void onReceive(Context context, Intent intent) {
             switch (Objects.requireNonNull(intent.getAction())) {
-                case UsbHelper.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
+                case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
                     Toast.makeText(context, "USB Ready", Toast.LENGTH_SHORT).show();
                     break;
-                case UsbHelper.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
+                case UsbService.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
                     Toast.makeText(context, "USB Permission not granted", Toast.LENGTH_SHORT).show();
                     break;
-                case UsbHelper.ACTION_NO_USB: // NO USB CONNECTED
+                case UsbService.ACTION_NO_USB: // NO USB CONNECTED
                     Toast.makeText(context, "No USB connected", Toast.LENGTH_SHORT).show();
                     break;
-                case UsbHelper.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
+                case UsbService.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
                     Toast.makeText(context, "USB disconnected", Toast.LENGTH_SHORT).show();
                     break;
-                case UsbHelper.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
+                case UsbService.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
                     Toast.makeText(context, "USB device not supported", Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -444,11 +444,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     };
 
     private void startService(ServiceConnection serviceConnection) {
-        if (!UsbHelper.SERVICE_CONNECTED) {
-            Intent startService = new Intent(this, UsbHelper.class);
+        if (!UsbService.SERVICE_CONNECTED) {
+            Intent startService = new Intent(this, UsbService.class);
             startService(startService);
         }
-        Intent bindingIntent = new Intent(this, UsbHelper.class);
+        Intent bindingIntent = new Intent(this, UsbService.class);
         bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -463,14 +463,14 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case UsbHelper.MESSAGE_FROM_SERIAL_PORT:
+                case UsbService.MESSAGE_FROM_SERIAL_PORT:
                     String data = (String) msg.obj;
                     //mActivity.get().display.append(data);
                     break;
-                case UsbHelper.CTS_CHANGE:
+                case UsbService.CTS_CHANGE:
                     Toast.makeText(mActivity.get(), "CTS_CHANGE",Toast.LENGTH_LONG).show();
                     break;
-                case UsbHelper.DSR_CHANGE:
+                case UsbService.DSR_CHANGE:
                     Toast.makeText(mActivity.get(), "DSR_CHANGE",Toast.LENGTH_LONG).show();
                     break;
             }
@@ -479,11 +479,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     private void setFilters() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(UsbHelper.ACTION_USB_PERMISSION_GRANTED);
-        filter.addAction(UsbHelper.ACTION_NO_USB);
-        filter.addAction(UsbHelper.ACTION_USB_DISCONNECTED);
-        filter.addAction(UsbHelper.ACTION_USB_NOT_SUPPORTED);
-        filter.addAction(UsbHelper.ACTION_USB_PERMISSION_NOT_GRANTED);
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
+        filter.addAction(UsbService.ACTION_NO_USB);
+        filter.addAction(UsbService.ACTION_USB_DISCONNECTED);
+        filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
+        filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
         registerReceiver(mUsbReceiver, filter);
     }
 

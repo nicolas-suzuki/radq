@@ -49,4 +49,7 @@
     <string name="login_description">Sign in to connect to your safe contact. If you don\'t have an account, create one using the bottom button.</string>
     <string name="login_title">Login</string>
     <string name="create_account_title">Create account</string>
+    <string name="my_account">My account</string>
+    <string name="my_contacts">My contacts</string>
+    <string name="add_contact_button">Add a contact</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.aden.radq.helper;
+package com.aden.radq.adapter;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UsbHelper extends Service {
+public class UsbService extends Service {
 
     public static final String TAG = "UsbService";
     
@@ -135,7 +135,7 @@ public class UsbHelper extends Service {
     public void onCreate() {
         this.context = this;
         serialPortConnected = false;
-        UsbHelper.SERVICE_CONNECTED = true;
+        UsbService.SERVICE_CONNECTED = true;
         setFilter();
         usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         findSerialPortDevice();
@@ -160,7 +160,7 @@ public class UsbHelper extends Service {
         super.onDestroy();
         serialPort.close();
         unregisterReceiver(usbReceiver);
-        UsbHelper.SERVICE_CONNECTED = false;
+        UsbService.SERVICE_CONNECTED = false;
     }
 
     /*
@@ -236,8 +236,8 @@ public class UsbHelper extends Service {
     }
 
     public class UsbBinder extends Binder {
-        public UsbHelper getService() {
-            return UsbHelper.this;
+        public UsbService getService() {
+            return UsbService.this;
         }
     }
 
