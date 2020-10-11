@@ -9,10 +9,10 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.model.Account;
-import com.aden.radq.helper.Base64Custom;
 import com.aden.radq.adapter.FirebaseConnector;
+import com.aden.radq.helper.Base64Custom;
 import com.aden.radq.helper.Settings;
+import com.aden.radq.model.Account;
 import com.aden.radq.model.Contact;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +26,7 @@ public class AddContactActivity extends AppCompatActivity {
 
     private Button btAddContact;
     private EditText etContactEmail;
+
     private String contactIdentifier;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -38,7 +39,7 @@ public class AddContactActivity extends AppCompatActivity {
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
         btAddContact = findViewById(R.id.btAddContact);
-        etContactEmail = findViewById(R.id.etContactEmail);
+        etContactEmail = findViewById(R.id.etAccountEmail);
 
         btAddContact.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -52,4 +52,5 @@
     <string name="my_account">My account</string>
     <string name="my_contacts">My contacts</string>
     <string name="add_contact_button">Add a contact</string>
+    <string name="unkown_error_camera_initialization">Unkown error initializing camera</string>
 </resources>

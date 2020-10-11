@@ -22,13 +22,13 @@ import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 public class EmergencyActivity extends AppCompatActivity {
     private static final String TAG = "EmergencyActivity";
 
-    CountDownTimer countDownTimer;
-    Button imOkay;
-    Button imNotOkay;
-    ConstraintLayout emergencyLayout;
-    LinearLayout layoutButtons;
-    TextView emergencyContactWillBeContactedTxt;
-    TextView emergencyTitle;
+    private CountDownTimer countDownTimer;
+    private Button imOkay;
+    private Button imNotOkay;
+    private ConstraintLayout emergencyLayout;
+    private LinearLayout layoutButtons;
+    private TextView emergencyContactWillBeContactedTxt;
+    private TextView emergencyTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

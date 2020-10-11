@@ -49,4 +49,5 @@
     <string name="my_account">Minha conta</string>
     <string name="my_contacts">Meus contatos</string>
     <string name="add_contact_button">Adicione um contato</string>
+    <string name="unkown_error_camera_initialization">Erro desconhecido ao inicializar câmera</string>
 </resources>

@@ -57,27 +57,27 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     private static final String TAG = "CameraActivity";
 
     //TODO re-analyze the need of the following two variables and their logic
-    boolean startYolo = false;
-    boolean firstTimeYolo = true;
+    private boolean isYoloStarted = false;
+    private boolean isFirstTimeYolo = true;
     //TODO change framesToConfirmFall name/logic
-    int framesToConfirmFall = 0;
-    boolean isCountDownTimerActive = false;
+    private int framesToConfirmFall = 0;
+    private boolean isCountDownTimerActive = false;
 
     //Robot control by height
-    int countHeightsDetected = 0;
-    List<Integer> listOfHeights = new ArrayList<>();
-
-    String personDetectedText;
-    String fallDetectedText;
+    private int countHeightsDetected = 0;
+    private List<Integer> listOfHeights = new ArrayList<>();
 
     //Camera connection + detection specific variables
-    CameraBridgeViewBase cameraBridgeViewBase;
-    BaseLoaderCallback baseLoaderCallback;
-    Net tinyYolo;
+    private CameraBridgeViewBase cameraBridgeViewBase;
+    private BaseLoaderCallback baseLoaderCallback;
+    private Net tinyYolo;
 
     //USB connection + control specific variables
     private UsbService usbService;
     private MyHandler mHandler;
+
+    //String messages for toasts/logs
+    private String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +85,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         //Get saved preferences
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String contactEmail = sharedPreferences.getString("contactEmail","aaaaaaa");
-
-        //Initiate Strings
-        personDetectedText = getString(R.string.person_detected_text);
-        fallDetectedText = getString(R.string.fall_detected_text);
 
         Log.d(TAG, "Contact Email: " + contactEmail);
         if(contactEmail.isEmpty()){
@@ -126,7 +122,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                     super.onManagerConnected(status);
                     if (status == BaseLoaderCallback.SUCCESS) {
                         cameraBridgeViewBase.enableView();
-                        YOLO();
+                        checkYolo();
                     } else {
                         super.onManagerConnected(status);
                     }
@@ -140,7 +136,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         super.onResume();
         Log.d(TAG,"onResume()");
         if (!OpenCVLoader.initDebug()) {
-            Toast.makeText(getApplicationContext(), "There's a problem, yo!", Toast.LENGTH_SHORT).show();
+            message = getString(R.string.unkown_error_camera_initialization);
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         } else {
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
@@ -172,7 +169,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         //Log.d(TAG, "new frame");
         Mat frame = inputFrame.rgba();
-        if (startYolo) {
+        if (isYoloStarted) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
             Mat imageBlob = Dnn.blobFromImage(frame, 0.00392, new Size(416, 416), new Scalar(0, 0, 0),/*swapRB*/false, /*crop*/false);
             tinyYolo.setInput(imageBlob);
@@ -215,11 +212,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                         if((usbService != null) && (height > width)){
                             if(countHeightsDetected<3){
-                                Log.d(TAG,"countHeightsDetected<3");
+                                Log.d(TAG,"countHeightsDetected < 3");
                                 listOfHeights.add(height);
                                 countHeightsDetected++;
                             } else {
-                                Log.d(TAG,"countHeightsDetected>=3");
+                                Log.d(TAG,"countHeightsDetected >= 3");
                                 countHeightsDetected = 0;
                                 double coefficientOfVariationResult = coefficientOfVariationCalculator(listOfHeights);
                                 listOfHeights.clear();
@@ -266,7 +263,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                     if (idGuy == 0) {
                         // Fall detected
-                        Imgproc.putText(frame, fallDetectedText + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
+                        message = getString(R.string.fall_detected_text);
+                        Imgproc.putText(frame, message + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
 
                         Log.d(TAG, "Fall detected! Precision: " + intConf + "%");
@@ -295,7 +293,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         return frame;
                     } else if (idGuy == 1) {
                         // Pessoa detectada
-                        Imgproc.putText(frame, personDetectedText + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
+                        message = getString(R.string.person_detected_text);
+                        Imgproc.putText(frame, message + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
                         Log.d(TAG, "Person detected! Precision: " + intConf + "%");
                         return frame;
@@ -315,45 +314,41 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     public void onCameraViewStarted(int width, int height) {
         Log.d(TAG,"onCameraViewStarted()");
-        if (startYolo) {
-            String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
-            String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
-            Log.d(TAG, "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
-            try{
-                tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
-            } catch (Exception e){
-                Log.d(TAG, "Exception: " + e);
-                Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
-                toast.show();
-            }
+        if (isYoloStarted) {
+            initializeYolo();
         }
     }
 
     @Override
     public void onCameraViewStopped() {
         Log.d(TAG,"onCameraViewStopped()");
-        startYolo = false;
+        isYoloStarted = false;
     }
 
-    public void YOLO() {
-        if (!startYolo) {
-            startYolo = true;
-            if (firstTimeYolo) {
-                firstTimeYolo = false;
-                String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
-                String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
-
-                Log.d(TAG, "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
-                try{
-                    tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
-                } catch (Exception e){
-                    Log.d(TAG, "Exception: " + e);
-                    Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
-                    toast.show();
-                }
+    public void checkYolo() {
+        Log.d(TAG,"checkYolo()");
+        if (!isYoloStarted) {
+            isYoloStarted = true;
+            if (isFirstTimeYolo) {
+                isFirstTimeYolo = false;
+                initializeYolo();
             }
         } else {
-            startYolo = false;
+            isYoloStarted = false;
+        }
+    }
+
+    public void initializeYolo(){
+        Log.d(TAG,"initializeYolo()");
+        String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
+        String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
+        Log.d(TAG, "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+        try{
+            tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
+        } catch (Exception e){
+            Log.d(TAG, "Exception: " + e);
+            Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 

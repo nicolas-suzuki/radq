@@ -9,10 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.aden.radq.adapter.FirebaseConnector;
+import com.aden.radq.helper.Base64Custom;
 import com.aden.radq.helper.Settings;
 import com.aden.radq.model.Account;
-import com.aden.radq.helper.Base64Custom;
-import com.aden.radq.adapter.FirebaseConnector;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -47,7 +47,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         setContentView(R.layout.create_account_activity);
 
         etContactName = findViewById(R.id.etContactName);
-        etContactEmail = findViewById(R.id.etContactEmail);
+        etContactEmail = findViewById(R.id.etAccountEmail);
         etContactPassword = findViewById(R.id.etContactPassword);
         btSaveContact = findViewById(R.id.btAddContact);
 

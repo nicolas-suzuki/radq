@@ -48,7 +48,7 @@
                     android:text="@string/contact_email" />
 
                 <EditText
-                    android:id="@+id/etContactEmail"
+                    android:id="@+id/etAccountEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -72,7 +72,7 @@
                     android:text="@string/contact_password" />
 
                 <EditText
-                    android:id="@+id/contactPasswordEditText"
+                    android:id="@+id/etAccountPassword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -87,7 +87,7 @@
                 android:layout_height="20dp" />
 
             <Button
-                android:id="@+id/contactLoginButton"
+                android:id="@+id/btAccountLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -104,7 +104,7 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/createAccountButton"
+            android:id="@+id/btCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

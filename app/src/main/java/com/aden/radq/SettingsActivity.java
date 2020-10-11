@@ -17,16 +17,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SWITCH_CAMERA_FRONT_BACK ="switchCameraFrontBack";
-    public static final String IDENTIFIER_KEY = "identifierLoggedUser";
 
     private SwitchCompat swCameraFrontBack;
     private boolean isSwitchBackChecked;
 
-    Button btSaveSettings;
-    Button btMyAccount;
-    Button btMyContacts;
+    private Button btSaveSettings;
+    private Button btMyAccount;
+    private Button btMyContacts;
 
-    Snackbar mySnackbar;
+    private Snackbar mySnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
