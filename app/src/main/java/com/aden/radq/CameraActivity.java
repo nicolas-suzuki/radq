@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aden.radq.adapter.UsbService;
+import com.aden.radq.helper.Settings;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -49,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 import static com.aden.radq.SettingsActivity.SWITCH_CAMERA_FRONT_BACK;
@@ -83,11 +85,9 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Get saved preferences
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String contactEmail = sharedPreferences.getString("contactEmail","aaaaaaa");
+        Settings settings = new Settings(CameraActivity.this);
 
-        Log.d(TAG, "Contact Email: " + contactEmail);
-        if(contactEmail.isEmpty()){
+        if(settings.getIdentifier().isEmpty()){
             //This is the second counter measure to forbid the start of the cameraActivity without
             //an emergency contact set up. First is at the MainActivity level.
             finish();
@@ -104,8 +104,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             cameraBridgeViewBase.setCvCameraViewListener(this);
 
             //Check which camera will be used frontal or back. By default, frontal camera.
-            Log.d(TAG, "Front/Back Camera preference: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
-            if (sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false)) {
+            Log.d(TAG, "Front/Back Camera preference: " + settings.getSwitchCameraFrontBack());
+            if (settings.getSwitchCameraFrontBack()) {
                 //Use Back Camera
                 Log.d(TAG, "Using Back Camera");
                 cameraBridgeViewBase.setCameraIndex(0);
@@ -269,8 +269,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                         Log.d(TAG, "Fall detected! Precision: " + intConf + "%");
                         framesToConfirmFall++;
-
-                        //This countdown ensures that the person is really down
+                        if (framesToConfirmFall == 5) {
+                            //This countdown ensures that the person is really down
 //                        if(!isCountDownTimerActive) {
 //                            new CountDownTimer(5000, 1000) {
 //                                @Override
@@ -283,14 +283,15 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 //                                    if (framesToConfirmFall >= 5) {
 //                                        //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
 //                                        //takeScreenshot(frame, intConf);
-                                        initiateAlarm();
+                            initiateAlarm();
 //                                    }
 //                                    isCountDownTimerActive = false;
 //                                    framesToConfirmFall = 0;
 //                                }
 //                            }.start();
 //                        }
-                        return frame;
+                            return frame;
+                        }
                     } else if (idGuy == 1) {
                         // Pessoa detectada
                         message = getString(R.string.person_detected_text);

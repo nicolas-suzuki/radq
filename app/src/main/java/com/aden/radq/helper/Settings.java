@@ -12,6 +12,7 @@ public class Settings {
     private SharedPreferences.Editor editor;
 
     private final String IDENTIFIER_KEY = "loggedUserID";
+    private final String SWITCH_CAMERA_FRONT_BACK = "switchCameraFrontBack";
 
     @SuppressLint("CommitPrefEdits")
     public Settings(Context parameterContext){
@@ -20,7 +21,7 @@ public class Settings {
         editor = sharedPreferences.edit();
     }
 
-    public void saveData (String contactID){
+    public void setIdentifier (String contactID){
         editor.putString(IDENTIFIER_KEY, contactID);
         editor.commit();
     }
@@ -28,4 +29,14 @@ public class Settings {
     public String getIdentifier(){
         return sharedPreferences.getString(IDENTIFIER_KEY,null);
     }
+
+    public void setSwitchCameraFrontBack(Boolean switchCameraFrontBack){
+        editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, switchCameraFrontBack);
+        editor.commit();
+    }
+
+    public boolean getSwitchCameraFrontBack(){
+        return sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK,false);
+    }
+
 }

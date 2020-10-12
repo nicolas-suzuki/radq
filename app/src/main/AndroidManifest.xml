@@ -89,7 +89,7 @@
                 android:name=".MyAccountActivity"
                 android:theme="@style/AppTheme"
                 android:parentActivityName=".SettingsActivity"
-                android:label="@string/login_title">
+                android:label="@string/my_account_title">
             </activity>
 
                 <!-- Create Account Activity -->
@@ -105,7 +105,7 @@
                 android:name=".MyContactsActivity"
                 android:theme="@style/AppTheme"
                 android:parentActivityName=".SettingsActivity"
-                android:label="@string/create_account_title">
+                android:label="@string/my_contacts_title">
             </activity>
 
                 <!-- Add Contact Activity -->
@@ -113,7 +113,7 @@
                     android:name=".AddContactActivity"
                     android:theme="@style/AppTheme"
                     android:parentActivityName=".MyContactsActivity"
-                    android:label="@string/create_account_title">
+                    android:label="@string/add_contacts_title">
                 </activity>
 
         <!-- END SETTINGS -->

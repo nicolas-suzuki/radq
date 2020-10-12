@@ -1,6 +1,5 @@
 package com.aden.radq;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -29,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
-import static com.aden.radq.SettingsActivity.SHARED_PREFS;
 
 public class EmergencyActivity extends AppCompatActivity {
     private static final String TAG = "EmergencyActivity";
@@ -184,13 +181,9 @@ public class EmergencyActivity extends AppCompatActivity {
     }
 
     private void contactContacted(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String contactName = sharedPreferences.getString("contactName","");
-
         ((ViewGroup) layoutButtons.getParent()).removeView(layoutButtons);
         emergencyContactWillBeContactedTxt.setVisibility(View.INVISIBLE);
-        String aux = contactName + " " + getResources().getString(R.string.contactContact);
-        emergencyTitle.setText(aux);
+        emergencyTitle.setText(getResources().getString(R.string.contacts_contacted));
         emergencyLayout.setBackgroundColor(Color.GREEN);
         storeNotification();
     }

@@ -58,7 +58,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="9"
                     android:background="@drawable/buttonshape"
-                    android:text="@string/my_account"
+                    android:text="@string/my_account_title"
                     android:textColor="#FFFFFF" />
 
                 <Space
@@ -73,7 +73,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="9"
                     android:background="@drawable/buttonshape"
-                    android:text="@string/my_contacts"
+                    android:text="@string/my_contacts_title"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
 

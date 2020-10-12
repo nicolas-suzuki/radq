@@ -2,7 +2,6 @@ package com.aden.radq;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -11,19 +10,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.aden.radq.helper.Settings;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Objects;
 
-import static com.aden.radq.SettingsActivity.SHARED_PREFS;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private static final int PERMISSIONS_CODE = 1;
-    private String contactEmail;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +46,9 @@ public class MainActivity extends AppCompatActivity {
     public void openCameraActivity(){
         //Get the saved preferences and check if there's a contact registered
         //if not, it won't start the CameraActivity and will show up a message
-        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        contactEmail = sharedPreferences.getString("contactEmail","aaaaaaaaa");
-        Log.d("contactEmail", "Contact Email: " + contactEmail);
-        if(contactEmail.isEmpty()) {
+        Settings settings = new Settings(MainActivity.this);
+        Log.d(TAG,settings.getIdentifier());
+        if(settings.getIdentifier().isEmpty()){
             alertDialogBox();
         } else {
             Intent intent = new Intent(this, CameraActivity.class);
@@ -147,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
     //Dialog box to warn the user about not defining a contact in the application settings
     private void alertDialogBox(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setMessage(getString(R.string.contact_alert_dialog_message));
         dialog.setTitle(getString(R.string.contact_alert_dialog_title));
+        dialog.setMessage(getString(R.string.contact_alert_dialog_message));
         dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();

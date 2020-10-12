@@ -93,6 +93,8 @@ public class MyAccountActivity extends AppCompatActivity {
         firebaseAuth.signOut();
         Snackbar.make(findViewById(R.id.LoginActivity), "Logged out", Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+        Settings settings = new Settings(MyAccountActivity.this);
+        settings.setIdentifier("");
         etAccountEmail.setEnabled(true);
         etAccountPassword.setEnabled(true);
         btAccountLogin.setText(getText(R.string.login_button));
@@ -116,7 +118,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
                     Settings settings = new Settings(MyAccountActivity.this);
                     String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
-                    settings.saveData(accountIdentifier);
+                    settings.setIdentifier(accountIdentifier);
 
                 } else {
                     Snackbar.make(findViewById(R.id.LoginActivity), "Erro", Snackbar.LENGTH_LONG)

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RADQ Companion App</string>
+    <string name="login_button">Login</string>
+    <string name="notifications_button">Notifications</string>
+    <string name="welcome_title">Welcome to RADQ Companion!</string>
+    <string name="welcome_description">Seu robô autônomo detector de quedas</string>
+</resources>

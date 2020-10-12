@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.aden.radq.helper.Settings;
 import com.google.android.material.snackbar.Snackbar;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -27,10 +28,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Snackbar mySnackbar;
 
+    private Settings settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+
+        settings = new Settings(SettingsActivity.this);
 
         swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
         btSaveSettings = findViewById(R.id.btSaveSettings);
@@ -43,7 +48,12 @@ public class SettingsActivity extends AppCompatActivity {
         btMyContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myContactsActivity();
+                if(settings.getIdentifier().isEmpty()){
+                    Snackbar.make(findViewById(R.id.clSettings), R.string.not_logged_in, Snackbar.LENGTH_SHORT)
+                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                } else {
+                    openMyContactsActivity();
+                }
             }
         });
 
@@ -57,7 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
         btMyAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openLoginActivity();
+                openMyAccountActivity();
             }
         });
 
@@ -65,12 +75,12 @@ public class SettingsActivity extends AppCompatActivity {
         updateData();
     }
 
-    private void myContactsActivity() {
+    private void openMyContactsActivity() {
         Intent intent = new Intent(this, MyContactsActivity.class);
         startActivity(intent);
     }
 
-    private void openLoginActivity() {
+    private void openMyAccountActivity() {
         Intent intent = new Intent(this, MyAccountActivity.class);
         startActivity(intent);
     }
@@ -78,10 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void saveData(){
         Log.d(TAG, "saveData()");
         try{
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, swCameraFrontBack.isChecked());
-            editor.apply();
+            settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked());
             mySnackbar.show();
         } catch (Exception e){
             e.printStackTrace();
@@ -90,12 +97,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void loadData(){
         Log.d(TAG, "loadData()");
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        isSwitchBackChecked = sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK,false);
+        isSwitchBackChecked = settings.getSwitchCameraFrontBack();
     }
 
     public void updateData(){
         Log.d(TAG, "updateData()");
-        swCameraFrontBack.setChecked(isSwitchBackChecked);
+        swCameraFrontBack.setChecked(settings.getSwitchCameraFrontBack());
     }
 }

@@ -27,19 +27,13 @@ import java.util.Objects;
 public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = "ContactActivity";
 
-    public static final String CONTACT_NAME = "contactName";
     private EditText etContactName;
-
     private EditText etContactPassword;
-
-    public static final String ACCOUNT_IDENTIFIER = "accountID";
     private EditText etContactEmail;
+    private Button btSaveContact;
+    private Snackbar mySnackbar;
 
     private Account account;
-
-    private Button btSaveContact;
-
-    private Snackbar mySnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,43 +69,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                     account.setEmail(etContactEmail.getText().toString());
                     account.setPassword(etContactPassword.getText().toString());
                     setContact();
-//              saveData();
                 }
             }
         });
-
-//        loadData();
-//        updateData();
     }
-
-//    private void saveData(){
-//        Log.d(TAG, "saveData()");
-//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString(CONTACT_NAME,contactName.getText().toString());
-//        editor.putString(CONTACT_EMAIL,contactEmail.getText().toString());
-//        //TODO validations
-//        editor.apply();
-//
-//        contact = new Contact();
-//        contact.setName(contactName.getText().toString());
-//        contact.setEmail(contactEmail.getText().toString());
-//        contact.setPassword(contactPassword.getText().toString());
-//        setContact();
-//    }
-//
-//    private void loadData(){
-//        Log.d(TAG, "loadData()");
-//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-//        getContactEmail = sharedPreferences.getString(CONTACT_EMAIL,"");
-//        getContactName = sharedPreferences.getString(CONTACT_NAME,"");
-//    }
-//
-//    private void updateData(){
-//        Log.d("settingsData", "updateData()");
-//        contactName.setText(getContactName);
-//        contactEmail.setText(getContactEmail);
-//    }
 
     private void setContact(){
         //contact's information can be null
@@ -130,11 +91,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                     account.saveContact();
 
                     Settings settings = new Settings(CreateAccountActivity.this);
-                    settings.saveData(accountIdentifier);
+                    settings.setIdentifier(accountIdentifier);
 
                 } else {
                     String exceptionError = "";
-
                     try {
                         throw Objects.requireNonNull(task.getException());
                     } catch (FirebaseAuthWeakPasswordException e) {

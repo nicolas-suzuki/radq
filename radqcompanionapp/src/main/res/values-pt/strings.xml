@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RADQ Companion App</string>
+    <string name="login_button">Logar</string>
+    <string name="notifications_button">Notificações</string>
+    <string name="welcome_description">Seu robô autônomo detector de quedas</string>
+    <string name="welcome_title">Bem-vindo ao RADQ Companion!</string>
+</resources>
