@@ -7,7 +7,9 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="5dp" />
+
     <LinearLayout
+        android:id="@+id/llNotificationCustom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -15,14 +17,16 @@
         <TextView
             android:id="@+id/tvNotification"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"/>
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center_vertical" />
 
         <TextView
             android:id="@+id/tvTimeStamp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:gravity="center_vertical" />
 
     </LinearLayout>
 

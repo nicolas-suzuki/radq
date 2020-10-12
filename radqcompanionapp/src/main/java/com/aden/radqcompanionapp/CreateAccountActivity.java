@@ -27,12 +27,10 @@ import java.util.Objects;
 public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = "ContactActivity";
 
-    public static final String CONTACT_NAME = "contactName";
     private EditText etContactName;
 
     private EditText etContactPassword;
 
-    public static final String ACCOUNT_IDENTIFIER = "accountID";
     private EditText etContactEmail;
 
     private Account account;
@@ -46,7 +44,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
 
-        etContactName = findViewById(R.id.etContactName);
+        etContactName = findViewById(R.id.etAccountName);
         etContactEmail = findViewById(R.id.etAccountEmail);
         etContactPassword = findViewById(R.id.etContactPassword);
         btSaveContact = findViewById(R.id.btAddContact);
@@ -54,8 +52,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         //Firebase
         FirebaseConnector.getFirebase();
 
-        //mySnackbar = Snackbar.make(findViewById(R.id.clCreateContact), R.string.contact_created, Snackbar.LENGTH_SHORT)
-        //        .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+        mySnackbar = Snackbar.make(findViewById(R.id.clCreateContact), R.string.contact_created, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
         btSaveContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,43 +73,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                     account.setEmail(etContactEmail.getText().toString());
                     account.setPassword(etContactPassword.getText().toString());
                     setContact();
-//              saveData();
                 }
             }
         });
-
-//        loadData();
-//        updateData();
     }
 
-//    private void saveData(){
-//        Log.d(TAG, "saveData()");
-//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString(CONTACT_NAME,contactName.getText().toString());
-//        editor.putString(CONTACT_EMAIL,contactEmail.getText().toString());
-//        //TODO validations
-//        editor.apply();
-//
-//        contact = new Contact();
-//        contact.setName(contactName.getText().toString());
-//        contact.setEmail(contactEmail.getText().toString());
-//        contact.setPassword(contactPassword.getText().toString());
-//        setContact();
-//    }
-//
-//    private void loadData(){
-//        Log.d(TAG, "loadData()");
-//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-//        getContactEmail = sharedPreferences.getString(CONTACT_EMAIL,"");
-//        getContactName = sharedPreferences.getString(CONTACT_NAME,"");
-//    }
-//
-//    private void updateData(){
-//        Log.d("settingsData", "updateData()");
-//        contactName.setText(getContactName);
-//        contactEmail.setText(getContactEmail);
-//    }
 
     private void setContact(){
         //contact's information can be null
@@ -138,16 +104,16 @@ public class CreateAccountActivity extends AppCompatActivity {
                     try {
                         throw Objects.requireNonNull(task.getException());
                     } catch (FirebaseAuthWeakPasswordException e) {
-                        //exceptionError = getString(R.string.invalid_password);
+                        exceptionError = getString(R.string.invalid_password);
                         alertDialogBox(exceptionError);
                     } catch (FirebaseAuthInvalidCredentialsException e) {
-                        //exceptionError = getString(R.string.invalid_email);
+                        exceptionError = getString(R.string.invalid_email);
                         alertDialogBox(exceptionError);
                     } catch (FirebaseAuthUserCollisionException e) {
-                        //exceptionError = getString(R.string.email_already_in_use);
+                        exceptionError = getString(R.string.email_already_in_use);
                         alertDialogBox(exceptionError);
                     } catch (Exception e) {
-                        //exceptionError = getString(R.string.unkown_error_contact_register);
+                        exceptionError = getString(R.string.unkown_error_contact_register);
                         alertDialogBox(exceptionError);
                     }
                 }
@@ -159,8 +125,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     private void alertDialogBox(String e){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage(e);
-        //dialog.setTitle(getString(R.string.default_alert_dialog_title));
-        //dialog.setPositiveButton(getString(R.string.positive_button), null);
+        dialog.setTitle(getString(R.string.default_alert_dialog_title));
+        dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }

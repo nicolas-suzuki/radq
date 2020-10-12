@@ -33,8 +33,7 @@
         <ListView
             android:id="@+id/lvNotifications"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stackFromBottom="true"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

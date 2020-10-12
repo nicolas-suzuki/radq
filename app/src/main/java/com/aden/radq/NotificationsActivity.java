@@ -61,7 +61,7 @@ public class NotificationsActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Log.d(TAG, "valueEventListenerNotifications. onDataChange");
-
+                    notifications.clear();
                     for (DataSnapshot data : snapshot.getChildren()) {
                         Notification notification = data.getValue(Notification.class);
                         notifications.add(notification);

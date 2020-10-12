@@ -24,9 +24,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class EmergencyActivity extends AppCompatActivity {
@@ -212,8 +214,10 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private void createTimeStamp(){
         Log.d(TAG,"createTimeStamp()");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss", Locale.getDefault());
 
         Date currentTime = Calendar.getInstance().getTime();
-        timeStamp = currentTime.toString();
+
+        timeStamp = simpleDateFormat.format(currentTime);
     }
 }

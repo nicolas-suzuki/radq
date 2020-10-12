@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Loading Activity -->
+        <!-- Main Activity -->
         <activity android:name=".MainActivity">
         <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,33 +35,20 @@
             >
         </activity>
 
-        <!-- START SETTINGS Activity -->
-        <!-- Settings Activity -->
+        <!-- Login Activity -->
         <activity
-            android:name=".SettingsActivity"
+            android:name=".LoginActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity"
             >
         </activity>
 
-        <!-- My Account Login Activity -->
-        <activity
-            android:name=".MyAccountActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".SettingsActivity"
-            >
-        </activity>
-
-        <!-- Create Account Activity -->
-        <activity
-            android:name=".CreateAccountActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MyAccountActivity"
-            >
-        </activity>
-
-
-
-
+            <!-- Create Account Activity -->
+            <activity
+                android:name=".CreateAccountActivity"
+                android:theme="@style/AppTheme"
+                android:parentActivityName=".LoginActivity"
+                >
+            </activity>
     </application>
 </manifest>

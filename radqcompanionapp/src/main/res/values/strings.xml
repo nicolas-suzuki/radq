@@ -4,4 +4,16 @@
     <string name="notifications_button">Notifications</string>
     <string name="welcome_title">Welcome to RADQ Companion!</string>
     <string name="welcome_description">Seu robô autônomo detector de quedas</string>
+    <string name="notifications_description">Notificações geradas pelo RADQ</string>
+    <string name="contact_created">Contact created</string>
+    <string name="default_alert_dialog_title">Alert!</string>
+    <string name="positive_button" translatable="false">OK</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="email_already_in_use">Email already in use</string>
+    <string name="unkown_error_contact_register">Unkown error while registering</string>
+    <string name="contact_name">Name</string>
+    <string name="account_email" translatable="false">Email</string>
+    <string name="account_password">Password</string>
+    <string name="create_account">Create account</string>
 </resources>

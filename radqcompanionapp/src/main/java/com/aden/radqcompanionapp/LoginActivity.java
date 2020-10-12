@@ -20,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MyAccountActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "ContactLoginActivity";
 
     private EditText etAccountEmail;
@@ -114,7 +114,7 @@ public class MyAccountActivity extends AppCompatActivity {
                     etAccountPassword.setEnabled(false);
                     //btAccountLogin.setText(getText(R.string.logout_button));
 
-                    Settings settings = new Settings(MyAccountActivity.this);
+                    Settings settings = new Settings(LoginActivity.this);
                     String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
                     settings.saveData(accountIdentifier);
 
