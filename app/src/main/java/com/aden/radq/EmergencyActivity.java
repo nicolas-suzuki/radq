@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static com.aden.radq.SettingsActivity.SHARED_PREFS;
@@ -44,6 +46,7 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private String accountId;
     private String message;
+    private String timeStamp;
 
     private ValueEventListener valueEventListenerMyContacts;
     private DatabaseReference databaseReference;
@@ -107,6 +110,7 @@ public class EmergencyActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Log.d(TAG,"timer finished");
+                message = "Button not pressed. Time's over.";
                 sendMessageToContact();
             }
         }.start();
@@ -116,6 +120,7 @@ public class EmergencyActivity extends AppCompatActivity {
                 Log.d(TAG, "I'm Okay button pressed");
                 message = "I'm OKay button pressed";
                 countDownTimer.cancel();
+                sendMessageToContact();
                 finish();
             }
         });
@@ -142,6 +147,7 @@ public class EmergencyActivity extends AppCompatActivity {
                     Contact contact = data.getValue(Contact.class);
                     myContactsId.add(contact.getContactIdentifier());
                 }
+                Log.d(TAG,"myContactsId: " + myContactsId.isEmpty());
             }
 
             @Override
@@ -149,7 +155,6 @@ public class EmergencyActivity extends AppCompatActivity {
 
             }
         };
-
     }
 
     @Override
@@ -159,12 +164,15 @@ public class EmergencyActivity extends AppCompatActivity {
     }
 
     private void sendMessageToContact() {
+        createTimeStamp();
+
         Notification notification = new Notification();
         notification.setUserId(accountId);
         notification.setNotification(message);
+        notification.setTimestamp(timeStamp);
 
         databaseReference = FirebaseConnector.getFirebase().child("notifications");
-
+        Log.d(TAG,"myContactsId 2: " + myContactsId.isEmpty());
         for (String myContactId : myContactsId) {
             databaseReference.
                     child(accountId).
@@ -184,5 +192,21 @@ public class EmergencyActivity extends AppCompatActivity {
         String aux = contactName + " " + getResources().getString(R.string.contactContact);
         emergencyTitle.setText(aux);
         emergencyLayout.setBackgroundColor(Color.GREEN);
+        storeNotification();
+    }
+
+    private void storeNotification(){
+        Notification notification = new Notification();
+        notification.setUserId(accountId);
+        notification.setNotification(message);
+        notification.setTimestamp(timeStamp);
+
+        databaseReference = FirebaseConnector.getFirebase().child("accounts");
+        databaseReference.child(accountId).child("notifications").push().setValue(notification);
+    }
+
+    private void createTimeStamp(){
+        Date currentTime = Calendar.getInstance().getTime();
+        timeStamp = currentTime.toString();
     }
 }
