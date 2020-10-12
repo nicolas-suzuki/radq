@@ -46,4 +46,13 @@
     <string name="add_contact_email">Adicione o email do contato</string>
     <string name="save_button">Salvar</string>
     <string name="not_logged_in">Não logado</string>
+    <string name="error_no_email">Por favor digite um email válido</string>
+    <string name="error_contact_not_found">Nenhum contato  encontrado com o email fornecido</string>
+    <string name="error_empty_name_field">Por favor forneça um nome</string>
+    <string name="error_empty_email_field">Por favor forneça um email válido</string>
+    <string name="error_empty_password_field">Por favor forneça uma senha</string>
+    <string name="error_opening_camera_title">Erro ao abrir Câmera</string>
+    <string name="error_opening_camera_message">Por favor verifique se você está logado</string>
+    <string name="alert_not_logged_title">Não logado</string>
+    <string name="alert_not_logged_message">Parece que você não está logado. Por favor faça o login para ter acesso ao RADQ.</string>
 </resources>

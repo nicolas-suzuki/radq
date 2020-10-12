@@ -34,12 +34,12 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private CountDownTimer countDownTimer;
 
-    private Button imOkay;
-    private Button imNotOkay;
-    private ConstraintLayout emergencyLayout;
-    private LinearLayout layoutButtons;
-    private TextView emergencyContactWillBeContactedTxt;
-    private TextView emergencyTitle;
+    private Button btImOkay;
+    private Button btImNotOkay;
+    private ConstraintLayout clEmergency;
+    private LinearLayout llButtons;
+    private TextView tvContactWillBeContacted;
+    private TextView tvEmergencyTitle;
 
     private String accountId;
     private String message;
@@ -69,12 +69,12 @@ public class EmergencyActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //Initializing view contents
-        imOkay = findViewById(R.id.imOkay);
-        imNotOkay = findViewById(R.id.imNotOkay);
-        emergencyLayout = findViewById(R.id.emergencyLayout);
-        emergencyContactWillBeContactedTxt = findViewById(R.id.emergencyContactWillBeContactedTxt);
-        emergencyTitle = findViewById(R.id.emergencyTitle);
-        layoutButtons = findViewById(R.id.layoutButtons);
+        btImOkay = findViewById(R.id.btImOkay);
+        btImNotOkay = findViewById(R.id.btImNotOkay);
+        clEmergency = findViewById(R.id.clEmergency);
+        tvContactWillBeContacted = findViewById(R.id.tvContactWillBeContacted);
+        tvEmergencyTitle = findViewById(R.id.tvEmergencyTitle);
+        llButtons = findViewById(R.id.llButtons);
 
         Settings settings = new Settings(EmergencyActivity.this);
         accountId = settings.getIdentifier();
@@ -93,42 +93,51 @@ public class EmergencyActivity extends AppCompatActivity {
 
                 //TODO change string name/logic
                 String aux = emergencySubtitleTxt + seconds + secondsText;
-                emergencyContactWillBeContactedTxt.setText(aux);
+                tvContactWillBeContacted.setText(aux);
                 if(tick){
-                    imNotOkay.setBackgroundColor(Color.RED);
-                    imNotOkay.setTextColor(Color.WHITE);
+                    btImNotOkay.setBackgroundColor(Color.RED);
+                    btImNotOkay.setTextColor(Color.WHITE);
                     tick = false;
                 } else {
-                    imNotOkay.setBackgroundColor(Color.WHITE);
-                    imNotOkay.setTextColor(Color.RED);
+                    btImNotOkay.setBackgroundColor(Color.WHITE);
+                    btImNotOkay.setTextColor(Color.RED);
                     tick = true;
                 }
             }
             @Override
             public void onFinish() {
+                //TODO static message
                 Log.d(TAG,"timer finished");
                 message = "Button not pressed. Time's over.";
+
                 sendMessageToContact();
+                contactContacted();
             }
         }.start();
-        imOkay.setOnClickListener(new View.OnClickListener() {
+
+        btImOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO static message
                 Log.d(TAG, "I'm Okay button pressed");
                 message = "I'm OKay button pressed";
+
                 countDownTimer.cancel();
                 sendMessageToContact();
                 finish();
             }
         });
 
-        imNotOkay.setOnClickListener(new View.OnClickListener() {
+        btImNotOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO static message
                 Log.d(TAG, "Not Okay button pressed");
                 message = "I'm NOT OKay button pressed";
+
                 countDownTimer.cancel();
                 sendMessageToContact();
+                contactContacted();
             }
         });
 
@@ -144,7 +153,6 @@ public class EmergencyActivity extends AppCompatActivity {
                     Contact contact = data.getValue(Contact.class);
                     myContactsId.add(contact.getContactIdentifier());
                 }
-                Log.d(TAG,"myContactsId: " + myContactsId.isEmpty());
             }
 
             @Override
@@ -161,6 +169,8 @@ public class EmergencyActivity extends AppCompatActivity {
     }
 
     private void sendMessageToContact() {
+        Log.d(TAG,"sendMessageToContact()");
+
         createTimeStamp();
 
         Notification notification = new Notification();
@@ -169,7 +179,6 @@ public class EmergencyActivity extends AppCompatActivity {
         notification.setTimestamp(timeStamp);
 
         databaseReference = FirebaseConnector.getFirebase().child("notifications");
-        Log.d(TAG,"myContactsId 2: " + myContactsId.isEmpty());
         for (String myContactId : myContactsId) {
             databaseReference.
                     child(accountId).
@@ -177,18 +186,21 @@ public class EmergencyActivity extends AppCompatActivity {
                     push().
                     setValue(notification);
         }
-        contactContacted();
-    }
-
-    private void contactContacted(){
-        ((ViewGroup) layoutButtons.getParent()).removeView(layoutButtons);
-        emergencyContactWillBeContactedTxt.setVisibility(View.INVISIBLE);
-        emergencyTitle.setText(getResources().getString(R.string.contacts_contacted));
-        emergencyLayout.setBackgroundColor(Color.GREEN);
         storeNotification();
     }
 
+    private void contactContacted(){
+        Log.d(TAG,"contactContacted()");
+
+        ((ViewGroup) llButtons.getParent()).removeView(llButtons);
+        tvContactWillBeContacted.setVisibility(View.INVISIBLE);
+        tvEmergencyTitle.setText(getResources().getString(R.string.contacts_contacted));
+        clEmergency.setBackgroundColor(Color.GREEN);
+    }
+
     private void storeNotification(){
+        Log.d(TAG,"storeNotification()");
+
         Notification notification = new Notification();
         notification.setUserId(accountId);
         notification.setNotification(message);
@@ -199,6 +211,8 @@ public class EmergencyActivity extends AppCompatActivity {
     }
 
     private void createTimeStamp(){
+        Log.d(TAG,"createTimeStamp()");
+
         Date currentTime = Calendar.getInstance().getTime();
         timeStamp = currentTime.toString();
     }

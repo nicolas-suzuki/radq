@@ -45,7 +45,8 @@ public class AddContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(etContactEmail.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clAddContactActivity), "ERRO. Sem Email", Snackbar.LENGTH_SHORT)
+                    Log.d(TAG, getString(R.string.error_no_email));
+                    Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.error_no_email), Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                 } else {
                     String contactEmail = etContactEmail.getText().toString();
@@ -78,8 +79,8 @@ public class AddContactActivity extends AppCompatActivity {
 
                                 databaseReference.setValue(contact);
                             } else {
-                                Log.d(TAG, "Nao cadastrado");
-                                Snackbar.make(findViewById(R.id.clAddContactActivity), "Não cadastrado.", Snackbar.LENGTH_SHORT)
+                                Log.d(TAG, getString(R.string.error_contact_not_found));
+                                Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.error_contact_not_found), Snackbar.LENGTH_LONG)
                                         .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                             }
                         }

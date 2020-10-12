@@ -48,7 +48,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         //Firebase
         FirebaseConnector.getFirebase();
 
-        mySnackbar = Snackbar.make(findViewById(R.id.clCreateContact), R.string.contact_created, Snackbar.LENGTH_SHORT)
+        mySnackbar = Snackbar.make(findViewById(R.id.clCreateContact), R.string.contact_created, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
         btSaveContact.setOnClickListener(new View.OnClickListener() {
@@ -56,13 +56,13 @@ public class CreateAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 account = new Account();
                 if(etContactName.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), "Nome vazio", Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(R.id.clCreateContact), getString(R.string.error_empty_name_field), Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                 } else if (etContactEmail.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), "Email vazio", Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(R.id.clCreateContact), getString(R.string.error_empty_email_field), Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                 } else if (etContactPassword.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), "Senha Vazia", Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(R.id.clCreateContact), getString(R.string.error_empty_password_field), Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                 } else {
                     account.setName(etContactName.getText().toString());
@@ -75,7 +75,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void setContact(){
-        //contact's information can be null
         FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
         firebaseAuth.createUserWithEmailAndPassword(
                 account.getEmail(),

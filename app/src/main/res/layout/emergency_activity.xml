@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/emergencyLayout"
+    android:id="@+id/clEmergency"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/emergencyTitle"
+            android:id="@+id/tvEmergencyTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/fall_detected_text"
@@ -31,7 +31,7 @@
             android:textSize="60sp" />
 
         <TextView
-            android:id="@+id/emergencyContactWillBeContactedTxt"
+            android:id="@+id/tvContactWillBeContacted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/emergency_contact_will_be_contacted"
@@ -46,13 +46,13 @@
             android:layout_height="20dp" />
 
         <LinearLayout
-            android:id="@+id/layoutButtons"
+            android:id="@+id/llButtons"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/imOkay"
+                android:id="@+id/btImOkay"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -68,7 +68,7 @@
                 android:layout_weight="0.5" />
 
             <Button
-                android:id="@+id/imNotOkay"
+                android:id="@+id/btImNotOkay"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

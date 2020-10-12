@@ -10,8 +10,10 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.aden.radq.adapter.FirebaseConnector;
 import com.aden.radq.helper.Settings;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";
@@ -30,6 +32,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Settings settings;
 
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,17 +46,24 @@ public class SettingsActivity extends AppCompatActivity {
         btMyAccount = findViewById(R.id.btMyAccount);
         btMyContacts = findViewById(R.id.btMyContacts);
 
+        firebaseAuth = FirebaseConnector.getFirebaseAuth();
+
         mySnackbar = Snackbar.make(findViewById(R.id.clSettings), R.string.settings_saved, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
 
         btMyContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(settings.getIdentifier().isEmpty()){
+                if(firebaseAuth.getCurrentUser() != null){
+                    if(settings.getIdentifier().isEmpty()){
+                        Snackbar.make(findViewById(R.id.clSettings), R.string.not_logged_in, Snackbar.LENGTH_SHORT)
+                                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                    } else {
+                        openMyContactsActivity();
+                    }
+                } else {
                     Snackbar.make(findViewById(R.id.clSettings), R.string.not_logged_in, Snackbar.LENGTH_SHORT)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-                } else {
-                    openMyContactsActivity();
                 }
             }
         });

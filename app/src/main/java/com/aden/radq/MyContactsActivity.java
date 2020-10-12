@@ -2,6 +2,7 @@ package com.aden.radq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,7 +49,6 @@ public class MyContactsActivity extends AppCompatActivity {
         setContentView(R.layout.my_contacts_activity);
 
         btAddContact = findViewById(R.id.btAddContact);
-
         myContacts = new ArrayList<>();
 
         lvContacts = (ListView) findViewById(R.id.lvContacts);
@@ -82,6 +82,7 @@ public class MyContactsActivity extends AppCompatActivity {
 
             }
         };
+        databaseReference.addValueEventListener(valueEventListenerMyContacts);
 
         btAddContact.setOnClickListener(new View.OnClickListener() {
             @Override

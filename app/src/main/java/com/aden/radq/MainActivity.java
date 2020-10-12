@@ -6,15 +6,26 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.aden.radq.adapter.FirebaseConnector;
 import com.aden.radq.helper.Settings;
+import com.aden.radq.model.Contact;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,11 +33,21 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_CODE = 1;
 
+    private DatabaseReference databaseReference;
+
+    private ValueEventListener valueEventListenerMyContacts;
+
+    private ArrayList<String> myContacts;
+
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkPermissions();
         workOnAdditionalFiles();
+
+        firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
         setContentView(R.layout.main_activity);
 
@@ -47,12 +68,36 @@ public class MainActivity extends AppCompatActivity {
         //Get the saved preferences and check if there's a contact registered
         //if not, it won't start the CameraActivity and will show up a message
         Settings settings = new Settings(MainActivity.this);
-        Log.d(TAG,settings.getIdentifier());
-        if(settings.getIdentifier().isEmpty()){
-            alertDialogBox();
+        //Log.d(TAG,settings.getIdentifier());
+
+        myContacts = new ArrayList<>();
+
+        if(firebaseAuth.getCurrentUser() != null){
+            databaseReference = FirebaseConnector.getFirebase().child("contacts").child(settings.getIdentifier());
+            valueEventListenerMyContacts = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    myContacts.clear();
+                    for(DataSnapshot data : snapshot.getChildren()){
+                        Contact contact = data.getValue(Contact.class);
+                        myContacts.add(contact.getName());
+                    }
+                    if(myContacts.isEmpty()){
+                        alertDialogBox(getString(R.string.contact_alert_dialog_title),getString(R.string.contact_alert_dialog_message) );
+                    } else {
+                        Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+            databaseReference.addValueEventListener(valueEventListenerMyContacts);
         } else {
-            Intent intent = new Intent(this, CameraActivity.class);
-            startActivity(intent);
+            alertDialogBox(getString(R.string.alert_not_logged_title), getString(R.string.alert_not_logged_message));
         }
     }
 
@@ -62,8 +107,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openNotificationsActivity(){
-        Intent intent = new Intent(this, NotificationsActivity.class);
-        startActivity(intent);
+        if(firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(this, NotificationsActivity.class);
+            startActivity(intent);
+        } else {
+            alertDialogBox(getString(R.string.alert_not_logged_title), getString(R.string.alert_not_logged_message));
+        }
+
     }
 
     public void openSettingsActivity(){
@@ -141,10 +191,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Dialog box to warn the user about not defining a contact in the application settings
-    private void alertDialogBox(){
+    private void alertDialogBox(String title, String message){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle(getString(R.string.contact_alert_dialog_title));
-        dialog.setMessage(getString(R.string.contact_alert_dialog_message));
+        dialog.setTitle(title);
+        dialog.setMessage(message);
         dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
