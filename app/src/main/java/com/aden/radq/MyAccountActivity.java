@@ -1,9 +1,11 @@
 package com.aden.radq;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -45,6 +47,7 @@ public class MyAccountActivity extends AppCompatActivity {
         btAccountLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeKeyboard();
                 if(!isUserConnected()){
                     account = new Account();
                     if(etAccountEmail.getText().toString().isEmpty()){
@@ -131,5 +134,13 @@ public class MyAccountActivity extends AppCompatActivity {
     private void createAccount(){
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
+    }
+
+    private void closeKeyboard(){
+        View view = this.getCurrentFocus();
+        if(view != null){
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
     }
 }

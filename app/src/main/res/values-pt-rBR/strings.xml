@@ -55,4 +55,6 @@
     <string name="error_opening_camera_message">Por favor verifique se você está logado</string>
     <string name="alert_not_logged_title">Não logado</string>
     <string name="alert_not_logged_message">Parece que você não está logado. Por favor faça o login para ter acesso ao RADQ.</string>
+    <string name="contact_added_successfully">Contato adicionado com sucesso</string>
+    <string name="unknown_error_adding_contact">Erro desconhecido ao adicionar contato</string>
 </resources>

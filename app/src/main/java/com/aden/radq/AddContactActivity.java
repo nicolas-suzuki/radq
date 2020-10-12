@@ -1,8 +1,10 @@
 package com.aden.radq;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -14,6 +16,8 @@ import com.aden.radq.helper.Base64Custom;
 import com.aden.radq.helper.Settings;
 import com.aden.radq.model.Account;
 import com.aden.radq.model.Contact;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -77,7 +81,20 @@ public class AddContactActivity extends AppCompatActivity {
                                         child(loggedUserID).
                                         child(contactIdentifier);
 
-                                databaseReference.setValue(contact);
+                                databaseReference.setValue(contact).addOnCompleteListener(AddContactActivity.this, new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Log.d(TAG, getString(R.string.contact_added_successfully));
+                                            Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.contact_added_successfully), Snackbar.LENGTH_LONG)
+                                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                                        } else {
+                                            Log.d(TAG, getString(R.string.unknown_error_adding_contact));
+                                            Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.unknown_error_adding_contact), Snackbar.LENGTH_LONG)
+                                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                                        }
+                                    }
+                                });
                             } else {
                                 Log.d(TAG, getString(R.string.error_contact_not_found));
                                 Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.error_contact_not_found), Snackbar.LENGTH_LONG)

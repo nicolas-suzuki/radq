@@ -6,16 +6,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aden.radq.adapter.FirebaseConnector;
 import com.aden.radq.adapter.NotificationAdapter;
 import com.aden.radq.helper.Settings;
-import com.aden.radq.model.Contact;
 import com.aden.radq.model.Notification;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

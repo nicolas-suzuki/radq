@@ -58,4 +58,6 @@
     <string name="error_opening_camera_message">Please verify if you are logged in</string>
     <string name="alert_not_logged_title">Not logged</string>
     <string name="alert_not_logged_message">Looks like you are not logged. Please login to acess RADQ.</string>
+    <string name="contact_added_successfully">Contact added successfully</string>
+    <string name="unknown_error_adding_contact">Unknown error adding contact</string>
 </resources>
