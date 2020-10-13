@@ -27,7 +27,7 @@ public class Settings {
     }
 
     public String getIdentifier(){
-        return sharedPreferences.getString(IDENTIFIER_KEY,null);
+        return sharedPreferences.getString(IDENTIFIER_KEY,"");
     }
 
     public void setSwitchCameraFrontBack(Boolean switchCameraFrontBack){

@@ -16,4 +16,6 @@
     <string name="account_email" translatable="false">Email</string>
     <string name="account_password">Password</string>
     <string name="create_account">Create account</string>
+    <string name="create_account_description">Create a new account</string>
+    <string name="my_account_description">Login to your RADQ account or create a new one</string>
 </resources>

@@ -2,6 +2,7 @@ package com.aden.radq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,23 +49,24 @@ public class MyContactsActivity extends AppCompatActivity {
         setContentView(R.layout.my_contacts_activity);
 
         btAddContact = findViewById(R.id.btAddContact);
-        myContacts = new ArrayList<>();
+        lvContacts = findViewById(R.id.lvContacts);
 
-        lvContacts = (ListView) findViewById(R.id.lvContacts);
+        myContacts = new ArrayList<>();
         arrayAdapter = new ArrayAdapter(
                 MyContactsActivity.this,
                 android.R.layout.simple_list_item_1,
                 myContacts
         );
-
         lvContacts.setAdapter(arrayAdapter);
 
         Settings settings = new Settings(MyContactsActivity.this);
         String ID = settings.getIdentifier();
+
         databaseReference = FirebaseConnector.getFirebase().
                 child("contacts").
                 child(ID);
 
+        Log.d(TAG, "isMyContactsEmpty1: " + myContacts.isEmpty());
         valueEventListenerMyContacts = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -73,6 +75,7 @@ public class MyContactsActivity extends AppCompatActivity {
                     Contact contact = data.getValue(Contact.class);
                     myContacts.add(contact.getName());
                 }
+                Log.d(TAG, "isMyContactsEmpty2: " + myContacts.isEmpty());
                 arrayAdapter.notifyDataSetChanged();
             }
 

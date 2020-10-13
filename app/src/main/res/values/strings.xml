@@ -54,10 +54,11 @@
     <string name="error_empty_name_field">Please provide a name</string>
     <string name="error_empty_email_field">Please provide a valid email</string>
     <string name="error_empty_password_field">Please provide a password</string>
-    <string name="error_opening_camera_title">Error opening Camera</string>
-    <string name="error_opening_camera_message">Please verify if you are logged in</string>
     <string name="alert_not_logged_title">Not logged</string>
     <string name="alert_not_logged_message">Looks like you are not logged. Please login to acess RADQ.</string>
     <string name="contact_added_successfully">Contact added successfully</string>
     <string name="unknown_error_adding_contact">Unknown error adding contact</string>
+    <string name="logged_out">Logged out</string>
+    <string name="logged_in">Logged in!</string>
+    <string name="unknown_error_logging_in">Unkown error while logging in</string>
 </resources>

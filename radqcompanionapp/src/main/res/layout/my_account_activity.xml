@@ -26,7 +26,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:text="@string/my_account_description"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                     />
+                    android:text="@string/account_email"/>
 
                 <EditText
                     android:id="@+id/etAccountEmail"
@@ -54,7 +54,6 @@
                     android:layout_weight="3"
                     android:autofillHints=""
                     android:ems="10"
-
                     android:inputType="textEmailAddress" />
             </LinearLayout>
 
@@ -69,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                     />
+                    android:text="@string/account_password"/>
 
                 <EditText
                     android:id="@+id/etAccountPassword"
@@ -92,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/buttonshape"
-
+                android:text="@string/login_button"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/buttonshape"
-
+            android:text="@string/create_account"
             android:textColor="#FFFFFF" />
 
         <Space

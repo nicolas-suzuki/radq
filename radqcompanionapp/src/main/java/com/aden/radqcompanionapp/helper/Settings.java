@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 public class Settings {
     private Context context;
     private SharedPreferences sharedPreferences;
-    private final String ARCHIVE = "radq.preferences";
+    private final String ARCHIVE = "radqcompanionapp.preferences";
     private final int MODE = 0;
     private SharedPreferences.Editor editor;
 
@@ -26,6 +26,11 @@ public class Settings {
     }
 
     public String getIdentifier(){
-        return sharedPreferences.getString(IDENTIFIER_KEY,null);
+        return sharedPreferences.getString(IDENTIFIER_KEY,"");
+    }
+
+    public void setIdentifier (String contactID){
+        editor.putString(IDENTIFIER_KEY, contactID);
+        editor.commit();
     }
 }

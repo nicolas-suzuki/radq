@@ -51,12 +51,12 @@ public class MyAccountActivity extends AppCompatActivity {
                 if(!isUserConnected()){
                     account = new Account();
                     if(etAccountEmail.getText().toString().isEmpty()){
-                        Log.d(TAG,"Email Vazio");
-                        Snackbar.make(findViewById(R.id.LoginActivity), "Email vazio", Snackbar.LENGTH_LONG)
+                        Log.d(TAG,getString(R.string.error_empty_email_field));
+                        Snackbar.make(findViewById(R.id.LoginActivity), R.string.error_empty_email_field, Snackbar.LENGTH_LONG)
                                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                     } else if(etAccountPassword.getText().toString().isEmpty()) {
-                        Log.d(TAG,"Senha Vazia");
-                        Snackbar.make(findViewById(R.id.LoginActivity), "Senha vazia", Snackbar.LENGTH_LONG)
+                        Log.d(TAG,getString(R.string.error_empty_password_field));
+                        Snackbar.make(findViewById(R.id.LoginActivity), R.string.error_empty_password_field, Snackbar.LENGTH_LONG)
                                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                     } else {
                         account.setEmail(etAccountEmail.getText().toString());
@@ -94,7 +94,7 @@ public class MyAccountActivity extends AppCompatActivity {
         Log.d(TAG,"ValidateLogout()");
         FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
         firebaseAuth.signOut();
-        Snackbar.make(findViewById(R.id.LoginActivity), "Logged out", Snackbar.LENGTH_LONG)
+        Snackbar.make(findViewById(R.id.LoginActivity), R.string.logged_out, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
         Settings settings = new Settings(MyAccountActivity.this);
         settings.setIdentifier("");
@@ -113,7 +113,7 @@ public class MyAccountActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Snackbar.make(findViewById(R.id.LoginActivity), "Sucesso", Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(R.id.LoginActivity), R.string.logged_in, Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                     etAccountEmail.setEnabled(false);
                     etAccountPassword.setEnabled(false);
@@ -124,7 +124,7 @@ public class MyAccountActivity extends AppCompatActivity {
                     settings.setIdentifier(accountIdentifier);
 
                 } else {
-                    Snackbar.make(findViewById(R.id.LoginActivity), "Erro", Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(R.id.LoginActivity), R.string.unknown_error_logging_in, Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                 }
             }

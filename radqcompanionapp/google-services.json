@@ -42,6 +42,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884321221831:android:c4e44f1a128f451e29d2e2",
+        "android_client_info": {
+          "package_name": "com.aden.radqcompanionapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884321221831-ufin505n8dlpri0b2r77g1nmfn27ajha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpsivrslx0Stwdunxt9uXFK6E8Gp9sEgg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884321221831-ufin505n8dlpri0b2r77g1nmfn27ajha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

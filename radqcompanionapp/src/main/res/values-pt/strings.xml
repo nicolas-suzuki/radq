@@ -15,4 +15,6 @@
     <string name="contact_name">Nome</string>
     <string name="account_password">Senha</string>
     <string name="create_account">Criar conta</string>
+    <string name="create_account_description">Crie uma nova conta</string>
+    <string name="my_account_description">Conecte-se à sua conta RADQ ou crie uma</string>
 </resources>

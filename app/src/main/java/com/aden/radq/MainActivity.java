@@ -46,6 +46,17 @@ public class MainActivity extends AppCompatActivity {
         workOnAdditionalFiles();
 
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
+        Settings settings = new Settings(MainActivity.this);
+        if(settings.getIdentifier() != null) {
+            if ((settings.getIdentifier().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {
+                Log.d(TAG, "Logging out, since settings is empty");
+                firebaseAuth.signOut();
+            }
+            if ((firebaseAuth.getCurrentUser() == null) && (!settings.getIdentifier().isEmpty())) {
+                Log.d(TAG, "Setting settings as empty, since logged out");
+                settings.setIdentifier("");
+            }
+        }
 
         setContentView(R.layout.main_activity);
 
