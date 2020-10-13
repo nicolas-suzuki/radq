@@ -47,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
         Settings settings = new Settings(MainActivity.this);
-        if(settings.getIdentifier() != null) {
-            if ((settings.getIdentifier().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {
+        if(settings.getIdentifierKey() != null) {
+            if ((settings.getIdentifierKey().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {
                 Log.d(TAG, "Logging out, since settings is empty");
                 firebaseAuth.signOut();
             }
-            if ((firebaseAuth.getCurrentUser() == null) && (!settings.getIdentifier().isEmpty())) {
+            if ((firebaseAuth.getCurrentUser() == null) && (!settings.getIdentifierKey().isEmpty())) {
                 Log.d(TAG, "Setting settings as empty, since logged out");
-                settings.setIdentifier("");
+                settings.setIdentifierKey("");
             }
         }
 
@@ -77,12 +77,14 @@ public class MainActivity extends AppCompatActivity {
         //Get the saved preferences and check if there's a contact registered
         //if not, it won't start the CameraActivity and will show up a message
         Settings settings = new Settings(MainActivity.this);
-        //Log.d(TAG,settings.getIdentifier());
+        Log.d(TAG,settings.getIdentifierKey());
 
         myContacts = new ArrayList<>();
 
         if(firebaseAuth.getCurrentUser() != null){
-            databaseReference = FirebaseConnector.getFirebase().child("contacts").child(settings.getIdentifier());
+            databaseReference = FirebaseConnector.getFirebase().
+                    child("contacts").
+                    child(settings.getIdentifierKey());
             valueEventListenerMyContacts = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

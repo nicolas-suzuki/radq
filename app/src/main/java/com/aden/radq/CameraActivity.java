@@ -82,7 +82,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         //Get saved preferences
         Settings settings = new Settings(CameraActivity.this);
 
-        if(settings.getIdentifier().isEmpty()){
+        if(settings.getIdentifierKey().isEmpty()){
             //This is the second counter measure to forbid the start of the cameraActivity without
             //an emergency contact set up. First is at the MainActivity level.
             finish();
@@ -162,7 +162,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        //Log.d(TAG, "new frame");
         Mat frame = inputFrame.rgba();
         if (isYoloStarted) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
@@ -299,11 +298,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         return frame;
                     }
                 }
-            } else {
-                //Log.d(TAG, "what else? empty/non detected frame?");
             }
         } //End if (startYolo)
-        //Log.d(TAG, "end frame");
         return frame;
     }
 

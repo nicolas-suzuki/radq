@@ -54,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(firebaseAuth.getCurrentUser() != null){
-                    if(settings.getIdentifier().isEmpty()){
+                    if(settings.getIdentifierKey().isEmpty()){
                         Snackbar.make(findViewById(R.id.clSettings), R.string.not_logged_in, Snackbar.LENGTH_SHORT)
                                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
                     } else {

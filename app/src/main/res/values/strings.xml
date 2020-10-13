@@ -61,4 +61,7 @@
     <string name="logged_out">Logged out</string>
     <string name="logged_in">Logged in!</string>
     <string name="unknown_error_logging_in">Unkown error while logging in</string>
+    <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Button \"I\'m okay\" pressed after fall detected or after alarm went off.</string>
+    <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Button \"HELP\" pressed after fall detected or after alarm went off.</string>
+    <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Buttons not pressed. Time\'s over. After fall detected or after alarm went off.</string>
 </resources>

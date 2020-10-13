@@ -21,12 +21,12 @@ public class Settings {
         editor = sharedPreferences.edit();
     }
 
-    public void setIdentifier (String contactID){
+    public void setIdentifierKey(String contactID){
         editor.putString(IDENTIFIER_KEY, contactID);
         editor.commit();
     }
 
-    public String getIdentifier(){
+    public String getIdentifierKey(){
         return sharedPreferences.getString(IDENTIFIER_KEY,"");
     }
 

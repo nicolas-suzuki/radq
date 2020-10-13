@@ -33,28 +33,34 @@ public class AddContactActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
 
+    private Settings settings;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_contact_activity);
 
-        firebaseAuth = FirebaseConnector.getFirebaseAuth();
-
         btAddContact = findViewById(R.id.btAddContact);
         etContactEmail = findViewById(R.id.etAccountEmail);
+
+        //Firebase
+        firebaseAuth = FirebaseConnector.getFirebaseAuth();
+
+        settings = new Settings(AddContactActivity.this);
 
         btAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(etContactEmail.getText().toString().isEmpty()){
                     Log.d(TAG, getString(R.string.error_no_email));
-                    Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.error_no_email), Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                    showSnackbar(getString(R.string.error_no_email));
                 } else {
                     String contactEmail = etContactEmail.getText().toString();
                     contactIdentifier = Base64Custom.encodeBase64(contactEmail);
 
-                    databaseReference = FirebaseConnector.getFirebase().child("accounts").child(contactIdentifier);
+                    databaseReference = FirebaseConnector.getFirebase().
+                            child("accounts").
+                            child(contactIdentifier);
 
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -66,8 +72,7 @@ public class AddContactActivity extends AppCompatActivity {
                                 Account contactAccount = snapshot.getValue(Account.class);
 
                                 //Get current logged account
-                                Settings settings = new Settings(AddContactActivity.this);
-                                String loggedUserID = settings.getIdentifier();
+                                String loggedUserID = settings.getIdentifierKey();
 
                                 Contact contact = new Contact();
                                 contact.setContactIdentifier(contactIdentifier);
@@ -84,19 +89,16 @@ public class AddContactActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
                                             Log.d(TAG, getString(R.string.contact_added_successfully));
-                                            Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.contact_added_successfully), Snackbar.LENGTH_LONG)
-                                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                                            showSnackbar(getString(R.string.contact_added_successfully));
                                         } else {
                                             Log.d(TAG, getString(R.string.unknown_error_adding_contact));
-                                            Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.unknown_error_adding_contact), Snackbar.LENGTH_LONG)
-                                                    .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                                            showSnackbar(getString(R.string.unknown_error_adding_contact));
                                         }
                                     }
                                 });
                             } else {
                                 Log.d(TAG, getString(R.string.error_contact_not_found));
-                                Snackbar.make(findViewById(R.id.clAddContactActivity), getString(R.string.error_contact_not_found), Snackbar.LENGTH_LONG)
-                                        .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                                showSnackbar(getString(R.string.error_contact_not_found));
                             }
                         }
 
@@ -109,4 +111,10 @@ public class AddContactActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void showSnackbar(String message){
+        Snackbar.make(findViewById(R.id.clAddContactActivity), message, Snackbar.LENGTH_LONG)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+    }
+
 }

@@ -1,17 +1,8 @@
 package com.aden.radq.model;
 
 public class Notification {
-    private String userId;
     private String notification;
     private String timestamp;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getNotification() {
         return notification;

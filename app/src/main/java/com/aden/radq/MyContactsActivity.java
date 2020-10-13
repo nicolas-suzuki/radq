@@ -60,13 +60,12 @@ public class MyContactsActivity extends AppCompatActivity {
         lvContacts.setAdapter(arrayAdapter);
 
         Settings settings = new Settings(MyContactsActivity.this);
-        String ID = settings.getIdentifier();
+        String ID = settings.getIdentifierKey();
 
         databaseReference = FirebaseConnector.getFirebase().
                 child("contacts").
                 child(ID);
 
-        Log.d(TAG, "isMyContactsEmpty1: " + myContacts.isEmpty());
         valueEventListenerMyContacts = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -75,7 +74,6 @@ public class MyContactsActivity extends AppCompatActivity {
                     Contact contact = data.getValue(Contact.class);
                     myContacts.add(contact.getName());
                 }
-                Log.d(TAG, "isMyContactsEmpty2: " + myContacts.isEmpty());
                 arrayAdapter.notifyDataSetChanged();
             }
 

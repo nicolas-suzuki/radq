@@ -48,6 +48,7 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private ValueEventListener valueEventListenerMyContacts;
     private DatabaseReference databaseReference;
+    private Settings settings;
 
     private ArrayList<String> myContactsId;
 
@@ -77,11 +78,10 @@ public class EmergencyActivity extends AppCompatActivity {
         tvEmergencyTitle = findViewById(R.id.tvEmergencyTitle);
         llButtons = findViewById(R.id.llButtons);
 
-        Settings settings = new Settings(EmergencyActivity.this);
-        accountId = settings.getIdentifier();
+        settings = new Settings(EmergencyActivity.this);
+        accountId = settings.getIdentifierKey();
 
-        String emergencySubtitleTxt = getString(R.string.emergency_contact_will_be_contacted);
-        String secondsText = getString(R.string.secondsTxt);
+        myContactsId = new ArrayList<>();
 
         Log.d(TAG, "Timer Started");
         countDownTimer = new CountDownTimer(30000,1000){
@@ -92,8 +92,9 @@ public class EmergencyActivity extends AppCompatActivity {
 
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
 
-                //TODO change string name/logic
-                String aux = emergencySubtitleTxt + seconds + secondsText;
+                String aux = getString(R.string.emergency_contact_will_be_contacted) +
+                        seconds +
+                        getString(R.string.secondsTxt);
                 tvContactWillBeContacted.setText(aux);
                 if(tick){
                     btImNotOkay.setBackgroundColor(Color.RED);
@@ -107,10 +108,8 @@ public class EmergencyActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                //TODO static message
-                Log.d(TAG,"timer finished");
-                message = "Button not pressed. Time's over.";
-
+                //Button not pressed, time's over
+                message = "YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg";
                 sendMessageAndStore();
                 contactContacted();
             }
@@ -119,10 +118,8 @@ public class EmergencyActivity extends AppCompatActivity {
         btImOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO static message
-                Log.d(TAG, "I'm Okay button pressed");
-                message = "I'm OKay button pressed";
-
+                //OKAY Button pressed
+                message = "aW1va2F5YnV0dG9ucHJlc3NlZA";
                 countDownTimer.cancel();
                 sendMessageAndStore();
                 finish();
@@ -132,19 +129,17 @@ public class EmergencyActivity extends AppCompatActivity {
         btImNotOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO static message
-                Log.d(TAG, "Not Okay button pressed");
-                message = "I'm NOT OKay button pressed";
-
+                //NOT okay Button pressed
+                message = "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA";
                 countDownTimer.cancel();
                 sendMessageAndStore();
                 contactContacted();
             }
         });
 
-        myContactsId = new ArrayList<>();
         databaseReference = FirebaseConnector.getFirebase().
-                child("contacts").child(accountId);
+                child("contacts").
+                child(accountId);
 
         valueEventListenerMyContacts = new ValueEventListener() {
             @Override
@@ -161,6 +156,7 @@ public class EmergencyActivity extends AppCompatActivity {
 
             }
         };
+        databaseReference.addValueEventListener(valueEventListenerMyContacts);
     }
 
     @Override
@@ -175,7 +171,6 @@ public class EmergencyActivity extends AppCompatActivity {
         String timeStamp = createTimeStamp();
 
         Notification notification = new Notification();
-        notification.setUserId(accountId);
         notification.setNotification(message);
         notification.setTimestamp(timeStamp);
 

@@ -1,10 +1,14 @@
 package com.aden.radq.model;
 
+import android.util.Log;
+
 import com.aden.radq.adapter.FirebaseConnector;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
 public class Account {
+    private static final String TAG = "Account";
+
     private String id;
     private String name;
     private String email;
@@ -15,8 +19,12 @@ public class Account {
     }
 
     public void saveContact(){
+        Log.d(TAG,"saveContact()");
         DatabaseReference databaseReference = FirebaseConnector.getFirebase();
-        databaseReference.child("accounts").child(getId()).setValue(this);
+        databaseReference.
+                child("accounts").
+                child(getId()).
+                setValue(this);
     }
 
     @Exclude

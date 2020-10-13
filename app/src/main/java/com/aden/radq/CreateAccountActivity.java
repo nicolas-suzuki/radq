@@ -1,6 +1,7 @@
 package com.aden.radq;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +32,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText etContactPassword;
     private EditText etContactEmail;
     private Button btSaveContact;
-    private Snackbar mySnackbar;
+    private FirebaseAuth firebaseAuth;
+
+    private Settings settings;
 
     private Account account;
 
@@ -46,24 +49,20 @@ public class CreateAccountActivity extends AppCompatActivity {
         btSaveContact = findViewById(R.id.btAddContact);
 
         //Firebase
-        FirebaseConnector.getFirebase();
+        firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
-        mySnackbar = Snackbar.make(findViewById(R.id.clCreateContact), R.string.contact_created, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+        settings = new Settings(CreateAccountActivity.this);
 
         btSaveContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 account = new Account();
                 if(etContactName.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), getString(R.string.error_empty_name_field), Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                    showSnackbar(getString(R.string.error_empty_name_field));
                 } else if (etContactEmail.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), getString(R.string.error_empty_email_field), Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                    showSnackbar(getString(R.string.error_empty_email_field));
                 } else if (etContactPassword.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), getString(R.string.error_empty_password_field), Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                    showSnackbar(getString(R.string.error_empty_password_field));
                 } else {
                     account.setName(etContactName.getText().toString());
                     account.setEmail(etContactEmail.getText().toString());
@@ -75,7 +74,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void setContact(){
-        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
+        Log.d(TAG,"setContact()");
         firebaseAuth.createUserWithEmailAndPassword(
                 account.getEmail(),
                 account.getPassword()
@@ -83,15 +82,13 @@ public class CreateAccountActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    mySnackbar.show();
-
                     String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
                     account.setId(accountIdentifier);
                     account.saveContact();
 
-                    Settings settings = new Settings(CreateAccountActivity.this);
-                    settings.setIdentifier(accountIdentifier);
+                    settings.setIdentifierKey(accountIdentifier);
 
+                    showSnackbar(getString(R.string.contact_created));
                 } else {
                     String exceptionError = "";
                     try {
@@ -123,4 +120,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }
+
+    private void showSnackbar(String message){
+        Snackbar.make(findViewById(R.id.clCreateContact), message, Snackbar.LENGTH_LONG)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+    }
+
 }

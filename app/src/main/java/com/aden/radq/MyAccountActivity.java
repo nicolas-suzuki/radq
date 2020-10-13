@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,8 @@ public class MyAccountActivity extends AppCompatActivity {
     private EditText etAccountPassword;
     private Button btAccountLogin;
     private Button btCreateAccount;
+    private FirebaseAuth firebaseAuth;
+    private Settings settings;
 
     private Account account;
 
@@ -42,23 +45,28 @@ public class MyAccountActivity extends AppCompatActivity {
         btAccountLogin = findViewById(R.id.btAccountLogin);
         btCreateAccount = findViewById(R.id.btCreateAccount);
 
-        isUserConnected();
+        //Firebase
+        firebaseAuth = FirebaseConnector.getFirebaseAuth();
+        if (firebaseAuth.getCurrentUser() != null){
+            setViewsAsConnected();
+        }
+
+        settings = new Settings(MyAccountActivity.this);
 
         btAccountLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeKeyboard();
                 if(!isUserConnected()){
-                    account = new Account();
                     if(etAccountEmail.getText().toString().isEmpty()){
                         Log.d(TAG,getString(R.string.error_empty_email_field));
-                        Snackbar.make(findViewById(R.id.LoginActivity), R.string.error_empty_email_field, Snackbar.LENGTH_LONG)
-                                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                        showSnackbar(getString(R.string.error_empty_email_field));
                     } else if(etAccountPassword.getText().toString().isEmpty()) {
                         Log.d(TAG,getString(R.string.error_empty_password_field));
-                        Snackbar.make(findViewById(R.id.LoginActivity), R.string.error_empty_password_field, Snackbar.LENGTH_LONG)
-                                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                        showSnackbar(getString(R.string.error_empty_password_field));
                     } else {
+                        Log.d(TAG,"new Account()");
+                        account = new Account();
                         account.setEmail(etAccountEmail.getText().toString());
                         account.setPassword(etAccountPassword.getText().toString());
 
@@ -79,25 +87,30 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     private boolean isUserConnected() {
-        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
+        Log.d(TAG,"isUserConnected()");
         if(firebaseAuth.getCurrentUser() != null){
-            etAccountEmail.setText(firebaseAuth.getCurrentUser().getEmail());
-            etAccountEmail.setEnabled(false);
-            etAccountPassword.setEnabled(false);
-            btAccountLogin.setText(getText(R.string.logout_button));
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
+
+    private void setViewsAsConnected(){
+        etAccountEmail.setText(firebaseAuth.getCurrentUser().getEmail());
+        etAccountEmail.setEnabled(false);
+        etAccountPassword.setEnabled(false);
+        etAccountPassword.setActivated(false);
+
+        btAccountLogin.setText(getText(R.string.logout_button));
+    }
+
 
     private void validateLogout(){
         Log.d(TAG,"ValidateLogout()");
-        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
         firebaseAuth.signOut();
-        Snackbar.make(findViewById(R.id.LoginActivity), R.string.logged_out, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-        Settings settings = new Settings(MyAccountActivity.this);
-        settings.setIdentifier("");
+        showSnackbar(getString(R.string.logged_out));
+
+        settings.setIdentifierKey("");
         etAccountEmail.setEnabled(true);
         etAccountPassword.setEnabled(true);
         btAccountLogin.setText(getText(R.string.login_button));
@@ -105,7 +118,6 @@ public class MyAccountActivity extends AppCompatActivity {
 
     private void validateLogin() {
         Log.d(TAG, "ValidateLogin()");
-        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
         firebaseAuth.signInWithEmailAndPassword(
                 account.getEmail(),
                 account.getPassword()
@@ -113,19 +125,14 @@ public class MyAccountActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Snackbar.make(findViewById(R.id.LoginActivity), R.string.logged_in, Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-                    etAccountEmail.setEnabled(false);
-                    etAccountPassword.setEnabled(false);
-                    btAccountLogin.setText(getText(R.string.logout_button));
+                    setViewsAsConnected();
 
-                    Settings settings = new Settings(MyAccountActivity.this);
                     String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
-                    settings.setIdentifier(accountIdentifier);
+                    settings.setIdentifierKey(accountIdentifier);
 
+                    showSnackbar(getString(R.string.logged_in));
                 } else {
-                    Snackbar.make(findViewById(R.id.LoginActivity), R.string.unknown_error_logging_in, Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                    showSnackbar(getString(R.string.unknown_error_logging_in));
                 }
             }
         });
@@ -142,5 +149,10 @@ public class MyAccountActivity extends AppCompatActivity {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
         }
+    }
+
+    private void showSnackbar(String message){
+        Snackbar.make(findViewById(R.id.clMyAccountActivity), message, Snackbar.LENGTH_LONG)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 }

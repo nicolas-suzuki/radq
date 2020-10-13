@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/LoginActivity">
+    android:id="@+id/clMyAccountActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/contactPasswordTxt"
+                    android:id="@+id/tvAccountPassword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

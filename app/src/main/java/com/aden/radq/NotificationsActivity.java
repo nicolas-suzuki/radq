@@ -36,6 +36,13 @@ public class NotificationsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        databaseReference.addValueEventListener(valueEventListenerNotifications);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseReference.removeEventListener(valueEventListenerNotifications);
     }
 
     @Override
@@ -45,9 +52,12 @@ public class NotificationsActivity extends AppCompatActivity {
             setContentView(R.layout.notifications_activity);
 
             Settings settings = new Settings(NotificationsActivity.this);
-            accountId = settings.getIdentifier();
+            accountId = settings.getIdentifierKey();
 
-            databaseReference = FirebaseConnector.getFirebase().child("accounts").child(accountId).child("notifications");
+            databaseReference = FirebaseConnector.getFirebase().
+                    child("accounts").
+                    child(accountId).
+                    child("notifications");
 
             notifications = new ArrayList<>();
 
@@ -74,18 +84,6 @@ public class NotificationsActivity extends AppCompatActivity {
                     Log.d(TAG, "valueEventListenerNotifications. onCancelled");
                 }
             };
-            Log.d(TAG, "notifications: " + notifications.isEmpty());
-
             databaseReference.addValueEventListener(valueEventListenerNotifications);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try{
-            databaseReference.removeEventListener(valueEventListenerNotifications);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }
