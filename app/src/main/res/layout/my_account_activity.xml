@@ -34,48 +34,57 @@
                 android:layout_height="20dp" />
 
             <LinearLayout
+                android:id="@+id/llLoginFields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/contact_email" />
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/etCreateAccountEmail"
-                    android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/contact_email" />
+
+                    <EditText
+                        android:id="@+id/etCreateAccountEmail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="@string/groupEmail"
+                        android:inputType="textEmailAddress" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPassword"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:hint="@string/groupEmail"
-                    android:inputType="textEmailAddress" />
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/contact_password" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/contact_password" />
+                    <EditText
+                        android:id="@+id/etAccountPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:inputType="textPassword" />
 
-                <EditText
-                    android:id="@+id/etAccountPassword"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:inputType="textPassword" />
+                </LinearLayout>
 
             </LinearLayout>
 

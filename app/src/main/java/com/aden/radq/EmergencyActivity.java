@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class EmergencyActivity extends AppCompatActivity {
     private LinearLayout llButtons;
     private TextView tvContactWillBeContacted;
     private TextView tvEmergencyTitle;
+    private Space spaceEmergency;
 
     private String accountId;
     private String message;
@@ -69,6 +71,7 @@ public class EmergencyActivity extends AppCompatActivity {
         tvContactWillBeContacted = findViewById(R.id.tvContactWillBeContacted);
         tvEmergencyTitle = findViewById(R.id.tvEmergencyTitle);
         llButtons = findViewById(R.id.llButtons);
+        spaceEmergency = findViewById(R.id.spaceEmergency);
 
         //Settings
         Settings settings = new Settings(EmergencyActivity.this);
@@ -183,7 +186,9 @@ public class EmergencyActivity extends AppCompatActivity {
         Log.d(TAG,"contactContacted()");
 
         ((ViewGroup) llButtons.getParent()).removeView(llButtons);
-        tvContactWillBeContacted.setVisibility(View.INVISIBLE);
+        ((ViewGroup) spaceEmergency.getParent()).removeView(spaceEmergency);
+        ((ViewGroup) tvContactWillBeContacted.getParent()).removeView(tvContactWillBeContacted);
+
         tvEmergencyTitle.setText(getResources().getString(R.string.contacts_contacted));
         clEmergency.setBackgroundColor(Color.GREEN);
     }

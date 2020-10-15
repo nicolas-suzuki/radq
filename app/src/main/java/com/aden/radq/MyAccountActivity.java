@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +27,9 @@ public class MyAccountActivity extends AppCompatActivity {
     private Button btAccountLogin;
     private FirebaseAuth firebaseAuth;
     private Settings settings;
+    private LinearLayout llPassword;
+    private LinearLayout llLoginFields;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,8 @@ public class MyAccountActivity extends AppCompatActivity {
         etAccountPassword = findViewById(R.id.etAccountPassword);
         btAccountLogin = findViewById(R.id.btAccountLogin);
         Button btCreateAccount = findViewById(R.id.btCreateAccount);
+        llPassword = findViewById(R.id.llPassword);
+        llLoginFields = findViewById(R.id.llLoginFields);
 
         //Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
@@ -75,7 +82,8 @@ public class MyAccountActivity extends AppCompatActivity {
         Log.d(TAG,"setViewsAsConnected()");
         etAccountEmail.setText(firebaseAuth.getCurrentUser().getEmail());
         etAccountEmail.setEnabled(false);
-        etAccountPassword.setEnabled(false);
+
+        ((ViewGroup) llPassword.getParent()).removeView(llPassword);
 
         btAccountLogin.setText(getText(R.string.logout_button));
     }
@@ -87,7 +95,8 @@ public class MyAccountActivity extends AppCompatActivity {
 
         settings.setIdentifierKey("");
         etAccountEmail.setEnabled(true);
-        etAccountPassword.setEnabled(true);
+
+        ((ViewGroup) llLoginFields).addView(llPassword);
         btAccountLogin.setText(getText(R.string.login_button));
     }
 

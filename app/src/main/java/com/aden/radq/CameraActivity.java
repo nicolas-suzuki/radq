@@ -138,6 +138,9 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         } else {
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
+        //TODO Check if this works: there's a problem when clicking on I'm okay button, that the camera doesn't start detecting anymore
+        checkYolo();
+        
         setFilters();
         startService(usbConnection); // Start UsbService(if it was not started before) and Bind it
     }

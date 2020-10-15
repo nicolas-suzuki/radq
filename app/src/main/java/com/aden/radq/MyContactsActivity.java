@@ -29,6 +29,12 @@ public class MyContactsActivity extends AppCompatActivity {
     private ValueEventListener valueEventListenerMyContacts;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        databaseReference.addValueEventListener(valueEventListenerMyContacts);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         databaseReference.removeEventListener(valueEventListenerMyContacts);
