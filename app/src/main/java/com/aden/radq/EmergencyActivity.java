@@ -36,7 +36,6 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private CountDownTimer countDownTimer;
 
-    private Button btImOkay;
     private Button btImNotOkay;
     private ConstraintLayout clEmergency;
     private LinearLayout llButtons;
@@ -48,7 +47,6 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private ValueEventListener valueEventListenerMyContacts;
     private DatabaseReference databaseReference;
-    private Settings settings;
 
     private ArrayList<String> myContactsId;
 
@@ -71,14 +69,16 @@ public class EmergencyActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //Initializing view contents
-        btImOkay = findViewById(R.id.btImOkay);
+        Button btImOkay = findViewById(R.id.btImOkay);
         btImNotOkay = findViewById(R.id.btImNotOkay);
         clEmergency = findViewById(R.id.clEmergency);
         tvContactWillBeContacted = findViewById(R.id.tvContactWillBeContacted);
         tvEmergencyTitle = findViewById(R.id.tvEmergencyTitle);
         llButtons = findViewById(R.id.llButtons);
 
-        settings = new Settings(EmergencyActivity.this);
+        //Settings
+        Settings settings = new Settings(EmergencyActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
         accountId = settings.getIdentifierKey();
 
         myContactsId = new ArrayList<>();
@@ -115,26 +115,20 @@ public class EmergencyActivity extends AppCompatActivity {
             }
         }.start();
 
-        btImOkay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //OKAY Button pressed
-                message = "aW1va2F5YnV0dG9ucHJlc3NlZA";
-                countDownTimer.cancel();
-                sendMessageAndStore();
-                finish();
-            }
+        btImOkay.setOnClickListener(v -> {
+            //OKAY Button pressed
+            message = "aW1va2F5YnV0dG9ucHJlc3NlZA";
+            countDownTimer.cancel();
+            sendMessageAndStore();
+            finish();
         });
 
-        btImNotOkay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //NOT okay Button pressed
-                message = "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA";
-                countDownTimer.cancel();
-                sendMessageAndStore();
-                contactContacted();
-            }
+        btImNotOkay.setOnClickListener(v -> {
+            //NOT okay Button pressed
+            message = "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA";
+            countDownTimer.cancel();
+            sendMessageAndStore();
+            contactContacted();
         });
 
         databaseReference = FirebaseConnector.getFirebase().
@@ -147,7 +141,7 @@ public class EmergencyActivity extends AppCompatActivity {
                 myContactsId.clear();
                 for(DataSnapshot data : snapshot.getChildren()){
                     Contact contact = data.getValue(Contact.class);
-                    myContactsId.add(contact.getContactIdentifier());
+                    myContactsId.add(contact.getId());
                 }
             }
 
@@ -202,7 +196,7 @@ public class EmergencyActivity extends AppCompatActivity {
 
     private String createTimeStamp(){
         Log.d(TAG,"createTimeStamp()");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
 
         Date currentTime = Calendar.getInstance().getTime();
 

@@ -58,11 +58,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     private boolean isFirstTimeYolo = true;
     //TODO change framesToConfirmFall name/logic
     private int framesToConfirmFall = 0;
-    private boolean isCountDownTimerActive = false;
+    private final boolean isCountDownTimerActive = false;
 
     //Robot control by height
     private int countHeightsDetected = 0;
-    private List<Integer> listOfHeights = new ArrayList<>();
+    private final List<Integer> listOfHeights = new ArrayList<>();
 
     //Camera connection + detection specific variables
     private CameraBridgeViewBase cameraBridgeViewBase;
@@ -80,7 +80,9 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Get saved preferences
+        //Settings
         Settings settings = new Settings(CameraActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         if(settings.getIdentifierKey().isEmpty()){
             //This is the second counter measure to forbid the start of the cameraActivity without
@@ -131,7 +133,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         super.onResume();
         Log.d(TAG,"onResume()");
         if (!OpenCVLoader.initDebug()) {
-            message = getString(R.string.unkown_error_camera_initialization);
+            message = getString(R.string.unknown_error_camera_initialization);
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         } else {
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);

@@ -3,7 +3,6 @@ package com.aden.radq;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,11 +23,9 @@ import java.util.ArrayList;
 public class MyContactsActivity extends AppCompatActivity {
     private static final String TAG = "MyContactsActivity";
 
-    private ListView lvContacts;
-    private ArrayAdapter arrayAdapter;
+    private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> myContacts;
     private DatabaseReference databaseReference;
-    private Button btAddContact;
     private ValueEventListener valueEventListenerMyContacts;
 
     @Override
@@ -48,19 +45,21 @@ public class MyContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_contacts_activity);
 
-        btAddContact = findViewById(R.id.btAddContact);
-        lvContacts = findViewById(R.id.lvContacts);
+        Button btAddContact = findViewById(R.id.btAddContact);
+        ListView lvContacts = findViewById(R.id.lvContacts);
+
+        //Load settings
+        Settings settings = new Settings(MyContactsActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
+        String ID = settings.getIdentifierKey();
 
         myContacts = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter(
+        arrayAdapter = new ArrayAdapter<>(
                 MyContactsActivity.this,
                 android.R.layout.simple_list_item_1,
                 myContacts
         );
         lvContacts.setAdapter(arrayAdapter);
-
-        Settings settings = new Settings(MyContactsActivity.this);
-        String ID = settings.getIdentifierKey();
 
         databaseReference = FirebaseConnector.getFirebase().
                 child("contacts").
@@ -84,12 +83,9 @@ public class MyContactsActivity extends AppCompatActivity {
         };
         databaseReference.addValueEventListener(valueEventListenerMyContacts);
 
-        btAddContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MyContactsActivity.this, AddContactActivity.class);
-                startActivity(intent);
-            }
+        btAddContact.setOnClickListener(v -> {
+            Intent intent = new Intent(MyContactsActivity.this, AddContactActivity.class);
+            startActivity(intent);
         });
     }
 }

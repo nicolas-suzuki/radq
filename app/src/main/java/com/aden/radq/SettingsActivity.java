@@ -3,7 +3,6 @@ package com.aden.radq;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,17 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";
 
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String SWITCH_CAMERA_FRONT_BACK ="switchCameraFrontBack";
-
     private SwitchCompat swCameraFrontBack;
-    private boolean isSwitchBackChecked;
-
-    private Button btSaveSettings;
-    private Button btMyAccount;
-    private Button btMyContacts;
-
-    private Snackbar mySnackbar;
 
     private Settings settings;
 
@@ -38,59 +27,44 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
+        //Load settings
         settings = new Settings(SettingsActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
-        btSaveSettings = findViewById(R.id.btSaveSettings);
-        btMyAccount = findViewById(R.id.btMyAccount);
-        btMyContacts = findViewById(R.id.btMyContacts);
+        Button btSaveSettings = findViewById(R.id.btSaveSettings);
+        Button btMyAccount = findViewById(R.id.btMyAccount);
+        Button btMyContacts = findViewById(R.id.btMyContacts);
 
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
-        mySnackbar = Snackbar.make(findViewById(R.id.clSettings), R.string.settings_saved, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
-
-        btMyContacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(firebaseAuth.getCurrentUser() != null){
-                    if(settings.getIdentifierKey().isEmpty()){
-                        Snackbar.make(findViewById(R.id.clSettings), R.string.not_logged_in, Snackbar.LENGTH_SHORT)
-                                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-                    } else {
-                        openMyContactsActivity();
-                    }
+        btMyContacts.setOnClickListener(v -> {
+            if(firebaseAuth.getCurrentUser() != null){
+                if(settings.getIdentifierKey().isEmpty()){
+                    showSnackbar(getString(R.string.not_logged_in));
                 } else {
-                    Snackbar.make(findViewById(R.id.clSettings), R.string.not_logged_in, Snackbar.LENGTH_SHORT)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+                    openMyContactsActivity();
                 }
+            } else {
+                showSnackbar(getString(R.string.not_logged_in));
             }
         });
 
-        btSaveSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveData();
-            }
-        });
+        btSaveSettings.setOnClickListener(v -> saveData());
 
-        btMyAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMyAccountActivity();
-            }
-        });
+        btMyAccount.setOnClickListener(v -> openMyAccountActivity());
 
-        loadData();
         updateData();
     }
 
     private void openMyContactsActivity() {
+        Log.d(TAG,"openMyContactsActivity()");
         Intent intent = new Intent(this, MyContactsActivity.class);
         startActivity(intent);
     }
 
     private void openMyAccountActivity() {
+        Log.d(TAG,"openMyAccountActivity()");
         Intent intent = new Intent(this, MyAccountActivity.class);
         startActivity(intent);
     }
@@ -99,19 +73,20 @@ public class SettingsActivity extends AppCompatActivity {
         Log.d(TAG, "saveData()");
         try{
             settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked());
-            mySnackbar.show();
+            showSnackbar(getString(R.string.settings_saved));
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void loadData(){
-        Log.d(TAG, "loadData()");
-        isSwitchBackChecked = settings.getSwitchCameraFrontBack();
-    }
-
     public void updateData(){
         Log.d(TAG, "updateData()");
         swCameraFrontBack.setChecked(settings.getSwitchCameraFrontBack());
+    }
+
+    private void showSnackbar(String message){
+        Log.d(TAG,"showSnackbar()");
+        Snackbar.make(findViewById(R.id.clSettingsActivity), message, Snackbar.LENGTH_LONG)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 }

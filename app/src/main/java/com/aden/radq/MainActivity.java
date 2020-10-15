@@ -31,22 +31,25 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_CODE = 1;
 
-    private DatabaseReference databaseReference;
-
-    private ValueEventListener valueEventListenerMyContacts;
-
     private ArrayList<String> myContacts;
 
     private FirebaseAuth firebaseAuth;
+
+    private Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkPermissions();
-        workOnAdditionalFiles();
 
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
-        Settings settings = new Settings(MainActivity.this);
+
+        //Load settings
+        settings = new Settings(MainActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
+
+        myContacts = new ArrayList<>();
+
         if(settings.getIdentifierKey() != null) {
             if ((settings.getIdentifierKey().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {
                 Log.d(TAG, "Logging out, since settings is empty");
@@ -76,25 +79,21 @@ public class MainActivity extends AppCompatActivity {
     public void openCameraActivity(){
         //Get the saved preferences and check if there's a contact registered
         //if not, it won't start the CameraActivity and will show up a message
-        Settings settings = new Settings(MainActivity.this);
-        Log.d(TAG,settings.getIdentifierKey());
-
-        myContacts = new ArrayList<>();
 
         if(firebaseAuth.getCurrentUser() != null){
-            databaseReference = FirebaseConnector.getFirebase().
+            DatabaseReference databaseReference = FirebaseConnector.getFirebase().
                     child("contacts").
                     child(settings.getIdentifierKey());
-            valueEventListenerMyContacts = new ValueEventListener() {
+            ValueEventListener valueEventListenerMyContacts = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     myContacts.clear();
-                    for(DataSnapshot data : snapshot.getChildren()){
+                    for (DataSnapshot data : snapshot.getChildren()) {
                         Contact contact = data.getValue(Contact.class);
                         myContacts.add(contact.getName());
                     }
-                    if(myContacts.isEmpty()){
-                        alertDialogBox(getString(R.string.contact_alert_dialog_title),getString(R.string.contact_alert_dialog_message) );
+                    if (myContacts.isEmpty()) {
+                        alertDialogBox(getString(R.string.contact_alert_dialog_title), getString(R.string.contact_alert_dialog_message));
                     } else {
                         Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                         startActivity(intent);
@@ -124,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             alertDialogBox(getString(R.string.alert_not_logged_title), getString(R.string.alert_not_logged_message));
         }
-
     }
 
     public void openSettingsActivity(){
@@ -137,68 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
         },PERMISSIONS_CODE);
-    }
-
-    //This method guarantees that the files in the /res/raw folder an extracted to the ExternalStorage
-    //ready for the app to consume
-    //TODO improve code
-    private void workOnAdditionalFiles(){
-        boolean isCfgHere = false;
-        boolean isWeightsHere = false;
-        Log.d(TAG, "workOnAdditionalFiles()");
-
-        String path = Objects.requireNonNull(getExternalFilesDir(null)).toString() + "/";
-
-        File directory = new File(path);
-        File[] files = directory.listFiles();
-        assert files != null;
-        for (File file : files){
-            if (file.getName().equals("yolov3-tiny.cfg")){
-                Log.d(TAG, "Configuration file here!");
-                isCfgHere = true;
-            } else if (file.getName().equals("yolov3-tiny.weights")){
-                Log.d(TAG, "Weights file here!");
-                isWeightsHere = true;
-            }
-        }
-
-        if (!isCfgHere){
-            File cfgFile = new File(path + "yolov3-tiny.cfg");
-            try{
-                Log.d(TAG, "isCfgHere try()");
-                InputStream inputStream = this.getResources().openRawResource(R.raw.yolov3_tiny_cfg);
-                FileOutputStream fileOutputStream = new FileOutputStream(cfgFile);
-                byte[] buf = new byte[1024];
-                int len;
-                while((len=inputStream.read(buf))>0){
-                    fileOutputStream.write(buf,0,len);
-                }
-                fileOutputStream.close();
-                inputStream.close();
-            } catch (Exception e) {
-                Log.d(TAG, "isCfgHere catch(): " + e);
-                e.printStackTrace();
-            }
-        }
-
-        if (!isWeightsHere){
-            File weightsFile = new File(path + "yolov3-tiny.weights");
-            try{
-                Log.d(TAG, "isWeightsHere try()");
-                InputStream inputStream = this.getResources().openRawResource(R.raw.yolov3_tiny_weights);
-                FileOutputStream fileOutputStream = new FileOutputStream(weightsFile);
-                byte[] buf = new byte[1024];
-                int len;
-                while((len=inputStream.read(buf))>0){
-                    fileOutputStream.write(buf,0,len);
-                }
-                fileOutputStream.close();
-                inputStream.close();
-            } catch (Exception e) {
-                Log.d(TAG, "isWeightsHere catch(): " + e);
-                e.printStackTrace();
-            }
-        }
     }
 
     //Dialog box to warn the user about not defining a contact in the application settings

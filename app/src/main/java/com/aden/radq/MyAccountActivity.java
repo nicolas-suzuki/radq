@@ -8,42 +8,33 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aden.radq.adapter.FirebaseConnector;
 import com.aden.radq.helper.Base64Custom;
 import com.aden.radq.helper.Settings;
-import com.aden.radq.model.Account;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MyAccountActivity extends AppCompatActivity {
-    private static final String TAG = "ContactLoginActivity";
+    private static final String TAG = "MyAccountActivity";
 
     private EditText etAccountEmail;
     private EditText etAccountPassword;
     private Button btAccountLogin;
-    private Button btCreateAccount;
     private FirebaseAuth firebaseAuth;
     private Settings settings;
-
-    private Account account;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_account_activity);
 
-        etAccountEmail = findViewById(R.id.etAccountEmail);
+        etAccountEmail = findViewById(R.id.etCreateAccountEmail);
         etAccountPassword = findViewById(R.id.etAccountPassword);
         btAccountLogin = findViewById(R.id.btAccountLogin);
-        btCreateAccount = findViewById(R.id.btCreateAccount);
+        Button btCreateAccount = findViewById(R.id.btCreateAccount);
 
         //Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
@@ -51,62 +42,46 @@ public class MyAccountActivity extends AppCompatActivity {
             setViewsAsConnected();
         }
 
+        //Load application settings
         settings = new Settings(MyAccountActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
-        btAccountLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeKeyboard();
-                if(!isUserConnected()){
-                    if(etAccountEmail.getText().toString().isEmpty()){
-                        Log.d(TAG,getString(R.string.error_empty_email_field));
-                        showSnackbar(getString(R.string.error_empty_email_field));
-                    } else if(etAccountPassword.getText().toString().isEmpty()) {
-                        Log.d(TAG,getString(R.string.error_empty_password_field));
-                        showSnackbar(getString(R.string.error_empty_password_field));
-                    } else {
-                        Log.d(TAG,"new Account()");
-                        account = new Account();
-                        account.setEmail(etAccountEmail.getText().toString());
-                        account.setPassword(etAccountPassword.getText().toString());
-
-                        validateLogin();
-                    }
+        btAccountLogin.setOnClickListener(v -> {
+            closeKeyboard();
+            if(!isUserConnected()){
+                if(etAccountEmail.getText().toString().isEmpty()){
+                    Log.d(TAG,getString(R.string.error_empty_email_field));
+                    showSnackbar(getString(R.string.error_empty_email_field));
+                } else if(etAccountPassword.getText().toString().isEmpty()) {
+                    Log.d(TAG,getString(R.string.error_empty_password_field));
+                    showSnackbar(getString(R.string.error_empty_password_field));
                 } else {
-                    validateLogout();
+                    validateLogin();
                 }
+            } else {
+                validateLogout();
             }
         });
 
-        btCreateAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createAccount();
-            }
-        });
+        btCreateAccount.setOnClickListener(v -> openCreateAccountActivity());
     }
 
     private boolean isUserConnected() {
         Log.d(TAG,"isUserConnected()");
-        if(firebaseAuth.getCurrentUser() != null){
-            return true;
-        } else {
-            return false;
-        }
+        return firebaseAuth.getCurrentUser() != null;
     }
 
     private void setViewsAsConnected(){
+        Log.d(TAG,"setViewsAsConnected()");
         etAccountEmail.setText(firebaseAuth.getCurrentUser().getEmail());
         etAccountEmail.setEnabled(false);
         etAccountPassword.setEnabled(false);
-        etAccountPassword.setActivated(false);
 
         btAccountLogin.setText(getText(R.string.logout_button));
     }
 
-
     private void validateLogout(){
-        Log.d(TAG,"ValidateLogout()");
+        Log.d(TAG,"validateLogout()");
         firebaseAuth.signOut();
         showSnackbar(getString(R.string.logged_out));
 
@@ -117,33 +92,32 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     private void validateLogin() {
-        Log.d(TAG, "ValidateLogin()");
+        Log.d(TAG, "validateLogin()");
         firebaseAuth.signInWithEmailAndPassword(
-                account.getEmail(),
-                account.getPassword()
-        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    setViewsAsConnected();
+                etAccountEmail.getText().toString(),
+                etAccountPassword.getText().toString()
+        ).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                setViewsAsConnected();
 
-                    String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
-                    settings.setIdentifierKey(accountIdentifier);
+                String accountIdentifier = Base64Custom.encodeBase64(etAccountEmail.getText().toString());
+                settings.setIdentifierKey(accountIdentifier);
 
-                    showSnackbar(getString(R.string.logged_in));
-                } else {
-                    showSnackbar(getString(R.string.unknown_error_logging_in));
-                }
+                showSnackbar(getString(R.string.logged_in));
+            } else {
+                showSnackbar(getString(R.string.unknown_error_logging_in));
             }
         });
     }
 
-    private void createAccount(){
+    private void openCreateAccountActivity(){
+        Log.d(TAG,"openCreateAccountActivity()");
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
     }
 
     private void closeKeyboard(){
+        Log.d(TAG,"closeKeyboard()");
         View view = this.getCurrentFocus();
         if(view != null){
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -152,6 +126,7 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     private void showSnackbar(String message){
+        Log.d(TAG,"showSnackbar()");
         Snackbar.make(findViewById(R.id.clMyAccountActivity), message, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }

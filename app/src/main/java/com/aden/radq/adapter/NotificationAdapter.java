@@ -19,13 +19,8 @@ import java.util.ArrayList;
 
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
-    private ArrayList<Notification> notifications;
-    private Context context;
-
-    private TextView tvNotification;
-    private TextView tvTimeStamp;
-
-    private LinearLayout llNotificationCustom;
+    private final ArrayList<Notification> notifications;
+    private final Context context;
 
     public NotificationAdapter(@NonNull Context c, @NonNull ArrayList<Notification> objects) {
         super(c, 0 , objects);
@@ -41,9 +36,9 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             view = layoutInflater.inflate(R.layout.notifications_custom,parent,false);
-            llNotificationCustom = view.findViewById(R.id.llNotificationCustom);
-            tvNotification = view.findViewById(R.id.tvNotification);
-            tvTimeStamp = view.findViewById(R.id.tvTimeStamp);
+            LinearLayout llNotificationCustom = view.findViewById(R.id.llNotificationCustom);
+            TextView tvNotification = view.findViewById(R.id.tvNotification);
+            TextView tvTimeStamp = view.findViewById(R.id.tvTimeStamp);
 
             Notification notificationX = notifications.get(position);
 

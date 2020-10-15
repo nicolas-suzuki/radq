@@ -2,19 +2,19 @@ package com.aden.radq.model;
 
 public class Contact {
 
-    private String contactIdentifier;
+    private String id;
     private String name;
     private String email;
 
     public Contact() {
     }
 
-    public String getContactIdentifier() {
-        return contactIdentifier;
+    public String getId() {
+        return id;
     }
 
-    public void setContactIdentifier(String contactIdentifier) {
-        this.contactIdentifier = contactIdentifier;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

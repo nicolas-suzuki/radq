@@ -24,7 +24,7 @@
     <string name="groupName">Aden Radq</string>
     <string name="groupEmail">radq@aden.com.br</string>
     <string name="contact_description">Adicione um contato para receber notificações do RADQ</string>
-    <string name="contact_created">Contato salvo!</string>
+    <string name="account_created">Conta criada!</string>
     <string name="settings_saved">Configurações salvas!</string>
     <string name="person_detected_text">Pessoa detectada!</string>
     <string name="contact_alert_dialog_message">Você deve adicionar um contato na página de configurações antes de usar o RADQ</string>
@@ -34,14 +34,14 @@
     <string name="default_alert_dialog_title">Alerta!</string>
     <string name="invalid_password">Senha fraca</string>
     <string name="email_already_in_use">Email já em uso</string>
-    <string name="unkown_error_contact_register">Erro desconhecido ao se cadastrar</string>
+    <string name="unknown_error_contact_register">Erro desconhecido ao se cadastrar</string>
     <string name="create_account_button">Criar conta</string>
     <string name="login_description">Entre com sua conta para conectar ao seu contato de emergência. Se não tiver uma conta, cadastre-se no botão abaixo.</string>
     <string name="create_account_title">Criar conta</string>
     <string name="my_account_title">Minha conta</string>
     <string name="my_contacts_title">Meus contatos</string>
     <string name="add_contact_button">Adicione um contato</string>
-    <string name="unkown_error_camera_initialization">Erro desconhecido ao inicializar câmera</string>
+    <string name="unknown_error_camera_initialization">Erro desconhecido ao inicializar câmera</string>
     <string name="add_contacts_title">Adicione contatos</string>
     <string name="add_contact_email">Adicione o email do contato</string>
     <string name="save_button">Salvar</string>

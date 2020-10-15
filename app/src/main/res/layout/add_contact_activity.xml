@@ -46,11 +46,12 @@
                     android:text="@string/add_contact_email" />
 
                 <EditText
-                    android:id="@+id/etAccountEmail"
+                    android:id="@+id/etCreateAccountEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:autofillHints="" />
             </LinearLayout>
 
         </LinearLayout>
@@ -60,7 +61,7 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/btAddContact"
+            android:id="@+id/btSaveCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

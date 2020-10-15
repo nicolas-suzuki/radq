@@ -2,6 +2,7 @@ package com.aden.radq;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,13 +24,9 @@ public class NotificationsActivity extends AppCompatActivity {
     private static final String TAG = "NotificationsActivity";
 
     private ArrayList<Notification> notifications;
-    private ArrayAdapter arrayAdapter;
-
-    private ListView lvNotifications;
+    private NotificationAdapter arrayAdapter;
 
     private DatabaseReference databaseReference;
-
-    private String accountId;
 
     private ValueEventListener valueEventListenerNotifications;
 
@@ -49,41 +46,42 @@ public class NotificationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-            setContentView(R.layout.notifications_activity);
+        setContentView(R.layout.notifications_activity);
 
-            Settings settings = new Settings(NotificationsActivity.this);
-            accountId = settings.getIdentifierKey();
+        //Load settings
+        Settings settings = new Settings(NotificationsActivity.this);
+        String accountId = settings.getIdentifierKey();
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
-            databaseReference = FirebaseConnector.getFirebase().
-                    child("accounts").
-                    child(accountId).
-                    child("notifications");
+        databaseReference = FirebaseConnector.getFirebase().
+                child("accounts").
+                child(accountId).
+                child("notifications");
 
-            notifications = new ArrayList<>();
+        notifications = new ArrayList<>();
 
-            lvNotifications = findViewById(R.id.lvNotifications);
+        ListView lvNotifications = findViewById(R.id.lvNotifications);
 
-            arrayAdapter = new NotificationAdapter(NotificationsActivity.this, notifications);
+        arrayAdapter = new NotificationAdapter(NotificationsActivity.this, notifications);
 
-            lvNotifications.setAdapter(arrayAdapter);
+        lvNotifications.setAdapter(arrayAdapter);
 
-            valueEventListenerNotifications = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.d(TAG, "valueEventListenerNotifications. onDataChange");
-                    notifications.clear();
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        Notification notification = data.getValue(Notification.class);
-                        notifications.add(notification);
-                    }
-                    arrayAdapter.notifyDataSetChanged();
+        valueEventListenerNotifications = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d(TAG, "valueEventListenerNotifications. onDataChange");
+                notifications.clear();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Notification notification = data.getValue(Notification.class);
+                    notifications.add(notification);
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.d(TAG, "valueEventListenerNotifications. onCancelled");
-                }
-            };
-            databaseReference.addValueEventListener(valueEventListenerNotifications);
+                arrayAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d(TAG, "valueEventListenerNotifications. onCancelled");
+            }
+        };
+        databaseReference.addValueEventListener(valueEventListenerNotifications);
     }
 }
