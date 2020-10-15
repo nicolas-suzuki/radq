@@ -57,12 +57,6 @@ public class EmergencyActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        databaseReference.addValueEventListener(valueEventListenerMyContacts);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency_activity);

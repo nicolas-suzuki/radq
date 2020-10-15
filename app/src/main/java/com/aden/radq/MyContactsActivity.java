@@ -29,12 +29,6 @@ public class MyContactsActivity extends AppCompatActivity {
     private ValueEventListener valueEventListenerMyContacts;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        databaseReference.addValueEventListener(valueEventListenerMyContacts);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         databaseReference.removeEventListener(valueEventListenerMyContacts);
@@ -45,8 +39,8 @@ public class MyContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_contacts_activity);
 
-        Button btAddContact = findViewById(R.id.btAddContact);
-        ListView lvContacts = findViewById(R.id.lvContacts);
+        Button btAddContact = (Button) findViewById(R.id.btAddContact);
+        ListView lvContacts = (ListView) findViewById(R.id.lvContacts);
 
         //Load settings
         Settings settings = new Settings(MyContactsActivity.this);
@@ -73,6 +67,7 @@ public class MyContactsActivity extends AppCompatActivity {
                     Contact contact = data.getValue(Contact.class);
                     myContacts.add(contact.getName());
                 }
+                Log.d(TAG, "MyContacts.size(): " + myContacts.size());
                 arrayAdapter.notifyDataSetChanged();
             }
 

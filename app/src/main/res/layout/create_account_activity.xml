@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/buttonshape"
+            android:background="@drawable/button_shape"
             android:text="@string/save_button"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"

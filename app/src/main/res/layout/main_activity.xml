@@ -17,7 +17,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtWelcomeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcome_title"
@@ -25,7 +24,6 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/txtWelcomeDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcome_description"
@@ -54,7 +52,6 @@
                     android:hapticFeedbackEnabled="true" />
 
                 <TextView
-                    android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -81,7 +78,6 @@
                     android:hapticFeedbackEnabled="true" />
 
                 <TextView
-                    android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -108,7 +104,6 @@
                     android:hapticFeedbackEnabled="true" />
 
                 <TextView
-                    android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -134,7 +129,6 @@
                     android:hapticFeedbackEnabled="true" />
 
                 <TextView
-                    android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

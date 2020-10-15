@@ -31,12 +31,6 @@ public class NotificationsActivity extends AppCompatActivity {
     private ValueEventListener valueEventListenerNotifications;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        databaseReference.addValueEventListener(valueEventListenerNotifications);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         databaseReference.removeEventListener(valueEventListenerNotifications);

@@ -7,8 +7,8 @@ android {
         applicationId "com.aden.radq"
         minSdkVersion 19
         targetSdkVersion 29
-        versionName '3.2.4'
-        versionCode 10
+        versionName '3.2.7'
+        versionCode 13
 
         multiDexEnabled true
 
@@ -17,8 +17,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             debuggable false
             jniDebuggable false

@@ -1,19 +1,17 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.aden.radq",
-  "variantName": "release",
+  "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 8,
-      "versionName": "3.2.2",
-      "enabled": true,
+      "versionCode": 13,
+      "versionName": "3.2.7",
       "outputFile": "app-release.apk"
     }
   ]
