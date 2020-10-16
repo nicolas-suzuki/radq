@@ -1,3 +1,4 @@
+include ':radqcompanionapp'
 include ':opencv'
 include ':usbserial'
 include ':app'

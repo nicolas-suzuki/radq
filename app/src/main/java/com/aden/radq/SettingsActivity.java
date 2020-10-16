@@ -1,75 +1,92 @@
 package com.aden.radq;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.aden.radq.adapter.FirebaseConnector;
+import com.aden.radq.helper.Settings;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsActivity extends AppCompatActivity {
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String SWITCH_CAMERA_FRONT_BACK ="switchCameraFrontBack";
+    private static final String TAG = "SettingsActivity";
 
-    private SwitchCompat switchCameraFrontBack;
-    private boolean isSwitchBackChecked;
+    private SwitchCompat swCameraFrontBack;
+
+    private Settings settings;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
-        switchCameraFrontBack = findViewById(R.id.switchCameraFrontBack);
-        Button bttnSaveSettings = findViewById(R.id.bttnSaveSettings);
-        Button bttnDefineSafeContact = findViewById(R.id.bttnDefineSafeContact);
-        Snackbar mySnackbar = Snackbar.make(findViewById(R.id.settingsView), R.string.settings_saved, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+        //Load settings
+        settings = new Settings(SettingsActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
-        bttnDefineSafeContact.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                openContactsActivity();
+        swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
+        Button btSaveSettings = findViewById(R.id.btSaveSettings);
+        Button btMyAccount = findViewById(R.id.btMyAccount);
+        Button btMyContacts = findViewById(R.id.btMyContacts);
+
+        firebaseAuth = FirebaseConnector.getFirebaseAuth();
+
+        btMyContacts.setOnClickListener(v -> {
+            if(firebaseAuth.getCurrentUser() != null){
+                if(settings.getIdentifierKey().isEmpty()){
+                    showSnackbar(getString(R.string.not_logged_in));
+                } else {
+                    openMyContactsActivity();
+                }
+            } else {
+                showSnackbar(getString(R.string.not_logged_in));
             }
         });
 
-        bttnSaveSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mySnackbar.show();
-                saveData();
-            }
-        });
+        btSaveSettings.setOnClickListener(v -> saveData());
 
-        loadData();
+        btMyAccount.setOnClickListener(v -> openMyAccountActivity());
+
         updateData();
     }
 
-    public void openContactsActivity(){
-        Intent intent = new Intent(this, ContactActivity.class);
+    private void openMyContactsActivity() {
+        Log.d(TAG,"openMyContactsActivity()");
+        Intent intent = new Intent(this, MyContactsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openMyAccountActivity() {
+        Log.d(TAG,"openMyAccountActivity()");
+        Intent intent = new Intent(this, MyAccountActivity.class);
         startActivity(intent);
     }
 
     public void saveData(){
-        Log.d("settingsData", "saveData()");
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, switchCameraFrontBack.isChecked());
-        editor.apply();
-    }
-
-    public void loadData(){
-        Log.d("settingsData", "loadData()");
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        isSwitchBackChecked = sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK,false);
+        Log.d(TAG, "saveData()");
+        try{
+            settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked());
+            showSnackbar(getString(R.string.settings_saved));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void updateData(){
-        Log.d("settingsData", "updateData()");
-        switchCameraFrontBack.setChecked(isSwitchBackChecked);
+        Log.d(TAG, "updateData()");
+        swCameraFrontBack.setChecked(settings.getSwitchCameraFrontBack());
+    }
+
+    private void showSnackbar(String message){
+        Log.d(TAG,"showSnackbar()");
+        Snackbar.make(findViewById(R.id.clSettingsActivity), message, Snackbar.LENGTH_LONG)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 }

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +17,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.aden.radq.adapter.UsbService;
+import com.aden.radq.helper.Settings;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -48,45 +50,41 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static com.aden.radq.SettingsActivity.SHARED_PREFS;
-import static com.aden.radq.SettingsActivity.SWITCH_CAMERA_FRONT_BACK;
-
 public class CameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+    private static final String TAG = "CameraActivity";
+
     //TODO re-analyze the need of the following two variables and their logic
-    boolean startYolo = false;
-    boolean firstTimeYolo = true;
+    private boolean isYoloStarted = false;
+    private boolean isFirstTimeYolo = true;
     //TODO change framesToConfirmFall name/logic
-    int framesToConfirmFall = 0;
+    private int framesToConfirmFall = 0;
+    private final boolean isCountDownTimerActive = false;
 
     //Robot control by height
-    int countHeightsDetected = 0;
-    List<Integer> listOfHeights = new ArrayList<>();
-
-    String personDetectedText;
-    String fallDetectedText;
+    private int countHeightsDetected = 0;
+    private final List<Integer> listOfHeights = new ArrayList<>();
 
     //Camera connection + detection specific variables
-    CameraBridgeViewBase cameraBridgeViewBase;
-    BaseLoaderCallback baseLoaderCallback;
-    Net tinyYolo;
+    private CameraBridgeViewBase cameraBridgeViewBase;
+    private BaseLoaderCallback baseLoaderCallback;
+    private Net tinyYolo;
 
     //USB connection + control specific variables
     private UsbService usbService;
     private MyHandler mHandler;
 
+    //String messages for toasts/logs
+    private String message;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Get saved preferences
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String contactEmail = sharedPreferences.getString("contactEmail","");
+        //Settings
+        Settings settings = new Settings(CameraActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
-        //Initiate Strings
-        personDetectedText = getString(R.string.person_detected_text);
-        fallDetectedText = getString(R.string.fall_detected_text);
-
-        Log.d("contactEmail", "Contact Email: " + contactEmail);
-        if(contactEmail.isEmpty()){
+        if(settings.getIdentifierKey().isEmpty()){
             //This is the second counter measure to forbid the start of the cameraActivity without
             //an emergency contact set up. First is at the MainActivity level.
             finish();
@@ -103,14 +101,14 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             cameraBridgeViewBase.setCvCameraViewListener(this);
 
             //Check which camera will be used frontal or back. By default, frontal camera.
-            Log.d("cameraFrontBack", "Front/Back Camera preference: " + sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false));
-            if (sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK, false)) {
+            Log.d(TAG, "Front/Back Camera preference: " + settings.getSwitchCameraFrontBack());
+            if (settings.getSwitchCameraFrontBack()) {
                 //Use Back Camera
-                Log.d("cameraFrontBack", "Using Back Camera");
+                Log.d(TAG, "Using Back Camera");
                 cameraBridgeViewBase.setCameraIndex(0);
             } else {
                 //Use Frontal Camera
-                Log.d("cameraFrontBack", "Using Frontal Camera");
+                Log.d(TAG, "Using Frontal Camera");
                 cameraBridgeViewBase.setCameraIndex(1);
             }
 
@@ -121,7 +119,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                     super.onManagerConnected(status);
                     if (status == BaseLoaderCallback.SUCCESS) {
                         cameraBridgeViewBase.enableView();
-                        YOLO();
+                        checkYolo();
                     } else {
                         super.onManagerConnected(status);
                     }
@@ -133,12 +131,16 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("onCameraState","onResume()");
+        Log.d(TAG,"onResume()");
         if (!OpenCVLoader.initDebug()) {
-            Toast.makeText(getApplicationContext(), "There's a problem, yo!", Toast.LENGTH_SHORT).show();
+            message = getString(R.string.unknown_error_camera_initialization);
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         } else {
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
+        //TODO Check if this works: there's a problem when clicking on I'm okay button, that the camera doesn't start detecting anymore
+        checkYolo();
+        
         setFilters();
         startService(usbConnection); // Start UsbService(if it was not started before) and Bind it
     }
@@ -146,7 +148,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("onCameraState","onPause()");
+        Log.d(TAG,"onPause()");
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
@@ -157,7 +159,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("onCameraState","onDestroy()");
+        Log.d(TAG,"onDestroy()");
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
@@ -165,9 +167,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        //Log.d("onCameraFrame", "new frame");
         Mat frame = inputFrame.rgba();
-        if (startYolo) {
+        if (isYoloStarted) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
             Mat imageBlob = Dnn.blobFromImage(frame, 0.00392, new Size(416, 416), new Scalar(0, 0, 0),/*swapRB*/false, /*crop*/false);
             tinyYolo.setInput(imageBlob);
@@ -206,32 +207,32 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         clsIds.add((int) classIdPoint.x);
                         confs.add(confidence);
                         rects.add(new Rect(left, top, width, height));
-                        Log.d("onCameraFrame", "height: " + height);
+                        Log.d(TAG, "height: " + height);
 
                         if((usbService != null) && (height > width)){
                             if(countHeightsDetected<3){
-                                Log.d("onCameraFrame","countHeightsDetected<3");
+                                Log.d(TAG,"countHeightsDetected < 3");
                                 listOfHeights.add(height);
                                 countHeightsDetected++;
                             } else {
-                                Log.d("onCameraFrame","countHeightsDetected>=3");
+                                Log.d(TAG,"countHeightsDetected >= 3");
                                 countHeightsDetected = 0;
                                 double coefficientOfVariationResult = coefficientOfVariationCalculator(listOfHeights);
                                 listOfHeights.clear();
-                                Log.d("onCameraFrame", "coefficientOfVariationResult: " + coefficientOfVariationResult);
+                                Log.d(TAG, "coefficientOfVariationResult: " + coefficientOfVariationResult);
                                 String command;
                                 if(coefficientOfVariationResult < 15.0){
                                     if(height < 500){
                                         command = "frente";
-                                        Log.d("robotControl","Frente");
+                                        Log.d(TAG,"Frente");
                                         usbService.write(command.getBytes());
                                     } else if (height > 600){
                                         command = "tras";
-                                        Log.d("robotControl","Tras");
+                                        Log.d(TAG,"Tras");
                                         usbService.write(command.getBytes());
                                     } else {
                                         command = "parar";
-                                        Log.d("robotControl","Parar");
+                                        Log.d(TAG,"Parar");
                                         usbService.write(command.getBytes());
                                     }
                                 }
@@ -261,89 +262,90 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                     if (idGuy == 0) {
                         // Fall detected
-                        Imgproc.putText(frame, fallDetectedText + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
+                        message = getString(R.string.fall_detected_text);
+                        Imgproc.putText(frame, message + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
 
-                        Log.d("onCameraFrame", "Fall detected! Precision: " + intConf + "%");
+                        Log.d(TAG, "Fall detected! Precision: " + intConf + "%");
                         framesToConfirmFall++;
-                        if (framesToConfirmFall > 10) {
+                        if (framesToConfirmFall == 5) {
                             //This countdown ensures that the person is really down
-//                            CountDownTimer countDownTimer = new CountDownTimer(5000,1000) {
+//                        if(!isCountDownTimerActive) {
+//                            new CountDownTimer(5000, 1000) {
 //                                @Override
 //                                public void onTick(long millisUntilFinished) {
-//
+//                                    isCountDownTimerActive = true;
 //                                }
+//
 //                                @Override
 //                                public void onFinish() {
-                            //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
-                            //takeScreenshot(frame, intConf);
+//                                    if (framesToConfirmFall >= 5) {
+//                                        //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
+//                                        //takeScreenshot(frame, intConf);
                             initiateAlarm();
-                            framesToConfirmFall = 0;
+//                                    }
+//                                    isCountDownTimerActive = false;
+//                                    framesToConfirmFall = 0;
 //                                }
 //                            }.start();
+//                        }
+                            return frame;
                         }
-                        return frame;
                     } else if (idGuy == 1) {
                         // Pessoa detectada
-                        Imgproc.putText(frame, personDetectedText + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
+                        message = getString(R.string.person_detected_text);
+                        Imgproc.putText(frame, message + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
-                        Log.d("onCameraFrame", "Person detected! Precision: " + intConf + "%");
+                        Log.d(TAG, "Person detected! Precision: " + intConf + "%");
                         return frame;
                     } else {
-                        Log.d("onCameraFrame", "idGuy!=0||1");
+                        Log.d(TAG, "idGuy!=0||1");
                         return frame;
                     }
                 }
-            } else {
-                //Log.d("onCameraFrame", "what else? empty/non detected frame?");
             }
         } //End if (startYolo)
-        //Log.d("onCameraFrame", "end frame");
         return frame;
     }
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-        Log.d("onCameraState","onCameraViewStarted()");
-        if (startYolo) {
-            String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
-            String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
-            Log.d("tinyLocation2", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
-            try{
-                tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
-            } catch (Exception e){
-                Log.d("tinyLocation1", "Exception: " + e);
-                Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
-                toast.show();
-            }
+        Log.d(TAG,"onCameraViewStarted()");
+        if (isYoloStarted) {
+            initializeYolo();
         }
     }
 
     @Override
     public void onCameraViewStopped() {
-        Log.d("onCameraState","onCameraViewStopped()");
-        startYolo = false;
+        Log.d(TAG,"onCameraViewStopped()");
+        isYoloStarted = false;
     }
 
-    public void YOLO() {
-        if (!startYolo) {
-            startYolo = true;
-            if (firstTimeYolo) {
-                firstTimeYolo = false;
-                String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
-                String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
-
-                Log.d("tinyLocation1", "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
-                try{
-                    tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
-                } catch (Exception e){
-                    Log.d("tinyLocation1", "Exception: " + e);
-                    Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
-                    toast.show();
-                }
+    public void checkYolo() {
+        Log.d(TAG,"checkYolo()");
+        if (!isYoloStarted) {
+            isYoloStarted = true;
+            if (isFirstTimeYolo) {
+                isFirstTimeYolo = false;
+                initializeYolo();
             }
         } else {
-            startYolo = false;
+            isYoloStarted = false;
+        }
+    }
+
+    public void initializeYolo(){
+        Log.d(TAG,"initializeYolo()");
+        String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
+        String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
+        Log.d(TAG, "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
+        try{
+            tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
+        } catch (Exception e){
+            Log.d(TAG, "Exception: " + e);
+            Toast toast = Toast.makeText(this, "Exception: " + e , Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 
@@ -363,7 +365,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             bitmap = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
             Utils.matToBitmap(frame,bitmap);
         } catch (CvException e){
-            Log.d("save_image", Objects.requireNonNull(e.getMessage()));
+            Log.d(TAG, Objects.requireNonNull(e.getMessage()));
         }
 
         if(!sd.exists()){
@@ -377,15 +379,15 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                 assert bitmap != null;
                 bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
             } catch(Exception e){
-                Log.d("save_image", Objects.requireNonNull(e.getMessage()));
+                Log.d(TAG, Objects.requireNonNull(e.getMessage()));
             } finally {
                 try{
                     if(outputStream != null){
                         outputStream.close();
-                        Log.d("save_image","Saved successfully.");
+                        Log.d(TAG,"Saved successfully.");
                     }
                 } catch (IOException e){
-                    Log.d("save_image","Error: " + e.getMessage());
+                    Log.d(TAG,"Error: " + e.getMessage());
                 }
             }
         }
@@ -499,8 +501,5 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         // <15% homogeneous; 15% - 30%; 30%< heterogeneous
         coefficientOfVariation = (standardDeviation/average) * 100;
         return coefficientOfVariation;
-
-
-
     }
 }

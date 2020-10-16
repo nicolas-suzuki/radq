@@ -1,32 +1,61 @@
 package com.aden.radq;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.aden.radq.adapter.FirebaseConnector;
+import com.aden.radq.helper.Settings;
+import com.aden.radq.model.Contact;
+import com.aden.radq.model.Notification;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import static com.aden.radq.SettingsActivity.SHARED_PREFS;
-
 public class EmergencyActivity extends AppCompatActivity {
-    CountDownTimer countDownTimer;
-    Button imOkay;
-    Button imNotOkay;
-    ConstraintLayout emergencyLayout;
-    LinearLayout layoutButtons;
-    TextView emergencyContactWillBeContactedTxt;
-    TextView emergencyTitle;
+    private static final String TAG = "EmergencyActivity";
+
+    private CountDownTimer countDownTimer;
+
+    private Button btImNotOkay;
+    private ConstraintLayout clEmergency;
+    private LinearLayout llButtons;
+    private TextView tvContactWillBeContacted;
+    private TextView tvEmergencyTitle;
+    private Space spaceEmergency;
+
+    private String accountId;
+    private String message;
+
+    private ValueEventListener valueEventListenerMyContacts;
+    private DatabaseReference databaseReference;
+
+    private ArrayList<String> myContactsId;
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseReference.removeEventListener(valueEventListenerMyContacts);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,62 +64,89 @@ public class EmergencyActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //Initializing view contents
-        imOkay = findViewById(R.id.imOkay);
-        imNotOkay = findViewById(R.id.imNotOkay);
-        emergencyLayout = findViewById(R.id.emergencyLayout);
-        emergencyContactWillBeContactedTxt = findViewById(R.id.emergencyContactWillBeContactedTxt);
-        emergencyTitle = findViewById(R.id.emergencyTitle);
-        layoutButtons = findViewById(R.id.layoutButtons);
+        Button btImOkay = findViewById(R.id.btImOkay);
+        btImNotOkay = findViewById(R.id.btImNotOkay);
+        clEmergency = findViewById(R.id.clEmergency);
+        tvContactWillBeContacted = findViewById(R.id.tvContactWillBeContacted);
+        tvEmergencyTitle = findViewById(R.id.tvEmergencyTitle);
+        llButtons = findViewById(R.id.llButtons);
+        spaceEmergency = findViewById(R.id.spaceEmergency);
 
-        String emergencySubtitleTxt = getString(R.string.emergency_contact_will_be_contacted);
-        String secondsText = getString(R.string.secondsTxt);
+        //Settings
+        Settings settings = new Settings(EmergencyActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
+        accountId = settings.getIdentifierKey();
 
-        Log.d("timer", "Timer Started");
+        myContactsId = new ArrayList<>();
+
+        Log.d(TAG, "Timer Started");
         countDownTimer = new CountDownTimer(30000,1000){
             boolean tick = true;
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.d("timer","tick");
+                Log.d(TAG,"tick");
 
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
 
-                //TODO change string name/logic
-                String aux = emergencySubtitleTxt + seconds + secondsText;
-                emergencyContactWillBeContactedTxt.setText(aux);
+                String aux = getString(R.string.emergency_contact_will_be_contacted) +
+                        seconds +
+                        getString(R.string.secondsTxt);
+                tvContactWillBeContacted.setText(aux);
                 if(tick){
-                    imNotOkay.setBackgroundColor(Color.RED);
-                    imNotOkay.setTextColor(Color.WHITE);
+                    btImNotOkay.setBackgroundColor(Color.RED);
+                    btImNotOkay.setTextColor(Color.WHITE);
                     tick = false;
                 } else {
-                    imNotOkay.setBackgroundColor(Color.WHITE);
-                    imNotOkay.setTextColor(Color.RED);
+                    btImNotOkay.setBackgroundColor(Color.WHITE);
+                    btImNotOkay.setTextColor(Color.RED);
                     tick = true;
                 }
             }
             @Override
             public void onFinish() {
-                Log.d("timer","timer finished");
-                sendMessageToContact();
+                //Button not pressed, time's over
+                message = "YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg";
+                sendMessageAndStore();
+                contactContacted();
             }
         }.start();
-        imOkay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("emergency", "I'm Okay button pressed");
-                countDownTimer.cancel();
-                finish();
-            }
+
+        btImOkay.setOnClickListener(v -> {
+            //OKAY Button pressed
+            message = "aW1va2F5YnV0dG9ucHJlc3NlZA";
+            countDownTimer.cancel();
+            sendMessageAndStore();
+            finish();
         });
 
-        imNotOkay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("emergency", "Not Okay button pressed");
-                countDownTimer.cancel();
-                //TODO
-                sendMessageToContact();
-            }
+        btImNotOkay.setOnClickListener(v -> {
+            //NOT okay Button pressed
+            message = "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA";
+            countDownTimer.cancel();
+            sendMessageAndStore();
+            contactContacted();
         });
+
+        databaseReference = FirebaseConnector.getFirebase().
+                child("contacts").
+                child(accountId);
+
+        valueEventListenerMyContacts = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myContactsId.clear();
+                for(DataSnapshot data : snapshot.getChildren()){
+                    Contact contact = data.getValue(Contact.class);
+                    myContactsId.add(contact.getId());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        databaseReference.addValueEventListener(valueEventListenerMyContacts);
     }
 
     @Override
@@ -99,19 +155,49 @@ public class EmergencyActivity extends AppCompatActivity {
         countDownTimer.cancel();
     }
 
-    private void sendMessageToContact() {
-        //TODO Send Message then:
-        contactContacted();
+    private void sendMessageAndStore() {
+        Log.d(TAG,"sendMessageToContact()");
+
+        String timeStamp = createTimeStamp();
+
+        Notification notification = new Notification();
+        notification.setNotification(message);
+        notification.setTimestamp(timeStamp);
+
+        databaseReference = FirebaseConnector.getFirebase().child("notifications");
+        for (String myContactId : myContactsId) {
+            databaseReference.
+                    child(accountId).
+                    child(myContactId).
+                    push().
+                    setValue(notification);
+        }
+
+        databaseReference = FirebaseConnector.getFirebase().child("accounts");
+        databaseReference.
+                child(accountId).
+                child("notifications").
+                push().
+                setValue(notification);
     }
 
     private void contactContacted(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String contactName = sharedPreferences.getString("contactName","");
+        Log.d(TAG,"contactContacted()");
 
-        ((ViewGroup) layoutButtons.getParent()).removeView(layoutButtons);
-        emergencyContactWillBeContactedTxt.setVisibility(View.INVISIBLE);
-        String aux = contactName + " " + getResources().getString(R.string.contactContact);
-        emergencyTitle.setText(aux);
-        emergencyLayout.setBackgroundColor(Color.GREEN);
+        ((ViewGroup) llButtons.getParent()).removeView(llButtons);
+        ((ViewGroup) spaceEmergency.getParent()).removeView(spaceEmergency);
+        ((ViewGroup) tvContactWillBeContacted.getParent()).removeView(tvContactWillBeContacted);
+
+        tvEmergencyTitle.setText(getResources().getString(R.string.contacts_contacted));
+        clEmergency.setBackgroundColor(Color.GREEN);
+    }
+
+    private String createTimeStamp(){
+        Log.d(TAG,"createTimeStamp()");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+
+        Date currentTime = Calendar.getInstance().getTime();
+
+        return simpleDateFormat.format(currentTime);
     }
 }

@@ -5,7 +5,7 @@ def artifact = "usbserial.jar"
 android {
 
     group = 'com.felhr.usbserial'
-    version = project.VERSION_NAME
+    version = "?"
     compileSdkVersion 29
 
 
@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         minSdkVersion 19
-        archivesBaseName = "${project.name}-${project.VERSION_NAME}"
+        archivesBaseName = "?"
         consumerProguardFiles 'proguard-rules.pro'
     }
 
