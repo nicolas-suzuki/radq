@@ -2,8 +2,6 @@ package com.aden.radq;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +22,7 @@ public class NotificationsActivity extends AppCompatActivity {
     private static final String TAG = "NotificationsActivity";
 
     private ArrayList<Notification> notifications;
-    private NotificationAdapter arrayAdapter;
+    private NotificationAdapter notificationAdapter;
 
     private DatabaseReference databaseReference;
 
@@ -62,9 +60,9 @@ public class NotificationsActivity extends AppCompatActivity {
 
         ListView lvNotifications = findViewById(R.id.lvNotifications);
 
-        arrayAdapter = new NotificationAdapter(NotificationsActivity.this, notifications);
+        notificationAdapter = new NotificationAdapter(NotificationsActivity.this, notifications);
 
-        lvNotifications.setAdapter(arrayAdapter);
+        lvNotifications.setAdapter(notificationAdapter);
 
         valueEventListenerNotifications = new ValueEventListener() {
             @Override
@@ -75,8 +73,9 @@ public class NotificationsActivity extends AppCompatActivity {
                     Notification notification = data.getValue(Notification.class);
                     notifications.add(notification);
                 }
-                arrayAdapter.notifyDataSetChanged();
+                notificationAdapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d(TAG, "valueEventListenerNotifications. onCancelled");

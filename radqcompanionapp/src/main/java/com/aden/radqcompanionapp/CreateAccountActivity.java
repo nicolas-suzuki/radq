@@ -1,6 +1,7 @@
 package com.aden.radqcompanionapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,113 +22,105 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    private static final String TAG = "ContactActivity";
+    private static final String TAG = "CreateAccountActivity";
 
-    private EditText etContactName;
+    private EditText etCreateAccountName;
+    private EditText etCreateAccountPassword;
+    private EditText etCreateAccountEmail;
 
-    private EditText etContactPassword;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
-    private EditText etContactEmail;
-
+    private Settings settings;
     private Account account;
-
-    private Button btSaveContact;
-
-    private Snackbar mySnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
 
-        etContactName = findViewById(R.id.etAccountName);
-        etContactEmail = findViewById(R.id.etAccountEmail);
-        etContactPassword = findViewById(R.id.etContactPassword);
-        btSaveContact = findViewById(R.id.btAddContact);
+        etCreateAccountName = findViewById(R.id.etCreateAccountName);
+        etCreateAccountEmail = findViewById(R.id.etCreateAccountEmail);
+        etCreateAccountPassword = findViewById(R.id.etCreateAccountPassword);
+        Button btSaveCreateAccount = findViewById(R.id.btSaveCreateAccount);
 
         //Firebase
-        FirebaseConnector.getFirebase();
+        firebaseAuth = FirebaseConnector.getFirebaseAuth();
+        databaseReference = FirebaseConnector.getFirebase();
 
-        mySnackbar = Snackbar.make(findViewById(R.id.clCreateContact), R.string.contact_created, Snackbar.LENGTH_SHORT)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark));
+        //Get application settings
+        settings = new Settings(CreateAccountActivity.this);
+        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
-        btSaveContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                account = new Account();
-                if(etContactName.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), "Nome vazio", Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-                } else if (etContactEmail.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), "Email vazio", Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-                } else if (etContactPassword.getText().toString().isEmpty()){
-                    Snackbar.make(findViewById(R.id.clCreateContact), "Senha Vazia", Snackbar.LENGTH_LONG)
-                            .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
-                } else {
-                    account.setName(etContactName.getText().toString());
-                    account.setEmail(etContactEmail.getText().toString());
-                    account.setPassword(etContactPassword.getText().toString());
-                    setContact();
-                }
+        btSaveCreateAccount.setOnClickListener(v -> {
+            if(etCreateAccountName.getText().toString().isEmpty()){
+                showSnackbar(getString(R.string.error_empty_name_field));
+            } else if (etCreateAccountEmail.getText().toString().isEmpty()){
+                showSnackbar(getString(R.string.error_empty_email_field));
+            } else if (etCreateAccountPassword.getText().toString().isEmpty()){
+                showSnackbar(getString(R.string.error_empty_password_field));
+            } else {
+                createAccount();
             }
         });
     }
 
-
-    private void setContact(){
-        //contact's information can be null
-        FirebaseAuth firebaseAuth = FirebaseConnector.getFirebaseAuth();
+    private void createAccount(){
+        Log.d(TAG,"createAccount()");
         firebaseAuth.createUserWithEmailAndPassword(
-                account.getEmail(),
-                account.getPassword()
-        ).addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    mySnackbar.show();
+                etCreateAccountEmail.getText().toString(),
+                etCreateAccountPassword.getText().toString()
+        ).addOnCompleteListener(CreateAccountActivity.this, task -> {
+            if (task.isSuccessful()) {
+                account = new Account();
+                account.setName(etCreateAccountName.getText().toString());
+                account.setEmail(etCreateAccountEmail.getText().toString());
+                account.setPassword(etCreateAccountPassword.getText().toString());
+                String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
+                account.setId(accountIdentifier);
 
-                    String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
-                    account.setId(accountIdentifier);
-                    account.saveContact();
+                databaseReference.child("accounts").child(account.getId()).setValue(account);
 
-                    Settings settings = new Settings(CreateAccountActivity.this);
-                    settings.saveData(accountIdentifier);
+                settings.setIdentifierKey(accountIdentifier);
 
-                } else {
-                    String exceptionError = "";
-
-                    try {
-                        throw Objects.requireNonNull(task.getException());
-                    } catch (FirebaseAuthWeakPasswordException e) {
-                        exceptionError = getString(R.string.invalid_password);
-                        alertDialogBox(exceptionError);
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        exceptionError = getString(R.string.invalid_email);
-                        alertDialogBox(exceptionError);
-                    } catch (FirebaseAuthUserCollisionException e) {
-                        exceptionError = getString(R.string.email_already_in_use);
-                        alertDialogBox(exceptionError);
-                    } catch (Exception e) {
-                        exceptionError = getString(R.string.unkown_error_contact_register);
-                        alertDialogBox(exceptionError);
-                    }
+                showSnackbar(getString(R.string.account_created));
+            } else {
+                String exceptionError;
+                try {
+                    throw Objects.requireNonNull(task.getException());
+                } catch (FirebaseAuthWeakPasswordException e) {
+                    exceptionError = getString(R.string.invalid_password);
+                    alertDialogBox(exceptionError);
+                } catch (FirebaseAuthInvalidCredentialsException e) {
+                    exceptionError = getString(R.string.invalid_email);
+                    alertDialogBox(exceptionError);
+                } catch (FirebaseAuthUserCollisionException e) {
+                    exceptionError = getString(R.string.email_already_in_use);
+                    alertDialogBox(exceptionError);
+                } catch (Exception e) {
+                    exceptionError = getString(R.string.unknown_error_contact_register);
+                    alertDialogBox(exceptionError);
                 }
             }
         });
     }
 
-    //Dialog box to warn the user about not defining a contact in the application settings
     private void alertDialogBox(String e){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setMessage(e);
         dialog.setTitle(getString(R.string.default_alert_dialog_title));
+        dialog.setMessage(e);
         dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
+    }
+
+    private void showSnackbar(String message){
+        Snackbar.make(findViewById(R.id.clCreateContact), message, Snackbar.LENGTH_LONG)
+                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 }

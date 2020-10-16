@@ -61,4 +61,5 @@
     <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Botão \"Estou bem\" pressionado após detecção de queda ou alarme ativado.</string>
     <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Botão \"AJUDA!\" pressionado após detecção de queda ou alarme ativado.</string>
     <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Botões não pressionados. Tempo expirado. Após detecção de queda ou alarme ativado.</string>
+    <string name="disconnect_before_proceed">Por favor, desconecte-se de sua sessão atual antes de continuar.</string>
 </resources>

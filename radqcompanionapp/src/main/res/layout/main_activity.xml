@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/login_button"
+                    android:text="@string/access_account"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 

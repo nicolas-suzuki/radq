@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aden.radq.adapter.FirebaseConnector;
@@ -25,11 +26,11 @@ public class MyAccountActivity extends AppCompatActivity {
     private EditText etAccountEmail;
     private EditText etAccountPassword;
     private Button btAccountLogin;
-    private FirebaseAuth firebaseAuth;
-    private Settings settings;
     private LinearLayout llPassword;
     private LinearLayout llLoginFields;
 
+    private FirebaseAuth firebaseAuth;
+    private Settings settings;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,9 +121,13 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     private void openCreateAccountActivity(){
-        Log.d(TAG,"openCreateAccountActivity()");
-        Intent intent = new Intent(this, CreateAccountActivity.class);
-        startActivity(intent);
+        if(isUserConnected()){
+            alertDialogBox(getString(R.string.disconnect_before_proceed));
+        } else {
+            Log.d(TAG,"openCreateAccountActivity()");
+            Intent intent = new Intent(this, CreateAccountActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void closeKeyboard(){
@@ -138,5 +143,14 @@ public class MyAccountActivity extends AppCompatActivity {
         Log.d(TAG,"showSnackbar()");
         Snackbar.make(findViewById(R.id.clMyAccountActivity), message, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+    }
+
+    private void alertDialogBox(String e){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(getString(R.string.default_alert_dialog_title));
+        dialog.setMessage(e);
+        dialog.setPositiveButton(getString(R.string.positive_button), null);
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
     }
 }

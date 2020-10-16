@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/LoginActivity">
+    android:id="@+id/clLoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,49 +35,58 @@
                 android:layout_height="20dp" />
 
             <LinearLayout
+                android:id="@+id/llLoginFields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/emailTxt"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/account_email"/>
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/etAccountEmail"
-                    android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/emailTxt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/account_email" />
+
+                    <EditText
+                        android:id="@+id/etAccountEmail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:inputType="textEmailAddress" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPassword"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:inputType="textEmailAddress" />
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/contactPasswordTxt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/account_password" />
 
-                <TextView
-                    android:id="@+id/contactPasswordTxt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/account_password"/>
+                    <EditText
+                        android:id="@+id/etAccountPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:inputType="textPassword" />
 
-                <EditText
-                    android:id="@+id/etAccountPassword"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:autofillHints=""
-                    android:ems="10"
-                    android:inputType="textPassword" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -90,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/buttonshape"
+                android:background="@drawable/button_shape"
                 android:text="@string/login_button"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -107,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/buttonshape"
+            android:background="@drawable/button_shape"
             android:text="@string/create_account"
             android:textColor="#FFFFFF" />
 

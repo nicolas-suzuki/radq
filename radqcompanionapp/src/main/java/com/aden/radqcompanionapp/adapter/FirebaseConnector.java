@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public final class FirebaseConnector {
-    private static final String TAG = "FirebaseHelper";
+    private static final String TAG = "FirebaseConnector";
 
     private static DatabaseReference databaseReference;
     private static FirebaseAuth firebaseAuth;

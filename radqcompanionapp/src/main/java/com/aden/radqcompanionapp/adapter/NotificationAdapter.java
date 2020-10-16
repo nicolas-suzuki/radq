@@ -19,13 +19,8 @@ import java.util.ArrayList;
 
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
-    private ArrayList<Notification> notifications;
-    private Context context;
-
-    private TextView tvNotification;
-    private TextView tvTimeStamp;
-
-    private LinearLayout llNotificationCustom;
+    private final ArrayList<Notification> notifications;
+    private final Context context;
 
     public NotificationAdapter(@NonNull Context c, @NonNull ArrayList<Notification> objects) {
         super(c, 0 , objects);
@@ -37,20 +32,27 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = null;
-
         if(notifications != null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             view = layoutInflater.inflate(R.layout.notifications_custom,parent,false);
-            llNotificationCustom = view.findViewById(R.id.llNotificationCustom);
-            tvNotification = view.findViewById(R.id.tvNotification);
-            tvTimeStamp = view.findViewById(R.id.tvTimeStamp);
+            LinearLayout llNotificationCustom = view.findViewById(R.id.llNotificationCustom);
+            TextView tvNotification = view.findViewById(R.id.tvNotification);
+            TextView tvTimeStamp = view.findViewById(R.id.tvTimeStamp);
 
             Notification notificationX = notifications.get(position);
-            tvNotification.setText(notificationX.getNotification());
-            //TODO change this
-            if(notificationX.getNotification().toLowerCase().equals("i'm not okay button pressed")){
-                llNotificationCustom.setBackgroundColor(Color.parseColor("#E57373"));
+
+            switch (notificationX.getNotification()) {
+                case "aW1va2F5YnV0dG9ucHJlc3NlZA":  //okay_button_pressed_code
+                    tvNotification.setText(R.string.aW1va2F5YnV0dG9ucHJlc3NlZA);
+                    break;
+                case "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA":  //not_okay_button_pressed_code
+                    tvNotification.setText(R.string.aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA);
+                    llNotificationCustom.setBackgroundColor(Color.parseColor("#E57373"));
+                    break;
+                case "YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg":  //button_not_pressed_code
+                    tvNotification.setText(R.string.YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg);
+                    break;
             }
             tvTimeStamp.setText(notificationX.getTimestamp());
         }

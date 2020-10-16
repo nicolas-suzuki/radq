@@ -118,5 +118,4 @@ public class CreateAccountActivity extends AppCompatActivity {
         Snackbar.make(findViewById(R.id.clCreateContact), message, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
-
 }

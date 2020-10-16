@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 @TargetApi(15)
-@SuppressWarnings("deprecation")
 public class CameraRenderer extends CameraGLRendererBase {
 
     public static final String LOGTAG = "CameraRenderer";

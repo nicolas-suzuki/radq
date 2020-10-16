@@ -20,11 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -112,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openAlarmsActivity(){
-        Intent intent = new Intent(this, AlarmsActivity.class);
+        Intent intent = new Intent(MainActivity.this, AlarmsActivity.class);
         startActivity(intent);
     }
 
     public void openNotificationsActivity(){
         if(firebaseAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, NotificationsActivity.class);
+            Intent intent = new Intent(MainActivity.this, NotificationsActivity.class);
             startActivity(intent);
         } else {
             alertDialogBox(getString(R.string.alert_not_logged_title), getString(R.string.alert_not_logged_message));
@@ -126,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openSettingsActivity(){
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
 
