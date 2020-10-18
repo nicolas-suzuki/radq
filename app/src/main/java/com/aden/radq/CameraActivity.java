@@ -14,6 +14,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -76,6 +77,9 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     //String messages for toasts/logs
     private String message;
 
+    //Temporary
+    private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +103,10 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
             cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
             cameraBridgeViewBase.setCvCameraViewListener(this);
+
+            //Temporary
+            textView = findViewById(R.id.textView4);
+            textView.setText("Inicializado");
 
             //Check which camera will be used frontal or back. By default, frontal camera.
             Log.d(TAG, "Front/Back Camera preference: " + settings.getSwitchCameraFrontBack());
@@ -139,7 +147,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
         //TODO Check if this works: there's a problem when clicking on I'm okay button, that the camera doesn't start detecting anymore
-        checkYolo();
+        //doesn't work. check method. it sets isYoloStarted to false. I don't remember why.
+        //checkYolo();
         
         setFilters();
         startService(usbConnection); // Start UsbService(if it was not started before) and Bind it
@@ -210,11 +219,14 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         Log.d(TAG, "height: " + height);
 
                         if((usbService != null) && (height > width)){
+                            textView.setText("1");
                             if(countHeightsDetected<3){
+                                textView.setText("2");
                                 Log.d(TAG,"countHeightsDetected < 3");
                                 listOfHeights.add(height);
                                 countHeightsDetected++;
                             } else {
+                                textView.setText("3");
                                 Log.d(TAG,"countHeightsDetected >= 3");
                                 countHeightsDetected = 0;
                                 double coefficientOfVariationResult = coefficientOfVariationCalculator(listOfHeights);
@@ -222,15 +234,19 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                                 Log.d(TAG, "coefficientOfVariationResult: " + coefficientOfVariationResult);
                                 String command;
                                 if(coefficientOfVariationResult < 15.0){
+                                    textView.setText("4");
                                     if(height < 500){
+                                        textView.setText("5");
                                         command = "frente";
                                         Log.d(TAG,"Frente");
                                         usbService.write(command.getBytes());
                                     } else if (height > 600){
+                                        textView.setText("6");
                                         command = "tras";
                                         Log.d(TAG,"Tras");
                                         usbService.write(command.getBytes());
                                     } else {
+                                        textView.setText("7");
                                         command = "parar";
                                         Log.d(TAG,"Parar");
                                         usbService.write(command.getBytes());

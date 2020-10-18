@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llNotificationCustom"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="5dp" />
 
     <LinearLayout
-        android:id="@+id/llNotificationCustom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tvNotification"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:gravity="center_vertical" />
+            android:gravity="fill_horizontal|center_vertical"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/tvTimeStamp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical|end"
+            android:textColor="@android:color/black" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

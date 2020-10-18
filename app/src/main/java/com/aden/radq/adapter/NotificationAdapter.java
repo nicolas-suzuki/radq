@@ -45,6 +45,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
             switch (notificationX.getNotification()) {
                 case "aW1va2F5YnV0dG9ucHJlc3NlZA":  //okay_button_pressed_code
                     tvNotification.setText(R.string.aW1va2F5YnV0dG9ucHJlc3NlZA);
+                    llNotificationCustom.setBackgroundColor(Color.parseColor("#E57373"));
                     break;
                 case "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA":  //not_okay_button_pressed_code
                     tvNotification.setText(R.string.aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA);
@@ -52,6 +53,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
                     break;
                 case "YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg":  //button_not_pressed_code
                     tvNotification.setText(R.string.YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg);
+                    llNotificationCustom.setBackgroundColor(Color.parseColor("#E57373"));
                     break;
             }
             tvTimeStamp.setText(notificationX.getTimestamp());

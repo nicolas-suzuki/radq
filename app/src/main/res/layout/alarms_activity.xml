@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/alarms_description"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_darker"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -37,7 +37,6 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/bttnDefineSafeContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

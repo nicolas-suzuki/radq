@@ -26,24 +26,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_description"
-                android:textColor="@android:color/black"
+                android:text="@string/account_contact_description"
+                android:textColor="@color/text_darker"
                 android:textSize="16sp" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/contact_description"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,7 +67,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="20dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -89,33 +78,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/advanced_settings"
+                android:textColor="@color/text_darker"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/swCameraFrontBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:minHeight="48dp"
                 android:text="@string/switch_FrontBackCamera_txt"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
+                android:textColor="@color/text"
+                android:textSize="16sp"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <Button
-            android:id="@+id/btSaveSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/button_shape"
-            android:text="@string/save_bttn_settings"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <Space
             android:layout_width="match_parent"

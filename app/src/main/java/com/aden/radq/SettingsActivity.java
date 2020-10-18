@@ -3,6 +3,7 @@ package com.aden.radq;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
         Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
-        Button btSaveSettings = findViewById(R.id.btSaveSettings);
+
         Button btMyAccount = findViewById(R.id.btMyAccount);
         Button btMyContacts = findViewById(R.id.btMyContacts);
 
@@ -50,7 +51,12 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        btSaveSettings.setOnClickListener(v -> saveData());
+        swCameraFrontBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked());
+            }
+        });
 
         btMyAccount.setOnClickListener(v -> openMyAccountActivity());
 
@@ -67,16 +73,6 @@ public class SettingsActivity extends AppCompatActivity {
         Log.d(TAG,"openMyAccountActivity()");
         Intent intent = new Intent(this, MyAccountActivity.class);
         startActivity(intent);
-    }
-
-    public void saveData(){
-        Log.d(TAG, "saveData()");
-        try{
-            settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked());
-            showSnackbar(getString(R.string.settings_saved));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     public void updateData(){
