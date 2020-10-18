@@ -24,10 +24,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notifications_description"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_darker"
                 android:textSize="16sp" />
 
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <ListView
             android:id="@+id/lvNotifications"

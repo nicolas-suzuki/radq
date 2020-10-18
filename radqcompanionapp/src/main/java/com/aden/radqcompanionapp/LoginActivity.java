@@ -20,6 +20,8 @@ import com.aden.radqcompanionapp.helper.Settings;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "ContactLoginActivity";
 
@@ -72,12 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btCreateAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCreateAccountActivity();
-            }
-        });
+        btCreateAccount.setOnClickListener(v -> openCreateAccountActivity());
     }
 
     private boolean isUserConnected() {
@@ -93,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         settings.setIdentifierKey("");
         etAccountEmail.setEnabled(true);
 
-        ((ViewGroup) llLoginFields).addView(llPassword);
+        llLoginFields.addView(llPassword);
         btAccountLogin.setText(getText(R.string.login_button));
     }
 
@@ -118,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setViewsAsConnected(){
         Log.d(TAG,"setViewsAsConnected()");
-        etAccountEmail.setText(firebaseAuth.getCurrentUser().getEmail());
+        etAccountEmail.setText(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail());
         etAccountEmail.setEnabled(false);
 
         ((ViewGroup) llPassword.getParent()).removeView(llPassword);
@@ -141,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
         View view = this.getCurrentFocus();
         if(view != null){
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+            Objects.requireNonNull(inputMethodManager).hideSoftInputFromWindow(view.getWindowToken(),0);
         }
     }
 

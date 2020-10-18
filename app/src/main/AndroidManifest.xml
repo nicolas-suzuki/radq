@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/MainActivity">
         </activity>
 
         <!-- Loading Activity -->

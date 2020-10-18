@@ -2,11 +2,9 @@ package com.aden.radqcompanionapp;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +12,7 @@ import com.aden.radqcompanionapp.adapter.FirebaseConnector;
 import com.aden.radqcompanionapp.helper.Base64Custom;
 import com.aden.radqcompanionapp.helper.Settings;
 import com.aden.radqcompanionapp.model.Account;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;

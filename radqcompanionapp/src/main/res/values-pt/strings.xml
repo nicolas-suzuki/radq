@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RADQ Companion App</string>
-    <string name="notifications_button">Notificações</string>
-    <string name="account_password">Senha</string>
-    <string name="create_account">Criar conta</string>
-    <string name="my_account_description">Conecte-se à sua conta RADQ ou crie uma</string>
-    <string name="welcome_title">Bem-vindo ao RADQ Companion!</string>
-    <string name="welcome_description">Essa aplicação é destinada aos contatos de usuários que utilizam o Robô RADQ. Ela mostra todas as notificações de robôs em que você foi adicionado como contato.</string>
+    <string name="notifications_title">Notificações</string>
+    <string name="welcome_title">Bem-vindo ao RADQ!</string>
+    <string name="welcome_description">Seu robô autônomo detector de quedas</string>
     <string name="notifications_description">Notificações geradas pelo RADQ</string>
-    <string name="contact_email">Email</string>
-    <string name="contactName">Nome</string>
-    <string name="groupName">Aden Radq</string>
-    <string name="groupEmail">radq@aden.com.br</string>
-    <string name="contact_description">Adicione um contato para receber notificações do RADQ</string>
+    <string name="email">Email</string>
+    <string name="name">Nome</string>
     <string name="account_created">Conta criada!</string>
-    <string name="contact_password">Senha</string>
+    <string name="password">Senha</string>
     <string name="invalid_email">Email inválido</string>
     <string name="default_alert_dialog_title">Alerta!</string>
-    <string name="invalid_password">Senha fraca</string>
+    <string name="invalid_password">Senha fraca. Por favor, utilize uma senha longa, com letras e números</string>
     <string name="email_already_in_use">Email já em uso</string>
     <string name="unknown_error_contact_register">Erro desconhecido ao se cadastrar</string>
+    <string name="create_account_button">Criar conta</string>
+    <string name="login_description">Entre com sua conta para conectar ao seu contato de emergência. Se não tiver uma conta, cadastre-se no botão abaixo.</string>
     <string name="save_button">Salvar</string>
     <string name="error_empty_name_field">Por favor forneça um nome</string>
     <string name="error_empty_email_field">Por favor forneça um email válido</string>
@@ -32,8 +27,9 @@
     <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Botão \"Estou bem\" pressionado após detecção de queda ou alarme ativado.</string>
     <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Botão \"AJUDA!\" pressionado após detecção de queda ou alarme ativado.</string>
     <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Botões não pressionados. Tempo expirado. Após detecção de queda ou alarme ativado.</string>
-    <string name="login_button">Conectar</string>
-    <string name="logout_button">Desconectar</string>
-    <string name="access_account">Acesse sua conta</string>
     <string name="disconnect_before_proceed">Por favor, desconecte-se de sua sessão atual antes de continuar.</string>
+    <string name="logout_button">Desconectar</string>
+    <string name="login_button">Conectar</string>
+    <string name="create_account_description">Crie sua conta RADQ aqui</string>
+    <string name="manage_account">Gerencie sua conta</string>
 </resources>

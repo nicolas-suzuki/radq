@@ -12,7 +12,7 @@
     <string name="welcome_title">Welcome to RADQ!</string>
     <string name="welcome_description">Your autonomous fall detector robot</string>
     <string name="camera">Camera</string>
-    <string name="switch_FrontBackCamera_txt">Activate back camera?</string>
+    <string name="switch_FrontBackCamera_txt">Activate back camera</string>
     <string name="emergency_title">Emergency</string>
     <string name="imOkay">I\'m Okay!</string>
     <string name="imNotOkay">HELP!</string>
@@ -42,7 +42,6 @@
     <string name="add_contact_button">Add a contact</string>
     <string name="unknown_error_camera_initialization">Unknown error initializing camera</string>
     <string name="add_contacts_title">Add contacts</string>
-    <string name="add_contact_email">Add contact email</string>
     <string name="save_button">Save</string>
     <string name="not_logged_in">Not logged in</string>
     <string name="error_no_email">Please type a valid email</string>
@@ -51,7 +50,7 @@
     <string name="error_empty_email_field">Please provide a valid email</string>
     <string name="error_empty_password_field">Please provide a password</string>
     <string name="alert_not_logged_title">Not logged</string>
-    <string name="alert_not_logged_message">Looks like you are not logged. Please login to acess RADQ.</string>
+    <string name="alert_not_logged_message">Looks like you are not logged. Please login to access RADQ.</string>
     <string name="contact_added_successfully">Contact added successfully</string>
     <string name="unknown_error_adding_contact">Unknown error adding contact</string>
     <string name="logged_out">Logged out</string>
@@ -62,4 +61,6 @@
     <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Buttons not pressed. Time\'s over. After fall detected or after alarm went off.</string>
     <string name="disconnect_before_proceed">Please, logout from your current session before proceed.</string>
     <string name="advanced_settings">Advanced settings</string>
+    <string name="my_contacts_description">Here\'s a list of your current contacts. If you would like to add one, click on the button below.</string>
+    <string name="create_account_description">Create your RADQ account here</string>
 </resources>

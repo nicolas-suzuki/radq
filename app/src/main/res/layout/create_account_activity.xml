@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/account_contact_description"
+                android:text="@string/create_account_description"
                 android:textColor="@color/text_darker"
                 android:textSize="16sp" />
 
@@ -58,7 +58,8 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:minHeight="48dp"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/text_darker" />
             </LinearLayout>
 
             <LinearLayout
@@ -85,7 +86,8 @@
                     android:contentDescription="@string/email"
                     android:ems="10"
                     android:inputType="textEmailAddress"
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:textColor="@color/text_darker" />
             </LinearLayout>
 
             <LinearLayout
@@ -112,7 +114,8 @@
                     android:contentDescription="@string/password"
                     android:ems="10"
                     android:inputType="textPassword"
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:textColor="@color/text_darker" />
             </LinearLayout>
 
         </LinearLayout>

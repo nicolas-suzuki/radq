@@ -127,7 +127,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                     super.onManagerConnected(status);
                     if (status == BaseLoaderCallback.SUCCESS) {
                         cameraBridgeViewBase.enableView();
-                        checkYolo();
+                        checkIfDetectionStarted();
                     } else {
                         super.onManagerConnected(status);
                     }
@@ -140,16 +140,21 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     protected void onResume() {
         super.onResume();
         Log.d(TAG,"onResume()");
+
+        //Detection
         if (!OpenCVLoader.initDebug()) {
             message = getString(R.string.unknown_error_camera_initialization);
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
         } else {
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }
+        if (cameraBridgeViewBase == null) {
+            cameraBridgeViewBase.enableView();
+        }
         //TODO Check if this works: there's a problem when clicking on I'm okay button, that the camera doesn't start detecting anymore
-        //doesn't work. check method. it sets isYoloStarted to false. I don't remember why.
-        //checkYolo();
-        
+        checkIfDetectionStarted();
+
+        //Usb service
         setFilters();
         startService(usbConnection); // Start UsbService(if it was not started before) and Bind it
     }
@@ -158,9 +163,13 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     protected void onPause() {
         super.onPause();
         Log.d(TAG,"onPause()");
+
+        //Detection
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
+
+        //Usb service
         unregisterReceiver(mUsbReceiver);
         unbindService(usbConnection);
     }
@@ -169,6 +178,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG,"onDestroy()");
+
+        //Detection
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
@@ -328,7 +339,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     public void onCameraViewStarted(int width, int height) {
         Log.d(TAG,"onCameraViewStarted()");
         if (isYoloStarted) {
-            initializeYolo();
+            initializeDetection();
         }
     }
 
@@ -338,21 +349,19 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         isYoloStarted = false;
     }
 
-    public void checkYolo() {
-        Log.d(TAG,"checkYolo()");
+    public void checkIfDetectionStarted() {
+        Log.d(TAG,"checkIfDetectionStarted()");
         if (!isYoloStarted) {
             isYoloStarted = true;
             if (isFirstTimeYolo) {
                 isFirstTimeYolo = false;
-                initializeYolo();
+                initializeDetection();
             }
-        } else {
-            isYoloStarted = false;
         }
     }
 
-    public void initializeYolo(){
-        Log.d(TAG,"initializeYolo()");
+    public void initializeDetection(){
+        Log.d(TAG,"initializeDetection()");
         String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
         String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
         Log.d(TAG, "\nTiny Weights: " + tinyYoloWeights + "\nTiny CFG: " + tinyYoloCfg);
@@ -412,6 +421,30 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     private void initiateAlarm() {
         Intent intent = new Intent(this, EmergencyActivity.class);
         startActivity(intent);
+    }
+
+    private double coefficientOfVariationCalculator(List<Integer> heights){
+        double sum = 0D;
+        double summation = 0D;
+        double standardDeviation;
+        double average;
+        double coefficientOfVariation;
+
+        for(double height : heights){
+            sum += height;
+        }
+        average = sum / heights.size();
+
+        for(double height : heights){
+            double aux = height - average;
+            summation += aux * aux;
+        }
+        standardDeviation = Math.sqrt(summation/(heights.size()-1));
+
+        //Coefficient of Variation
+        // <15% homogeneous; 15% - 30%; 30%< heterogeneous
+        coefficientOfVariation = (standardDeviation/average) * 100;
+        return coefficientOfVariation;
     }
 
     // USB Connection + Control Classes Section //
@@ -493,29 +526,5 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
         filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
         registerReceiver(mUsbReceiver, filter);
-    }
-
-    private double coefficientOfVariationCalculator(List<Integer> heights){
-        double sum = 0D;
-        double summation = 0D;
-        double standardDeviation;
-        double average;
-        double coefficientOfVariation;
-
-        for(double height : heights){
-            sum += height;
-        }
-        average = sum / heights.size();
-
-        for(double height : heights){
-            double aux = height - average;
-            summation += aux * aux;
-        }
-        standardDeviation = Math.sqrt(summation/(heights.size()-1));
-
-        //Coefficient of Variation
-        // <15% homogeneous; 15% - 30%; 30%< heterogeneous
-        coefficientOfVariation = (standardDeviation/average) * 100;
-        return coefficientOfVariation;
     }
 }

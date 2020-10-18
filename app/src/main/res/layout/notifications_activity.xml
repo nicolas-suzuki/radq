@@ -36,10 +36,9 @@
         <ListView
             android:id="@+id/lvNotifications"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerHeight="3dp"
-            android:divider="@android:color/white"/>
+            android:layout_height="wrap_content"
+            android:divider="@android:color/white"
+            android:dividerHeight="3dp" />
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

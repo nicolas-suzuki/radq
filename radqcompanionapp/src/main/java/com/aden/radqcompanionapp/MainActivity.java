@@ -3,7 +3,6 @@ package com.aden.radqcompanionapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
@@ -14,14 +13,10 @@ import com.aden.radqcompanionapp.adapter.FirebaseConnector;
 import com.aden.radqcompanionapp.helper.Settings;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private FirebaseAuth firebaseAuth;
-
-    private Settings settings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
         //Load settings
-        settings = new Settings(MainActivity.this);
+        Settings settings = new Settings(MainActivity.this);
         Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         if(settings.getIdentifierKey() != null) {

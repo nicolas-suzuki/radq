@@ -29,6 +29,10 @@
             android:textColor="@color/text"
             android:textSize="16sp" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,9 +55,10 @@
                     android:hapticFeedbackEnabled="true" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:labelFor="@id/bttnCamera"
                     android:text="@string/camera"
                     android:textAlignment="center"
                     android:textColor="@color/text_darker" />
@@ -80,6 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:labelFor="@id/bttnNotifications"
                     android:text="@string/notifications_title"
                     android:textAlignment="center"
                     android:textColor="@color/text_darker" />
@@ -132,6 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:labelFor="@id/bttnSettings"
                     android:text="@string/settings_title"
                     android:textColor="@color/text_darker" />
             </LinearLayout>

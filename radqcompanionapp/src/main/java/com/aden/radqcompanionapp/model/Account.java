@@ -1,7 +1,5 @@
 package com.aden.radqcompanionapp.model;
 
-import com.aden.radqcompanionapp.adapter.FirebaseConnector;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
 public class Account {
@@ -12,11 +10,6 @@ public class Account {
 
     public Account(){
 
-    }
-
-    public void saveContact(){
-        DatabaseReference databaseReference = FirebaseConnector.getFirebase();
-        databaseReference.child("accounts").child(getId()).setValue(this);
     }
 
     @Exclude

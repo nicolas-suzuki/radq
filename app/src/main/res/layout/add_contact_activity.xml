@@ -43,8 +43,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="4"
+                    android:gravity="center_horizontal"
                     android:labelFor="@id/etCreateAccountEmail"
-                    android:text="@string/add_contact_email"
+                    android:text="@string/email"
                     android:textColor="@color/text"
                     android:textSize="16sp" />
 
@@ -56,7 +57,8 @@
                     android:autofillHints=""
                     android:contentDescription="@string/email"
                     android:inputType="textEmailAddress"
-                    android:minHeight="48dp" />
+                    android:minHeight="48dp"
+                    android:textColor="@color/text_darker" />
             </LinearLayout>
 
         </LinearLayout>
