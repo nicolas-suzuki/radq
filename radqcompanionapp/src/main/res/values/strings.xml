@@ -33,4 +33,6 @@
     <string name="create_account_description">Create your RADQ account here</string>
     <string name="manage_account">Manage your account</string>
     <string name="app_initials" translatable="false">RADQ Companion</string>
+    <string name="radq_notification">RADQ requires your attention!</string>
+    <string name="notification_channel_description">All notifications from RADQ</string>
 </resources>

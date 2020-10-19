@@ -57,7 +57,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
             }
             tvTimeStamp.setText(notificationX.getTimestamp());
         }
-        return Objects.requireNonNull(view);
+        return view;
     }
 }
 

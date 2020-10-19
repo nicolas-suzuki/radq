@@ -256,17 +256,17 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                                     if(height < 500){
                                         textView.setText("5");
                                         command = "frente";
-                                        Log.d(TAG,"Frente");
+                                        Log.d(TAG,"Forwards");
                                         usbService.write(command.getBytes());
                                     } else if (height > 600){
                                         textView.setText("6");
                                         command = "tras";
-                                        Log.d(TAG,"Tras");
+                                        Log.d(TAG,"Backwards");
                                         usbService.write(command.getBytes());
                                     } else {
                                         textView.setText("7");
                                         command = "parar";
-                                        Log.d(TAG,"Parar");
+                                        Log.d(TAG,"Stop");
                                         usbService.write(command.getBytes());
                                     }
                                 }
@@ -277,7 +277,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             }
 
             // Adding boxes around detection
-            if (confs.size() >= 1) { //if confs.size() == 0, maybe is because nothing was detected. for that, add an else at the end of this statement
+            if (confs.size() >= 1) {
                 // Apply non-maximum suppression procedure.
                 float nmsThresh = 0.3f;
                 MatOfFloat confidences = new MatOfFloat(Converters.vector_float_to_Mat(confs));
@@ -407,7 +407,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         return coefficientOfVariation;
     }
 
-    // USB Connection + Control Classes Section //
+    //////////////////////// USB Connection + Control Classes Section //////////////////////////////
 
     private final ServiceConnection usbConnection = new ServiceConnection() {
         @Override

@@ -21,7 +21,8 @@
 
         <!-- Main Activity -->
         <activity
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:theme="@style/MainActivity">
         </activity>
 
         <!-- Notifications Activity -->

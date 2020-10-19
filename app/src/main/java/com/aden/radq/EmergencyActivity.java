@@ -44,7 +44,6 @@ public class EmergencyActivity extends AppCompatActivity {
     private Space spaceEmergency;
 
     private String accountId;
-    private String message;
 
     private ValueEventListener valueEventListenerMyContacts;
     private DatabaseReference databaseReference;
@@ -105,25 +104,22 @@ public class EmergencyActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 //Button not pressed, time's over
-                message = "YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg";
-                sendMessageAndStore();
+                sendMessageAndStore("YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg");
                 contactContacted();
             }
         }.start();
 
         btImOkay.setOnClickListener(v -> {
             //OKAY Button pressed
-            message = "aW1va2F5YnV0dG9ucHJlc3NlZA";
             countDownTimer.cancel();
-            sendMessageAndStore();
+            sendMessageAndStore("aW1va2F5YnV0dG9ucHJlc3NlZA");
             finish();
         });
 
         btImNotOkay.setOnClickListener(v -> {
             //NOT okay Button pressed
-            message = "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA";
             countDownTimer.cancel();
-            sendMessageAndStore();
+            sendMessageAndStore("aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA");
             contactContacted();
         });
 
@@ -155,19 +151,20 @@ public class EmergencyActivity extends AppCompatActivity {
         countDownTimer.cancel();
     }
 
-    private void sendMessageAndStore() {
+    private void sendMessageAndStore(String message) {
         Log.d(TAG,"sendMessageToContact()");
-
+        Log.d(TAG,"myContacts: " + myContactsId.size());
         String timeStamp = createTimeStamp();
 
         Notification notification = new Notification();
         notification.setNotification(message);
         notification.setTimestamp(timeStamp);
+        notification.setUserId(accountId);
 
         databaseReference = FirebaseConnector.getFirebase().child("notifications");
         for (String myContactId : myContactsId) {
+            Log.d(TAG,"myContacts: " + myContactId);
             databaseReference.
-                    child(accountId).
                     child(myContactId).
                     push().
                     setValue(notification);

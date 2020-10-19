@@ -19,6 +19,8 @@
         android:name="android.hardware.front.autofocus"
         android:required="false" />
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,6 +28,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- USB Service -->
+        <service
+            android:enabled="true"
+            android:name="com.aden.radq.adapter.UsbService" />
 
         <!-- Loading Activity -->
         <activity android:name=".SplashScreenActivity"

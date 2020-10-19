@@ -32,4 +32,6 @@
     <string name="login_button">Conectar</string>
     <string name="create_account_description">Crie sua conta RADQ aqui</string>
     <string name="manage_account">Gerencie sua conta</string>
+    <string name="radq_notification">RADQ necessita de sua atenção!</string>
+    <string name="notification_channel_description">Todas as notificações do RADQ</string>
 </resources>
