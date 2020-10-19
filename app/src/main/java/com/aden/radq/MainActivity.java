@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    private Settings settings;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
         //Load settings
-        settings = new Settings(MainActivity.this);
+        Settings settings = new Settings(MainActivity.this);
         Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         myContacts = new ArrayList<>();
@@ -55,6 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Setting settings as empty, since logged out");
                 settings.setIdentifierKey("");
             }
+        }
+
+        if(firebaseAuth.getCurrentUser() != null){
+            DatabaseReference databaseReference = FirebaseConnector.getFirebase().
+                    child("contacts").
+                    child(settings.getIdentifierKey());
+            ValueEventListener valueEventListenerMyContacts = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    myContacts.clear();
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        Contact contact = data.getValue(Contact.class);
+                        myContacts.add(contact.getName());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+            databaseReference.addValueEventListener(valueEventListenerMyContacts);
         }
 
         setContentView(R.layout.main_activity);
@@ -75,41 +95,25 @@ public class MainActivity extends AppCompatActivity {
     public void openCameraActivity(){
         //Get the saved preferences and check if there's a contact registered
         //if not, it won't start the CameraActivity and will show up a message
-
         if(firebaseAuth.getCurrentUser() != null){
-            DatabaseReference databaseReference = FirebaseConnector.getFirebase().
-                    child("contacts").
-                    child(settings.getIdentifierKey());
-            ValueEventListener valueEventListenerMyContacts = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    myContacts.clear();
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        Contact contact = data.getValue(Contact.class);
-                        myContacts.add(contact.getName());
-                    }
-                    if (myContacts.isEmpty()) {
-                        alertDialogBox(getString(R.string.contact_alert_dialog_title), getString(R.string.contact_alert_dialog_message));
-                    } else {
-                        Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                        startActivity(intent);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            };
-            databaseReference.addValueEventListener(valueEventListenerMyContacts);
+            if (myContacts.isEmpty()) {
+                alertDialogBox(getString(R.string.contact_alert_dialog_title), getString(R.string.contact_alert_dialog_message));
+            } else {
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                startActivity(intent);
+            }
         } else {
             alertDialogBox(getString(R.string.alert_not_logged_title), getString(R.string.alert_not_logged_message));
         }
     }
 
     public void openAlarmsActivity(){
-        Intent intent = new Intent(MainActivity.this, AlarmsActivity.class);
-        startActivity(intent);
+        if(firebaseAuth.getCurrentUser() != null){
+            Intent intent = new Intent(MainActivity.this, AlarmsActivity.class);
+            startActivity(intent);
+        } else {
+            alertDialogBox(getString(R.string.alert_not_logged_title), getString(R.string.alert_not_logged_message));
+        }
     }
 
     public void openNotificationsActivity(){

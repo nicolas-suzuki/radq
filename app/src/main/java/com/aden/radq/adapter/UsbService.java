@@ -192,10 +192,10 @@ public class UsbService extends Service {
 
             for (Map.Entry<String, UsbDevice> entry : usbDevices.entrySet()) {
                 device = entry.getValue();
-                int deviceVID = device.getVendorId();
-                int devicePID = device.getProductId();
+                //int deviceVID = device.getVendorId();
+                //int devicePID = device.getProductId();
 
-//                if (deviceVID != 0x1d6b && (devicePID != 0x0001 && devicePID != 0x0002 && devicePID != 0x0003) && deviceVID != 0x5c6 && devicePID != 0x904c) {
+                //if (deviceVID != 0x1d6b && (devicePID != 0x0001 && devicePID != 0x0002 && devicePID != 0x0003) && deviceVID != 0x5c6 && devicePID != 0x904c) {
                 if (UsbSerialDevice.isSupported(device)) {
                     // There is a supported device connected - request permission to access it.
                     requestUserPermission();
@@ -256,12 +256,6 @@ public class UsbService extends Service {
                     serialPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
                     serialPort.setStopBits(UsbSerialInterface.STOP_BITS_1);
                     serialPort.setParity(UsbSerialInterface.PARITY_NONE);
-                    /**
-                     * Current flow control Options:
-                     * UsbSerialInterface.FLOW_CONTROL_OFF
-                     * UsbSerialInterface.FLOW_CONTROL_RTS_CTS only for CP2102 and FT232
-                     * UsbSerialInterface.FLOW_CONTROL_DSR_DTR only for CP2102 and FT232
-                     */
                     serialPort.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
                     serialPort.read(mCallback);
                     serialPort.getCTS(ctsCallback);

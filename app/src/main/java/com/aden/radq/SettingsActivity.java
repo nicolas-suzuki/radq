@@ -51,12 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        swCameraFrontBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked());
-            }
-        });
+        swCameraFrontBack.setOnClickListener(v -> settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked()));
 
         btMyAccount.setOnClickListener(v -> openMyAccountActivity());
 

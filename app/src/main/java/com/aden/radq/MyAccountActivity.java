@@ -97,7 +97,7 @@ public class MyAccountActivity extends AppCompatActivity {
         settings.setIdentifierKey("");
         etAccountEmail.setEnabled(true);
 
-        ((ViewGroup) llLoginFields).addView(llPassword);
+        llLoginFields.addView(llPassword);
         btAccountLogin.setText(getText(R.string.login_button));
     }
 

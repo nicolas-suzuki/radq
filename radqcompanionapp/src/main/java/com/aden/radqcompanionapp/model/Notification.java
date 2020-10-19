@@ -5,27 +5,19 @@ public class Notification {
     private String notification;
     private String timestamp;
 
-    public String getUserId() {
-        return userId;
+    public Notification() {
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getUserId() {
+        return userId;
     }
 
     public String getNotification() {
         return notification;
     }
 
-    public void setNotification(String notification) {
-        this.notification = notification;
-    }
-
     public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
 }

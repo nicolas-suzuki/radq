@@ -45,8 +45,8 @@ public class MyContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_contacts_activity);
 
-        Button btAddContact = (Button) findViewById(R.id.btAddContact);
-        ListView lvContacts = (ListView) findViewById(R.id.lvContacts);
+        Button btAddContact = findViewById(R.id.btAddContact);
+        ListView lvContacts = findViewById(R.id.lvContacts);
 
         //Load settings
         Settings settings = new Settings(MyContactsActivity.this);

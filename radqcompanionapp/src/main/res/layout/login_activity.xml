@@ -47,7 +47,6 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:labelFor="@id/etAccountEmail"
@@ -63,7 +62,7 @@
                         android:ems="10"
                         android:inputType="textEmailAddress"
                         android:minHeight="48dp"
-                        android:textColor="@color/text_darker" />
+                        android:singleLine="true" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -75,7 +74,6 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:labelFor="@id/etAccountPassword"
@@ -91,7 +89,7 @@
                         android:ems="10"
                         android:inputType="textPassword"
                         android:minHeight="48dp"
-                        android:textColor="@color/text_darker" />
+                        android:singleLine="true" />
 
                 </LinearLayout>
 

@@ -56,9 +56,9 @@
     <string name="logged_out">Logged out</string>
     <string name="logged_in">Logged in!</string>
     <string name="unknown_error_logging_in">Unknown error while logging in</string>
-    <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Button \"I\'m okay\" pressed after fall detected or after alarm went off.</string>
-    <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Button \"HELP\" pressed after fall detected or after alarm went off.</string>
-    <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Buttons not pressed. Time\'s over. After fall detected or after alarm went off.</string>
+    <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Button \"I\'m okay\" pressed after fall detected.</string>
+    <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Button \"HELP\" pressed after fall detected.</string>
+    <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Buttons not pressed. Time\'s over after fall detected.</string>
     <string name="disconnect_before_proceed">Please, logout from your current session before proceed.</string>
     <string name="advanced_settings">Advanced settings</string>
     <string name="my_contacts_description">Here\'s a list of your current contacts. If you would like to add one, click on the button below.</string>

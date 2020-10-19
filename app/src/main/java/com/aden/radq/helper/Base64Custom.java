@@ -12,8 +12,8 @@ public class Base64Custom {
                 replaceAll("([\\n\\r])","");
     }
 
-    public static String decodeBase64(String encodedText){
-        Log.d(TAG, "decodeBase64");
-        return new String (Base64.decode(encodedText,Base64.DEFAULT));
-    }
+//    public static String decodeBase64(String encodedText){
+//        Log.d(TAG, "decodeBase64");
+//        return new String (Base64.decode(encodedText,Base64.DEFAULT));
+//    }
 }

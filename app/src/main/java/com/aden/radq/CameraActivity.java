@@ -374,50 +374,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         }
     }
 
-    private void takeScreenshot(Mat frame, int intConf) {
-        cameraBridgeViewBase.disableView();
-        Date date = new Date();
-        CharSequence now = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
-        String filename = now + "_conf:" + intConf + ".jpg";
-
-        Bitmap bitmap = null;
-        FileOutputStream outputStream = null;
-
-        File sd = new File(getExternalFilesDir(null) + "/fall_detection_images");
-        boolean success = true;
-
-        try{
-            bitmap = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
-            Utils.matToBitmap(frame,bitmap);
-        } catch (CvException e){
-            Log.d(TAG, Objects.requireNonNull(e.getMessage()));
-        }
-
-        if(!sd.exists()){
-            success = sd.mkdir();
-        }
-
-        if (success){
-            File destination = new File(sd,filename);
-            try{
-                outputStream = new FileOutputStream(destination);
-                assert bitmap != null;
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
-            } catch(Exception e){
-                Log.d(TAG, Objects.requireNonNull(e.getMessage()));
-            } finally {
-                try{
-                    if(outputStream != null){
-                        outputStream.close();
-                        Log.d(TAG,"Saved successfully.");
-                    }
-                } catch (IOException e){
-                    Log.d(TAG,"Error: " + e.getMessage());
-                }
-            }
-        }
-    }
-
     private void initiateAlarm() {
         Intent intent = new Intent(this, EmergencyActivity.class);
         startActivity(intent);
@@ -527,4 +483,49 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
         registerReceiver(mUsbReceiver, filter);
     }
+
+
+//    private void takeScreenshot(Mat frame, int intConf) {
+//        cameraBridgeViewBase.disableView();
+//        Date date = new Date();
+//        CharSequence now = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
+//        String filename = now + "_conf:" + intConf + ".jpg";
+//
+//        Bitmap bitmap = null;
+//        FileOutputStream outputStream = null;
+//
+//        File sd = new File(getExternalFilesDir(null) + "/fall_detection_images");
+//        boolean success = true;
+//
+//        try{
+//            bitmap = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
+//            Utils.matToBitmap(frame,bitmap);
+//        } catch (CvException e){
+//            Log.d(TAG, Objects.requireNonNull(e.getMessage()));
+//        }
+//
+//        if(!sd.exists()){
+//            success = sd.mkdir();
+//        }
+//
+//        if (success){
+//            File destination = new File(sd,filename);
+//            try{
+//                outputStream = new FileOutputStream(destination);
+//                assert bitmap != null;
+//                bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
+//            } catch(Exception e){
+//                Log.d(TAG, Objects.requireNonNull(e.getMessage()));
+//            } finally {
+//                try{
+//                    if(outputStream != null){
+//                        outputStream.close();
+//                        Log.d(TAG,"Saved successfully.");
+//                    }
+//                } catch (IOException e){
+//                    Log.d(TAG,"Error: " + e.getMessage());
+//                }
+//            }
+//        }
+//    }
 }
