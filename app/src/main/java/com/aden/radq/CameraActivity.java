@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -47,9 +48,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class CameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
     private static final String TAG = "CameraActivity";
@@ -59,7 +62,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     private boolean isFirstTimeYolo = true;
     //TODO change framesToConfirmFall name/logic
     private int framesToConfirmFall = 0;
-    private final boolean isCountDownTimerActive = false;
+    private boolean isCountDownTimerActive = false;
 
     //Robot control by height
     private int countHeightsDetected = 0;
@@ -79,6 +82,10 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     //Temporary
     private TextView textView;
+    private boolean firstDetection = true;
+
+    private Date startTime;
+    private Date endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,37 +296,34 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                     if (idGuy == 0) {
                         // Fall detected
+                        if (firstDetection){
+                            startTime = Calendar.getInstance().getTime();
+                            firstDetection = false;
+                        }
                         message = getString(R.string.fall_detected_text);
                         Imgproc.putText(frame, message + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
 
                         Log.d(TAG, "Fall detected! Precision: " + intConf + "%");
                         framesToConfirmFall++;
-                        if (framesToConfirmFall == 5) {
-                            //This countdown ensures that the person is really down
-//                        if(!isCountDownTimerActive) {
-//                            new CountDownTimer(5000, 1000) {
-//                                @Override
-//                                public void onTick(long millisUntilFinished) {
-//                                    isCountDownTimerActive = true;
-//                                }
-//
-//                                @Override
-//                                public void onFinish() {
-//                                    if (framesToConfirmFall >= 5) {
-//                                        //TODO the Screenshot is not used anywhere in the code. Uncomment when it's useful
-//                                        //takeScreenshot(frame, intConf);
-                            initiateAlarm();
-//                                    }
-//                                    isCountDownTimerActive = false;
-//                                    framesToConfirmFall = 0;
-//                                }
-//                            }.start();
-//                        }
-                            return frame;
+                        Log.d(TAG, "Frame detected number: " + framesToConfirmFall);
+                        //This countdown ensures that the person is really down
+                        if(framesToConfirmFall == 5){
+                            endTime = Calendar.getInstance().getTime();
+                            long differenceInMinutes = endTime.getTime() - startTime.getTime();
+                            long differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(differenceInMinutes);
+                            if(differenceInSeconds < 10){
+                                firstDetection = true;
+                                framesToConfirmFall = 0;
+                                initiateAlarm();
+                            } else {
+                                Log.d(TAG, "False alarm!");
+                                framesToConfirmFall = 0;
+                                firstDetection = true;
+                            }
                         }
                     } else if (idGuy == 1) {
-                        // Pessoa detectada
+                        // Person detected
                         message = getString(R.string.person_detected_text);
                         Imgproc.putText(frame, message + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);

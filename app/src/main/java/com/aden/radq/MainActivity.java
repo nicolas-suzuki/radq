@@ -3,6 +3,7 @@ package com.aden.radq;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.widget.ImageButton;
 
@@ -30,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> myContacts;
 
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
+    private ValueEventListener valueEventListenerMyContacts;
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        databaseReference.removeEventListener(valueEventListenerMyContacts);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(firebaseAuth.getCurrentUser() != null){
-            DatabaseReference databaseReference = FirebaseConnector.getFirebase().
+            databaseReference = FirebaseConnector.getFirebase().
                     child("contacts").
                     child(settings.getIdentifierKey());
-            ValueEventListener valueEventListenerMyContacts = new ValueEventListener() {
+            valueEventListenerMyContacts = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     myContacts.clear();
@@ -96,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         //Get the saved preferences and check if there's a contact registered
         //if not, it won't start the CameraActivity and will show up a message
         if(firebaseAuth.getCurrentUser() != null){
+            databaseReference.addValueEventListener(valueEventListenerMyContacts);
             if (myContacts.isEmpty()) {
                 alertDialogBox(getString(R.string.contact_alert_dialog_title), getString(R.string.contact_alert_dialog_message));
             } else {
