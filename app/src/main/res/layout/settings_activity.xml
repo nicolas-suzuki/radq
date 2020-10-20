@@ -100,6 +100,17 @@
                 android:textSize="16sp"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swRobotInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:text="@string/switch_enable_robot_instructions"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
         </LinearLayout>
 
         <Space

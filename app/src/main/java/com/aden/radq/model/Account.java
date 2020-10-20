@@ -3,7 +3,6 @@ package com.aden.radq.model;
 import com.google.firebase.database.Exclude;
 
 public class Account {
-    private static final String TAG = "Account";
 
     private String id;
     private String name;

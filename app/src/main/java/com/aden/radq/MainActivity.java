@@ -3,7 +3,6 @@ package com.aden.radq;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.widget.ImageButton;
 
@@ -34,10 +33,14 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListenerMyContacts;
 
+    private boolean isLoadingContacts = true;
+
     @Override
     protected void onStop() {
         super.onStop();
-        databaseReference.removeEventListener(valueEventListenerMyContacts);
+        if(firebaseAuth.getCurrentUser() != null) {
+            databaseReference.removeEventListener(valueEventListenerMyContacts);
+        }
     }
 
     @Override
@@ -76,11 +79,12 @@ public class MainActivity extends AppCompatActivity {
                         Contact contact = data.getValue(Contact.class);
                         myContacts.add(contact.getName());
                     }
+                    isLoadingContacts = false;
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    isLoadingContacts = true;
                 }
             };
             databaseReference.addValueEventListener(valueEventListenerMyContacts);
@@ -106,11 +110,15 @@ public class MainActivity extends AppCompatActivity {
         //if not, it won't start the CameraActivity and will show up a message
         if(firebaseAuth.getCurrentUser() != null){
             databaseReference.addValueEventListener(valueEventListenerMyContacts);
-            if (myContacts.isEmpty()) {
-                alertDialogBox(getString(R.string.contact_alert_dialog_title), getString(R.string.contact_alert_dialog_message));
+            if(!isLoadingContacts){
+                if (myContacts.isEmpty()) {
+                    alertDialogBox(getString(R.string.contact_alert_dialog_title), getString(R.string.contact_alert_dialog_message));
+                } else {
+                    Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                    startActivity(intent);
+                }
             } else {
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                startActivity(intent);
+                alertDialogBox(getString(R.string.loading_contacts_dialog_title), getString(R.string.loading_contacts_dialog_message));
             }
         } else {
             alertDialogBox(getString(R.string.alert_not_logged_title), getString(R.string.alert_not_logged_message));

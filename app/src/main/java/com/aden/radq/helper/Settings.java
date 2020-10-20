@@ -13,6 +13,7 @@ public class Settings {
 
     private final String IDENTIFIER_KEY = "loggedUserID";
     private final String SWITCH_CAMERA_FRONT_BACK = "switchCameraFrontBack";
+    private final String ROBOT_INSTRUCTIONS = "switchRobotInstructions";
 
     @SuppressLint("CommitPrefEdits")
     public Settings(Context parameterContext){
@@ -24,7 +25,7 @@ public class Settings {
     }
 
     public void setIdentifierKey(String contactID){
-        Log.d(TAG, "Settings saved.");
+        Log.d(TAG, "Settings \"Identifier\" saved.");
         editor.putString(IDENTIFIER_KEY, contactID);
         editor.commit();
     }
@@ -34,12 +35,22 @@ public class Settings {
     }
 
     public void setSwitchCameraFrontBack(Boolean switchCameraFrontBack){
-        Log.d(TAG, "Settings saved.");
+        Log.d(TAG, "Settings \"CameraFrontBack\" saved.");
         editor.putBoolean(SWITCH_CAMERA_FRONT_BACK, switchCameraFrontBack);
         editor.commit();
     }
 
     public boolean getSwitchCameraFrontBack(){
         return sharedPreferences.getBoolean(SWITCH_CAMERA_FRONT_BACK,false);
+    }
+
+    public void setRobotInstructions(Boolean switchRobotInstructions){
+        Log.d(TAG, "Settings \"Robot Instructions\" saved.");
+        editor.putBoolean(ROBOT_INSTRUCTIONS, switchRobotInstructions);
+        editor.commit();
+    }
+
+    public boolean getRobotInstructions(){
+        return sharedPreferences.getBoolean(ROBOT_INSTRUCTIONS,false);
     }
 }

@@ -1,6 +1,7 @@
 package com.aden.radq.model;
 
 public class Notification {
+
     private String notification;
     private String timestamp;
     private String userId;

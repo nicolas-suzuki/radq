@@ -18,6 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";
 
     private SwitchCompat swCameraFrontBack;
+    private SwitchCompat swRobotInstructions;
 
     private Settings settings;
 
@@ -33,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
         Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
+        swRobotInstructions = findViewById(R.id.swRobotInstructions);
 
         Button btMyAccount = findViewById(R.id.btMyAccount);
         Button btMyContacts = findViewById(R.id.btMyContacts);
@@ -52,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         swCameraFrontBack.setOnClickListener(v -> settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked()));
+        swRobotInstructions.setOnClickListener(v -> settings.setRobotInstructions(swRobotInstructions.isChecked()));
 
         btMyAccount.setOnClickListener(v -> openMyAccountActivity());
 
@@ -73,6 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void updateData(){
         Log.d(TAG, "updateData()");
         swCameraFrontBack.setChecked(settings.getSwitchCameraFrontBack());
+        swRobotInstructions.setChecked(settings.getRobotInstructions());
     }
 
     private void showSnackbar(String message){

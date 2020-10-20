@@ -6,12 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
@@ -27,9 +23,7 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
 import org.opencv.core.Core;
-import org.opencv.core.CvException;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
@@ -43,10 +37,6 @@ import org.opencv.dnn.Net;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,37 +50,36 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     //TODO re-analyze the need of the following two variables and their logic
     private boolean isYoloStarted = false;
     private boolean isFirstTimeYolo = true;
-    //TODO change framesToConfirmFall name/logic
-    private int framesToConfirmFall = 0;
-    private boolean isCountDownTimerActive = false;
-
-    //Robot control by height
-    private int countHeightsDetected = 0;
-    private final List<Integer> listOfHeights = new ArrayList<>();
 
     //Camera connection + detection specific variables
     private CameraBridgeViewBase cameraBridgeViewBase;
     private BaseLoaderCallback baseLoaderCallback;
     private Net tinyYolo;
 
-    //USB connection + control specific variables
-    private UsbService usbService;
-    private MyHandler mHandler;
-
     //String messages for toasts/logs
     private String message;
 
-    //Temporary
-    private TextView textView;
+    //Fall confirmation
     private boolean firstDetection = true;
-
+    //TODO change framesToConfirmFall name/logic
+    private int framesToConfirmFall = 0;
     private Date startTime;
-    private Date endTime;
+
+    /////////////////////////////////// Robot variables section ///////////////////////////////////
+    //Robot control by height
+    private int countHeightsDetected = 0;
+    private final List<Integer> listOfHeights = new ArrayList<>();
+
+    //Robot instructions
+    private TextView tvRobotInstructions;
+    private boolean isRobotInstructionsEnabled = false;
+
+    //USB connection + control specific variables
+    private UsbService usbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Get saved preferences
         //Settings
         Settings settings = new Settings(CameraActivity.this);
         Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
@@ -103,17 +92,16 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             setContentView(R.layout.camera_activity);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-            //USB Handler initialization
-            mHandler = new MyHandler(this);
-
             //Camera initialization
             cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
             cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
             cameraBridgeViewBase.setCvCameraViewListener(this);
 
-            //Temporary
-            textView = findViewById(R.id.textView4);
-            textView.setText("Inicializado");
+            //Robot instructions
+            isRobotInstructionsEnabled = settings.getRobotInstructions();
+            if(isRobotInstructionsEnabled){
+                tvRobotInstructions = findViewById(R.id.tvRobotInstructions);
+            }
 
             //Check which camera will be used frontal or back. By default, frontal camera.
             Log.d(TAG, "Front/Back Camera preference: " + settings.getSwitchCameraFrontBack());
@@ -158,7 +146,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         if (cameraBridgeViewBase == null) {
             cameraBridgeViewBase.enableView();
         }
-        //TODO Check if this works: there's a problem when clicking on I'm okay button, that the camera doesn't start detecting anymore
         checkIfDetectionStarted();
 
         //Usb service
@@ -237,14 +224,11 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         Log.d(TAG, "height: " + height);
 
                         if((usbService != null) && (height > width)){
-                            textView.setText("1");
                             if(countHeightsDetected<3){
-                                textView.setText("2");
                                 Log.d(TAG,"countHeightsDetected < 3");
                                 listOfHeights.add(height);
                                 countHeightsDetected++;
                             } else {
-                                textView.setText("3");
                                 Log.d(TAG,"countHeightsDetected >= 3");
                                 countHeightsDetected = 0;
                                 double coefficientOfVariationResult = coefficientOfVariationCalculator(listOfHeights);
@@ -252,19 +236,18 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                                 Log.d(TAG, "coefficientOfVariationResult: " + coefficientOfVariationResult);
                                 String command;
                                 if(coefficientOfVariationResult < 15.0){
-                                    textView.setText("4");
                                     if(height < 500){
-                                        textView.setText("5");
+                                        if(isRobotInstructionsEnabled) tvRobotInstructions.setText(getString(R.string.robot_instruction_forward));
                                         command = "frente";
                                         Log.d(TAG,"Forwards");
                                         usbService.write(command.getBytes());
                                     } else if (height > 600){
-                                        textView.setText("6");
+                                        if(isRobotInstructionsEnabled) tvRobotInstructions.setText(getString(R.string.robot_instructions_backwards));
                                         command = "tras";
                                         Log.d(TAG,"Backwards");
                                         usbService.write(command.getBytes());
                                     } else {
-                                        textView.setText("7");
+                                        if(isRobotInstructionsEnabled) tvRobotInstructions.setText(getString(R.string.robot_instruction_stop));
                                         command = "parar";
                                         Log.d(TAG,"Stop");
                                         usbService.write(command.getBytes());
@@ -309,7 +292,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         Log.d(TAG, "Frame detected number: " + framesToConfirmFall);
                         //This countdown ensures that the person is really down
                         if(framesToConfirmFall == 5){
-                            endTime = Calendar.getInstance().getTime();
+                            Date endTime = Calendar.getInstance().getTime();
                             long differenceInMinutes = endTime.getTime() - startTime.getTime();
                             long differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(differenceInMinutes);
                             if(differenceInSeconds < 10){
@@ -413,7 +396,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             usbService = ((UsbService.UsbBinder) iBinder).getService();
-            usbService.setHandler(mHandler);
         }
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
@@ -453,31 +435,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
-    // This handler will be passed to UsbService. Data received from serial port is displayed through this handler
-    private static class MyHandler extends Handler {
-        private final WeakReference<CameraActivity> mActivity;
-
-        public MyHandler(CameraActivity activity) {
-            mActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case UsbService.MESSAGE_FROM_SERIAL_PORT:
-                    String data = (String) msg.obj;
-                    //mActivity.get().display.append(data);
-                    break;
-                case UsbService.CTS_CHANGE:
-                    Toast.makeText(mActivity.get(), "CTS_CHANGE",Toast.LENGTH_LONG).show();
-                    break;
-                case UsbService.DSR_CHANGE:
-                    Toast.makeText(mActivity.get(), "DSR_CHANGE",Toast.LENGTH_LONG).show();
-                    break;
-            }
-        }
-    }
-
     private void setFilters() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
@@ -487,49 +444,4 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
         registerReceiver(mUsbReceiver, filter);
     }
-
-
-//    private void takeScreenshot(Mat frame, int intConf) {
-//        cameraBridgeViewBase.disableView();
-//        Date date = new Date();
-//        CharSequence now = android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", date);
-//        String filename = now + "_conf:" + intConf + ".jpg";
-//
-//        Bitmap bitmap = null;
-//        FileOutputStream outputStream = null;
-//
-//        File sd = new File(getExternalFilesDir(null) + "/fall_detection_images");
-//        boolean success = true;
-//
-//        try{
-//            bitmap = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
-//            Utils.matToBitmap(frame,bitmap);
-//        } catch (CvException e){
-//            Log.d(TAG, Objects.requireNonNull(e.getMessage()));
-//        }
-//
-//        if(!sd.exists()){
-//            success = sd.mkdir();
-//        }
-//
-//        if (success){
-//            File destination = new File(sd,filename);
-//            try{
-//                outputStream = new FileOutputStream(destination);
-//                assert bitmap != null;
-//                bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
-//            } catch(Exception e){
-//                Log.d(TAG, Objects.requireNonNull(e.getMessage()));
-//            } finally {
-//                try{
-//                    if(outputStream != null){
-//                        outputStream.close();
-//                        Log.d(TAG,"Saved successfully.");
-//                    }
-//                } catch (IOException e){
-//                    Log.d(TAG,"Error: " + e.getMessage());
-//                }
-//            }
-//        }
-//    }
 }

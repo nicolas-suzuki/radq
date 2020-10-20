@@ -62,4 +62,10 @@
     <string name="login_button">Conectar</string>
     <string name="my_contacts_description">Aqui está uma lista dos seus atuais contatos. Se quiser adicionar um, clique no botão abaixo.</string>
     <string name="create_account_description">Crie sua conta RADQ aqui</string>
+    <string name="loading_contacts_dialog_title">Por favor aguarde</string>
+    <string name="loading_contacts_dialog_message">Carregando contatos</string>
+    <string name="switch_enable_robot_instructions">Habilitar instruções visuais do robô</string>
+    <string name="robot_instruction_forward">Frente</string>
+    <string name="robot_instructions_backwards">Trás</string>
+    <string name="robot_instruction_stop">Parar</string>
 </resources>

@@ -63,4 +63,10 @@
     <string name="advanced_settings">Advanced settings</string>
     <string name="my_contacts_description">Here\'s a list of your current contacts. If you would like to add one, click on the button below.</string>
     <string name="create_account_description">Create your RADQ account here</string>
+    <string name="loading_contacts_dialog_title">Please wait</string>
+    <string name="loading_contacts_dialog_message">Loading contacts</string>
+    <string name="switch_enable_robot_instructions">Enable visual robot instructions</string>
+    <string name="robot_instruction_forward">Forward</string>
+    <string name="robot_instructions_backwards">Backwards</string>
+    <string name="robot_instruction_stop">Stop</string>
 </resources>
