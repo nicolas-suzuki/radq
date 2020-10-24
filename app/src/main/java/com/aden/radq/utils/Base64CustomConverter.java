@@ -1,8 +1,8 @@
-package com.aden.radq.helper;
+package com.aden.radq.utils;
 
 import android.util.Base64;
 
-public final class Base64Custom {
+public final class Base64CustomConverter {
 
     public static String encodeBase64(String textToEncode){
         return Base64.encodeToString(textToEncode.getBytes(),Base64.DEFAULT).

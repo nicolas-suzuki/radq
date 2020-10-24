@@ -30,7 +30,7 @@
         <!-- USB Service -->
         <service
             android:enabled="true"
-            android:name="com.aden.radq.adapter.UsbService" />
+            android:name="com.aden.radq.services.UsbService" />
 
         <!-- Loading Activity -->
         <activity android:name=".SplashScreenActivity"
@@ -49,10 +49,11 @@
 
         <!-- Camera Activity -->
         <activity
-            android:name=".CameraActivity"
+            android:name=".StartRadqActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeBlackActionBar"
             android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop"
             android:label="">
         </activity>
 
@@ -61,7 +62,7 @@
                 android:screenOrientation="landscape"
                 android:name=".EmergencyActivity"
                 android:theme="@style/AppFullScreen"
-                android:parentActivityName=".CameraActivity"
+                android:parentActivityName=".StartRadqActivity"
                 android:label="@string/emergency_title">
             </activity>
 

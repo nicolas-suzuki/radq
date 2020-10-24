@@ -1,5 +1,6 @@
 package com.aden.radq.model;
 
+@SuppressWarnings("ALL")
 public class Notification {
 
     private String notification;

@@ -9,7 +9,7 @@
     <string name="notifications_title">Notificações</string>
     <string name="welcome_title">Bem-vindo ao RADQ!</string>
     <string name="welcome_description">Seu robô autônomo detector de quedas.</string>
-    <string name="camera">Câmera</string>
+    <string name="camera">Iniciar RADQ</string>
     <string name="switch_front_back_camera">Ativar câmera traseira</string>
     <string name="emergency_title">Emergência</string>
     <string name="notifications_description">Notificações geradas pelo RADQ</string>
@@ -73,4 +73,6 @@
     <string name="toast_action_usb_disconnected">USB desconectado</string>
     <string name="toast_action_usb_device_not_supported">Dispositivo USB não suportado</string>
     <string name="toast_error_initializeDetection">Erro: initializeDetection</string>
+    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda desativada. "</string>
+    <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Detecção de queda iniciada.</string>
 </resources>

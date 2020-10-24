@@ -10,9 +10,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.aden.radq.adapter.FirebaseConnector;
-import com.aden.radq.helper.Settings;
 import com.aden.radq.model.Contact;
+import com.aden.radq.utils.FirebaseConnector;
+import com.aden.radq.utils.SettingsStorage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isLoadingContacts = true;
     ArrayList<String> myContacts;
 
-    private Settings settings;
+    private SettingsStorage settingsStorage;
 
     //Firebase
     private FirebaseAuth firebaseAuth;
@@ -52,17 +52,16 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
         //Load settings
-        settings = new Settings(MainActivity.this);
+        settingsStorage = new SettingsStorage(MainActivity.this);
 
         myContacts = new ArrayList<>();
 
-        if(settings.getIdentifierKey() != null) {
-            if ((settings.getIdentifierKey().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {
-                firebaseAuth.signOut();
-            }
-            if ((firebaseAuth.getCurrentUser() == null) && (!settings.getIdentifierKey().isEmpty())) {
-                settings.setIdentifierKey("");
-            }
+        settingsStorage.getIdentifierKey();
+        if ((settingsStorage.getIdentifierKey().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {
+            firebaseAuth.signOut();
+        }
+        if ((firebaseAuth.getCurrentUser() == null) && (!settingsStorage.getIdentifierKey().isEmpty())) {
+            settingsStorage.setIdentifierKey("");
         }
 
         if(firebaseAuth.getCurrentUser() != null){
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 if (myContacts.isEmpty()) {
                     alertDialogBox(getString(R.string.contact_alert_dialog_title), getString(R.string.contact_alert_dialog_message));
                 } else {
-                    Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                    Intent intent = new Intent(MainActivity.this, StartRadqActivity.class);
                     startActivity(intent);
                 }
             }
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     private void initiateFirebaseDatabase(){
         databaseReference = FirebaseConnector.getFirebase().
                 child("contacts").
-                child(settings.getIdentifierKey());
+                child(settingsStorage.getIdentifierKey());
         valueEventListenerMyContacts = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

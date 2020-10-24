@@ -1,11 +1,6 @@
 package com.aden.radq;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.ViewGroup;
@@ -15,25 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.aden.radq.adapter.FirebaseConnector;
-import com.aden.radq.helper.Settings;
-import com.aden.radq.model.Contact;
-import com.aden.radq.model.Notification;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+import com.aden.radq.utils.AlarmSound;
+import com.aden.radq.utils.NotificationSender;
+import com.aden.radq.utils.SettingsStorage;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class EmergencyActivity extends AppCompatActivity {
@@ -41,38 +24,30 @@ public class EmergencyActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
 
     //Views
-    Button btImNotOkay;
+    private Button btImNotOkay;
     private ConstraintLayout clEmergency;
     private LinearLayout llButtons;
-    TextView tvContactWillBeContacted;
+    private TextView tvContactWillBeContacted;
     private TextView tvEmergencyTitle;
     private Space spaceEmergency;
 
-    private String accountId;
-    ArrayList<String> myContactsId;
-
-    //Firebase
-    private ValueEventListener valueEventListenerMyContacts;
-    private DatabaseReference databaseReference;
-
     //Play Alarm Sound
-    private SoundPool soundAlarmPool;
+    private AlarmSound alarmSound;
+
+    private NotificationSender notificationSender;
 
     @Override
     protected final void onStop() {
         super.onStop();
-        if(valueEventListenerMyContacts != null){
-            databaseReference.removeEventListener(valueEventListenerMyContacts);
-        }
         countDownTimer.cancel();
-        killAlarmSound();
+        alarmSound.stop();
     }
 
     @Override
     protected final void onDestroy() {
         super.onDestroy();
         countDownTimer.cancel();
-        killAlarmSound();
+        alarmSound.stop();
     }
 
     @Override
@@ -91,14 +66,15 @@ public class EmergencyActivity extends AppCompatActivity {
         spaceEmergency = findViewById(R.id.spaceEmergency);
 
         //Settings
-        Settings settings = new Settings(EmergencyActivity.this);
+        SettingsStorage settingsStorage = new SettingsStorage(EmergencyActivity.this);
+        String accountId = settingsStorage.getIdentifierKey();
 
-        accountId = settings.getIdentifierKey();
-
-        myContactsId = new ArrayList<>();
+        //Initialize object NotificationSender
+        notificationSender = new NotificationSender(accountId);
 
         //Play Alarm Sound
-        playAlarmSound();
+        alarmSound = new AlarmSound(this);
+        alarmSound.play();
 
         countDownTimer = new CountDownTimer(30000,1000){
             boolean tick = true;
@@ -124,7 +100,7 @@ public class EmergencyActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 //Button not pressed, time's over
-                sendMessageAndStore("YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg");
+                notificationSender.send("YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg");
                 contactContacted();
             }
         }.start();
@@ -132,112 +108,24 @@ public class EmergencyActivity extends AppCompatActivity {
         btImOkay.setOnClickListener(v -> {
             //OKAY Button pressed
             countDownTimer.cancel();
-            sendMessageAndStore("aW1va2F5YnV0dG9ucHJlc3NlZA");
+            notificationSender.send("aW1va2F5YnV0dG9ucHJlc3NlZA");
             finish();
         });
 
         btImNotOkay.setOnClickListener(v -> {
             //NOT okay Button pressed
             countDownTimer.cancel();
-            sendMessageAndStore("aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA");
+            notificationSender.send("aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA");
             contactContacted();
         });
-
-        databaseReference = FirebaseConnector.getFirebase().
-                child("contacts").
-                child(accountId);
-
-        valueEventListenerMyContacts = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                myContactsId.clear();
-                for(DataSnapshot data : snapshot.getChildren()){
-                    Contact contact = data.getValue(Contact.class);
-                    myContactsId.add(Objects.requireNonNull(contact).getId());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        databaseReference.addValueEventListener(valueEventListenerMyContacts);
     }
 
-    void sendMessageAndStore(String message) {
-        killAlarmSound();
-
-        String timeStamp = createTimeStamp();
-
-        Notification notification = new Notification();
-        notification.setNotification(message);
-        notification.setTimestamp(timeStamp);
-        notification.setUserId(accountId);
-
-        databaseReference = FirebaseConnector.getFirebase().child("notifications");
-        for (String myContactId : myContactsId) {
-            databaseReference.
-                    child(myContactId).
-                    push().
-                    setValue(notification);
-        }
-
-        databaseReference = FirebaseConnector.getFirebase().child("accounts");
-        databaseReference.
-                child(accountId).
-                child("notifications").
-                push().
-                setValue(notification);
-    }
-
-    void contactContacted(){
+    private void contactContacted(){
         ((ViewGroup) llButtons.getParent()).removeView(llButtons);
         ((ViewGroup) spaceEmergency.getParent()).removeView(spaceEmergency);
         ((ViewGroup) tvContactWillBeContacted.getParent()).removeView(tvContactWillBeContacted);
 
         tvEmergencyTitle.setText(getResources().getString(R.string.contacts_contacted));
         clEmergency.setBackgroundColor(Color.GREEN);
-    }
-
-    private String createTimeStamp(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-
-        Date currentTime = Calendar.getInstance().getTime();
-
-        return simpleDateFormat.format(currentTime);
-    }
-
-    private void playAlarmSound(){
-        setVolumeLevel();
-
-        int alarmSound; //add settings
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
-            soundAlarmPool = new SoundPool.Builder()
-                    .setAudioAttributes(audioAttributes)
-                    .build();
-        } else {
-            soundAlarmPool = new SoundPool(1, AudioManager.STREAM_ALARM, 0);
-        }
-
-        alarmSound = soundAlarmPool.load(EmergencyActivity.this, R.raw.alarm_sound, 1);
-
-        soundAlarmPool.setOnLoadCompleteListener((soundPool, sampleId, status) -> soundPool.play(alarmSound,1,1,0,-1,1));
-    }
-
-    private void setVolumeLevel(){
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        Objects.requireNonNull(audioManager).setStreamVolume(AudioManager.STREAM_ALARM,audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM),0);
-    }
-
-    private void killAlarmSound(){
-        if(soundAlarmPool != null){
-            soundAlarmPool.release();
-            soundAlarmPool = null;
-        }
     }
 }

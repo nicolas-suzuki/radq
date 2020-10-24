@@ -8,7 +8,7 @@
     <string name="notifications_title">Notifications</string>
     <string name="welcome_title">Welcome to RADQ!</string>
     <string name="welcome_description">Your autonomous fall detector robot.</string>
-    <string name="camera">Camera</string>
+    <string name="camera">Start RADQ</string>
     <string name="switch_front_back_camera">Activate back camera</string>
     <string name="emergency_title">Emergency</string>
     <string name="imOkay">I\'m Okay!</string>
@@ -21,7 +21,7 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="person_detected_text">Person detected</string>
-    <string name="contact_alert_dialog_message">You must add a contact in the settings page before using RADQ.</string>
+    <string name="contact_alert_dialog_message">You must add a contact in the settingsStorage page before using RADQ.</string>
     <string name="contact_alert_dialog_title">No contacts found…</string>
     <string name="positive_button" translatable="false">OK</string>
     <string name="invalid_password">Weak password. Please use a password longer than 6 characters.</string>
@@ -55,8 +55,9 @@
     <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Button \“I\'m okay\” pressed after fall detected.</string>
     <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Button \“HELP\” pressed after fall detected.</string>
     <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Buttons not pressed. Time\'s over after fall detected.</string>
+    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">Fall detection deactivated.</string>
     <string name="dialog_message_disconnect_before_proceed">Please, logout from your current session before proceed.</string>
-    <string name="advanced_settings">Advanced settings</string>
+    <string name="advanced_settings">Advanced settingsStorage</string>
     <string name="my_contacts_description">Here\'s a list of your current contacts. If you would like to add one, click on the button below.</string>
     <string name="create_account_description">Create your RADQ account here.</string>
     <string name="dialog_title_loading_contacts">Please wait a moment…</string>
@@ -74,4 +75,5 @@
     <string name="toast_action_usb_disconnected">USB disconnected</string>
     <string name="toast_action_usb_device_not_supported">USB device not supported</string>
     <string name="toast_error_initializeDetection">Error: initializeDetection</string>
+    <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Fall detection started.</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.aden.radq.adapter;
+package com.aden.radq.utils;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;

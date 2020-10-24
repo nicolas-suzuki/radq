@@ -9,9 +9,9 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.adapter.FirebaseConnector;
-import com.aden.radq.helper.Settings;
 import com.aden.radq.model.Contact;
+import com.aden.radq.utils.FirebaseConnector;
+import com.aden.radq.utils.SettingsStorage;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,8 +53,8 @@ public class MyContactsActivity extends AppCompatActivity {
         ListView lvContacts = findViewById(R.id.lvContacts);
 
         //Load settings
-        Settings settings = new Settings(MyContactsActivity.this);
-        String accountId = settings.getIdentifierKey();
+        SettingsStorage settingsStorage = new SettingsStorage(MyContactsActivity.this);
+        String accountId = settingsStorage.getIdentifierKey();
 
         myContacts = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<>(

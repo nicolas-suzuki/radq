@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000000"
     android:keepScreenOn="true"
-    tools:context=".CameraActivity"
+    tools:context=".StartRadqActivity"
     tools:ignore="Overdraw">
 
         <org.opencv.android.JavaCameraView

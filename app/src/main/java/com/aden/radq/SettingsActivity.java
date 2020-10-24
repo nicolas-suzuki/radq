@@ -7,8 +7,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
-import com.aden.radq.adapter.FirebaseConnector;
-import com.aden.radq.helper.Settings;
+import com.aden.radq.utils.FirebaseConnector;
+import com.aden.radq.utils.SettingsStorage;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
     private SwitchCompat swCameraFrontBack;
     private SwitchCompat swRobotInstructions;
 
-    private Settings settings;
+    private SettingsStorage settingsStorage;
 
     //Firebase
     private FirebaseAuth firebaseAuth;
@@ -35,14 +35,14 @@ public class SettingsActivity extends AppCompatActivity {
         swRobotInstructions = findViewById(R.id.swRobotInstructions);
 
         //Load settings
-        settings = new Settings(SettingsActivity.this);
+        settingsStorage = new SettingsStorage(SettingsActivity.this);
 
         //Initialize Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
         btMyContacts.setOnClickListener(v -> {
             if(firebaseAuth.getCurrentUser() != null){
-                if(settings.getIdentifierKey().isEmpty()){
+                if(settingsStorage.getIdentifierKey().isEmpty()){
                     showSnackbar(getString(R.string.not_logged_in));
                 } else {
                     openMyContactsActivity();
@@ -54,8 +54,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         btMyAccount.setOnClickListener(v -> openMyAccountActivity());
 
-        swCameraFrontBack.setOnClickListener(v -> settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked()));
-        swRobotInstructions.setOnClickListener(v -> settings.setRobotInstructions(swRobotInstructions.isChecked()));
+        swCameraFrontBack.setOnClickListener(v -> settingsStorage.setSwitchCameraFrontBack(swCameraFrontBack.isChecked()));
+        swRobotInstructions.setOnClickListener(v -> settingsStorage.setRobotInstructions(swRobotInstructions.isChecked()));
 
         updateData();
     }
@@ -71,8 +71,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public final void updateData(){
-        swCameraFrontBack.setChecked(settings.getSwitchCameraFrontBack());
-        swRobotInstructions.setChecked(settings.getRobotInstructions());
+        swCameraFrontBack.setChecked(settingsStorage.getSwitchCameraFrontBack());
+        swRobotInstructions.setChecked(settingsStorage.getRobotInstructions());
     }
 
     private void showSnackbar(String message){

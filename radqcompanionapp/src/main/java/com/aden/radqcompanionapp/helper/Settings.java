@@ -14,7 +14,7 @@ public class Settings {
     @SuppressLint("CommitPrefEdits")
     public Settings(Context parameterContext){
         int MODE = 0;
-        String ARCHIVE = "radq.preferences";
+        String ARCHIVE = "radqcompanionapp.preferences";
         sharedPreferences = parameterContext.getSharedPreferences(ARCHIVE, MODE);
         editor = sharedPreferences.edit(); //opens the editor. commit will be called within set(s)
     }

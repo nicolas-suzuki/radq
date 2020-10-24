@@ -7,9 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -17,8 +16,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.adapter.UsbService;
-import com.aden.radq.helper.Settings;
+import com.aden.radq.services.UsbService;
+import com.aden.radq.utils.CoefficientOfVariationCalculator;
+import com.aden.radq.utils.NotificationSender;
+import com.aden.radq.utils.SettingsStorage;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -38,7 +39,6 @@ import org.opencv.dnn.Net;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,22 +46,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class CameraActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class StartRadqActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
-    //TODO re-analyze the need of the following two variables and their logic
-    private boolean isYoloStarted = false;
-    private boolean isFirstTimeYolo = true;
+    private boolean isDetectionStarted = false;
+    private boolean isFirstTimeDetection = true;
 
     //Camera connection + detection specific variables
     CameraBridgeViewBase cameraBridgeViewBase;
     private BaseLoaderCallback baseLoaderCallback;
-    private Net tinyYolo;
+    private Net detectionEssential;
 
     //Fall confirmation
     private boolean firstDetection = true;
-    //TODO change framesToConfirmFall name/logic
     private int framesToConfirmFall = 0;
     private Date startTime;
+    private CoefficientOfVariationCalculator coefficient;
+
+    private NotificationSender notificationSender;
 
     /////////////////////////////////// Robot variables section ///////////////////////////////////
     //Robot control by height
@@ -74,58 +75,58 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     //USB connection + control specific variables
     UsbService usbService;
-    private MyHandler mHandler;
-
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.start_radq_activity);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        //Camera initialization
+        cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
+        cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
+        cameraBridgeViewBase.setCvCameraViewListener(this);
+
         //Settings
-        Settings settings = new Settings(CameraActivity.this);
+        SettingsStorage settingsStorage = new SettingsStorage(StartRadqActivity.this);
+        String accountId = settingsStorage.getIdentifierKey();
 
-        if(settings.getIdentifierKey().isEmpty()){
-            //This is the second counter measure to forbid the start of the cameraActivity without
-            //an emergency contact set up. First is at the MainActivity level.
-            finish();
-        } else {
-            setContentView(R.layout.camera_activity);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-            //Camera initialization
-            cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
-            cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
-            cameraBridgeViewBase.setCvCameraViewListener(this);
-
-            //Robot instructions
-            isRobotInstructionsEnabled = settings.getRobotInstructions();
-            if(isRobotInstructionsEnabled){
-                tvRobotInstructions = findViewById(R.id.tvRobotInstructions);
-                tvRobotInstructions.setText("");
-            }
-
-            //Check which camera will be used frontal or back. By default, frontal camera.
-            if (settings.getSwitchCameraFrontBack()) {
-                //Use Back Camera
-                cameraBridgeViewBase.setCameraIndex(0);
-            } else {
-                //Use Frontal Camera
-                cameraBridgeViewBase.setCameraIndex(1);
-            }
-
-            //OpenCV specific
-            baseLoaderCallback = new BaseLoaderCallback(this) {
-                @Override
-                public void onManagerConnected(int status) {
-                    super.onManagerConnected(status);
-                    if (status == BaseLoaderCallback.SUCCESS) {
-                        cameraBridgeViewBase.enableView();
-                        checkIfDetectionStarted();
-                    } else {
-                        super.onManagerConnected(status);
-                    }
-                }
-            };
+        //Robot instructions
+        isRobotInstructionsEnabled = settingsStorage.getRobotInstructions();
+        if (isRobotInstructionsEnabled) {
+            tvRobotInstructions = findViewById(R.id.tvRobotInstructions);
+            tvRobotInstructions.setText("");
         }
+
+        //Notification
+        notificationSender = new NotificationSender(accountId);
+        notificationSender.send("c3RhcnRpbmdmYWxsZGV0ZWN0aW9u");
+
+        //Fall confirmation
+        coefficient = new CoefficientOfVariationCalculator();
+
+        //Check which camera will be used frontal or back. By default, frontal camera.
+        if (settingsStorage.getSwitchCameraFrontBack()) {
+            //Use Back Camera
+            cameraBridgeViewBase.setCameraIndex(0);
+        } else {
+            //Use Frontal Camera
+            cameraBridgeViewBase.setCameraIndex(1);
+        }
+
+        //OpenCV specific
+        baseLoaderCallback = new BaseLoaderCallback(this) {
+            @Override
+            public void onManagerConnected(int status) {
+                super.onManagerConnected(status);
+                if (status == BaseLoaderCallback.SUCCESS) {
+                    cameraBridgeViewBase.enableView();
+                    checkIfDetectionStarted();
+                } else {
+                    super.onManagerConnected(status);
+                }
+            }
+        };
     }
 
     @Override
@@ -163,27 +164,28 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
     @Override
     protected final void onDestroy() {
         super.onDestroy();
-
+        Log.d("Test","onDestroy");
         //Detection
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
         }
+        notificationSender.send("b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu");
     }
 
     @Override
     public final Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         Mat frame = inputFrame.rgba();
-        if (isYoloStarted) {
+        if (isDetectionStarted) {
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
             Mat imageBlob = Dnn.blobFromImage(frame, 0.00392, new Size(416, 416), new Scalar(0, 0, 0),/*swapRB*/false, /*crop*/false);
-            tinyYolo.setInput(imageBlob);
+            detectionEssential.setInput(imageBlob);
 
             java.util.List<Mat> result = new java.util.ArrayList<>(2);
             List<String> outBlobNames = new java.util.ArrayList<>();
             outBlobNames.add(0, "yolo_16");
             outBlobNames.add(1, "yolo_23");
 
-            tinyYolo.forward(result, outBlobNames);
+            detectionEssential.forward(result, outBlobNames);
 
             //Detection threshold
             float confThreshold = 0.3f;
@@ -214,30 +216,33 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         rects.add(new Rect(left, top, width, height));
                         //TODO this usbService != null does not work as I imagined.
                         // This doesn't check if there's a current device connected. Only if the object was created
-                        if((usbService != null) && (height > width)){
-                            if(countHeightsDetected<3){
+                        if ((usbService != null) && (height > width)) {
+                            if (countHeightsDetected < 6) { //Change this number to increase/decrease the list of number to be calculated before taking an action
                                 listOfHeights.add(height);
                                 countHeightsDetected++;
                             } else {
                                 countHeightsDetected = 0;
-                                double coefficientOfVariationResult = coefficientOfVariationCalculator(listOfHeights);
+                                double coefficientOfVariationResult = coefficient.calculate(listOfHeights);
                                 listOfHeights.clear();
                                 String command;
-                                if(coefficientOfVariationResult < 15.0){
-                                    if(height < 500){
-                                        if(isRobotInstructionsEnabled) runOnUiThread(() -> tvRobotInstructions.setText(getString(R.string.robot_instruction_forward)));
+                                if (coefficientOfVariationResult < 15.0) {
+                                    if (height < 500) {
+                                        if (isRobotInstructionsEnabled)
+                                            runOnUiThread(() -> tvRobotInstructions.setText(getString(R.string.robot_instruction_forward)));
                                         //noinspection SpellCheckingInspection
-                                        command = "frente";
+                                        command = "frente"; //Forward
                                         usbService.write(command.getBytes());
-                                    } else if (height > 600){
-                                        if(isRobotInstructionsEnabled) runOnUiThread(() -> tvRobotInstructions.setText(getString(R.string.robot_instructions_backwards)));
+                                    } else if (height > 600) {
+                                        if (isRobotInstructionsEnabled)
+                                            runOnUiThread(() -> tvRobotInstructions.setText(getString(R.string.robot_instructions_backwards)));
                                         //noinspection SpellCheckingInspection
-                                        command = "tras";
+                                        command = "tras"; //Backwards
                                         usbService.write(command.getBytes());
                                     } else {
-                                        if(isRobotInstructionsEnabled) runOnUiThread(() -> tvRobotInstructions.setText(getString(R.string.robot_instruction_stop)));
+                                        if (isRobotInstructionsEnabled)
+                                            runOnUiThread(() -> tvRobotInstructions.setText(getString(R.string.robot_instruction_stop)));
                                         //noinspection SpellCheckingInspection
-                                        command = "parar";
+                                        command = "parar"; //Stop
                                         usbService.write(command.getBytes());
                                     }
                                 }
@@ -257,7 +262,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                 MatOfInt indices = new MatOfInt();
                 Dnn.NMSBoxes(boxes, confidences, confThreshold, nmsThresh, indices);
 
-                // Draw result boxes:
+                // Draw result boxes (make sure to return frames to avoid unnecessary calculations)
                 int[] ind = indices.toArray();
                 for (int idx : ind) {
                     Rect box = boxesArray[idx];
@@ -267,7 +272,8 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
                     if (idGuy == 0) {
                         // Fall detected
-                        if (firstDetection){
+                        if (firstDetection) {
+                            //Initialize automatic fall confirmation
                             startTime = Calendar.getInstance().getTime();
                             firstDetection = false;
                         }
@@ -275,27 +281,34 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
 
                         framesToConfirmFall++;
-                        //This countdown ensures that the person is really down
-                        if(framesToConfirmFall == 5){
+
+                        if (framesToConfirmFall == 5) {
                             Date endTime = Calendar.getInstance().getTime();
                             long differenceInMinutes = endTime.getTime() - startTime.getTime();
                             long differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(differenceInMinutes);
-                            if(differenceInSeconds < 10){
+                            if (differenceInSeconds < 10) {
+                                //Fall automatically confirmed
                                 firstDetection = true;
                                 framesToConfirmFall = 0;
+                                if (usbService != null) { //Last command that will be send to the robot
+                                    //noinspection SpellCheckingInspection
+                                    String command = "emergencia"; //Emergency
+                                    usbService.write(command.getBytes());
+                                }
                                 initiateAlarm();
                             } else {
                                 //False alarm
                                 framesToConfirmFall = 0;
                                 firstDetection = true;
+                                return frame;
                             }
+                        } else {
+                            return frame;
                         }
                     } else if (idGuy == 1) {
                         // Person detected
                         Imgproc.putText(frame, getString(R.string.person_detected_text) + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
-                        return frame;
-                    } else {
                         return frame;
                     }
                 }
@@ -306,63 +319,39 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
 
     @Override
     public final void onCameraViewStarted(int width, int height) {
-        if (isYoloStarted) {
+        if (isDetectionStarted) {
             initializeDetection();
         }
     }
 
     @Override
     public final void onCameraViewStopped() {
-        isYoloStarted = false;
+        isDetectionStarted = false;
     }
 
     public final void checkIfDetectionStarted() {
-        if (!isYoloStarted) {
-            isYoloStarted = true;
-            if (isFirstTimeYolo) {
-                isFirstTimeYolo = false;
+        if (!isDetectionStarted) {
+            isDetectionStarted = true;
+            if (isFirstTimeDetection) {
+                isFirstTimeDetection = false;
                 initializeDetection();
             }
         }
     }
 
-    public final void initializeDetection(){
+    public final void initializeDetection() {
         String tinyYoloCfg = getExternalFilesDir(null) + "/yolov3-tiny.cfg";
         String tinyYoloWeights = getExternalFilesDir(null) + "/yolov3-tiny.weights";
-        try{
-            tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
-        } catch (Exception e){
+        try {
+            detectionEssential = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
+        } catch (Exception e) {
             Toast.makeText(getApplicationContext(), getText(R.string.toast_error_initializeDetection), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void initiateAlarm() {
-        Intent intent = new Intent(this, EmergencyActivity.class);
+        Intent intent = new Intent(StartRadqActivity.this, EmergencyActivity.class);
         startActivity(intent);
-    }
-
-    private double coefficientOfVariationCalculator(List<Integer> heights){
-        double sum = 0D;
-        double summation = 0D;
-        double standardDeviation;
-        double average;
-        double coefficientOfVariation;
-
-        for(double height : heights){
-            sum += height;
-        }
-        average = sum / heights.size();
-
-        for(double height : heights){
-            double aux = height - average;
-            summation += aux * aux;
-        }
-        standardDeviation = Math.sqrt(summation/(heights.size()-1));
-
-        //Coefficient of Variation
-        // <15% homogeneous; 15% - 30%; 30%< heterogeneous
-        coefficientOfVariation = (standardDeviation/average) * 100;
-        return coefficientOfVariation;
     }
 
     //////////////////////// USB Connection + Control Classes Section //////////////////////////////
@@ -372,6 +361,7 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             usbService = ((UsbService.UsbBinder) iBinder).getService();
         }
+
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             usbService = null;
@@ -400,31 +390,6 @@ public class CameraActivity extends AppCompatActivity implements CameraBridgeVie
             }
         }
     };
-
-    // This handler will be passed to UsbService. Data received from serial port is displayed through this handler
-    private static class MyHandler extends Handler {
-        private final WeakReference<CameraActivity> mActivity;
-
-        public MyHandler(CameraActivity activity) {
-            mActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case UsbService.MESSAGE_FROM_SERIAL_PORT:
-                    String data = (String) msg.obj;
-                    //mActivity.get().display.append(data);
-                    break;
-                case UsbService.CTS_CHANGE:
-                    Toast.makeText(mActivity.get(), "CTS_CHANGE",Toast.LENGTH_LONG).show();
-                    break;
-                case UsbService.DSR_CHANGE:
-                    Toast.makeText(mActivity.get(), "DSR_CHANGE",Toast.LENGTH_LONG).show();
-                    break;
-            }
-        }
-    }
 
     private void startService(ServiceConnection serviceConnection) {
         if (!UsbService.SERVICE_CONNECTED) {

@@ -7,10 +7,10 @@ import android.widget.EditText;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.adapter.FirebaseConnector;
-import com.aden.radq.helper.Base64Custom;
-import com.aden.radq.helper.Settings;
 import com.aden.radq.model.Account;
+import com.aden.radq.utils.Base64CustomConverter;
+import com.aden.radq.utils.FirebaseConnector;
+import com.aden.radq.utils.SettingsStorage;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -31,7 +31,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
-    private Settings settings;
+    private SettingsStorage settingsStorage;
     private Account account;
 
     @Override
@@ -50,7 +50,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         databaseReference = FirebaseConnector.getFirebase();
 
         //Get application settings
-        settings = new Settings(CreateAccountActivity.this);
+        settingsStorage = new SettingsStorage(CreateAccountActivity.this);
 
         btSaveCreateAccount.setOnClickListener(v -> {
             if(etCreateAccountName.getText().toString().isEmpty()){
@@ -75,14 +75,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                 account.setName(etCreateAccountName.getText().toString());
                 account.setEmail(etCreateAccountEmail.getText().toString());
                 account.setPassword(etCreateAccountPassword.getText().toString());
-                String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
+                String accountIdentifier = Base64CustomConverter.encodeBase64(account.getEmail());
                 account.setId(accountIdentifier);
 
                 //Add account to Firebase Database
                 databaseReference.child("accounts").child(account.getId()).setValue(account);
 
                 //Add current user key to Settings
-                settings.setIdentifierKey(accountIdentifier);
+                settingsStorage.setIdentifierKey(accountIdentifier);
 
                 showSnackbar(getString(R.string.account_created));
             } else {

@@ -1,10 +1,10 @@
-package com.aden.radq.helper;
+package com.aden.radq.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class Settings {
+public class SettingsStorage {
 
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
@@ -16,7 +16,7 @@ public class Settings {
 
     //ALL SETTERS MUST HAVE A "editor.commit()" AT THE END OF THE METHOD
     @SuppressLint("CommitPrefEdits")
-    public Settings(Context parameterContext){
+    public SettingsStorage(Context parameterContext){
         int MODE = 0;
         String ARCHIVE = "radq.preferences";
         sharedPreferences = parameterContext.getSharedPreferences(ARCHIVE, MODE);

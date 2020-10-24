@@ -6,10 +6,10 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.adapter.FirebaseConnector;
 import com.aden.radq.adapter.NotificationAdapter;
-import com.aden.radq.helper.Settings;
 import com.aden.radq.model.Notification;
+import com.aden.radq.utils.FirebaseConnector;
+import com.aden.radq.utils.SettingsStorage;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,8 +49,8 @@ public class NotificationsActivity extends AppCompatActivity {
         ListView lvNotifications = findViewById(R.id.lvNotifications);
 
         //Load settings
-        Settings settings = new Settings(NotificationsActivity.this);
-        String accountId = settings.getIdentifierKey();
+        SettingsStorage settingsStorage = new SettingsStorage(NotificationsActivity.this);
+        String accountId = settingsStorage.getIdentifierKey();
 
         databaseReference = FirebaseConnector.getFirebase().
                 child("accounts").

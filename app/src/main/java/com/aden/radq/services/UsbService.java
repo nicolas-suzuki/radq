@@ -1,4 +1,4 @@
-package com.aden.radq.adapter;
+package com.aden.radq.services;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class UsbService extends Service {
 
     public static final String TAG = "UsbService";
@@ -169,10 +170,6 @@ public class UsbService extends Service {
     public void write(byte[] data) {
         if (serialPort != null)
             serialPort.write(data);
-    }
-
-    public void setHandler(Handler mHandler) {
-        this.mHandler = mHandler;
     }
 
     private void findSerialPortDevice() {

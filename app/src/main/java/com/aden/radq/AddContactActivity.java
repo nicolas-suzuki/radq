@@ -7,11 +7,11 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.adapter.FirebaseConnector;
-import com.aden.radq.helper.Base64Custom;
-import com.aden.radq.helper.Settings;
 import com.aden.radq.model.Account;
 import com.aden.radq.model.Contact;
+import com.aden.radq.utils.Base64CustomConverter;
+import com.aden.radq.utils.FirebaseConnector;
+import com.aden.radq.utils.SettingsStorage;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +29,7 @@ public class AddContactActivity extends AppCompatActivity {
     //Firebase
     DatabaseReference databaseReference;
 
-    Settings settings;
+    SettingsStorage settingsStorage;
 
     @Override
     public final void onCreate(Bundle savedInstanceState) {
@@ -41,13 +41,13 @@ public class AddContactActivity extends AppCompatActivity {
         etContactEmail = findViewById(R.id.etCreateAccountEmail);
 
         //Start settings class to get stored pref data
-        settings = new Settings(AddContactActivity.this);
+        settingsStorage = new SettingsStorage(AddContactActivity.this);
 
         btAddContact.setOnClickListener(v -> {
             if(etContactEmail.getText().toString().isEmpty()){
                 showSnackbar(getString(R.string.error_no_email));
             } else {
-                contactIdentifier = Base64Custom.encodeBase64(etContactEmail.getText().toString());
+                contactIdentifier = Base64CustomConverter.encodeBase64(etContactEmail.getText().toString());
 
                 databaseReference = FirebaseConnector.getFirebase().
                         child("accounts").
@@ -61,7 +61,7 @@ public class AddContactActivity extends AppCompatActivity {
                             Account contactAccount = snapshot.getValue(Account.class);
 
                             //Get current logged account
-                            String loggedUserID = settings.getIdentifierKey();
+                            String loggedUserID = settingsStorage.getIdentifierKey();
 
                             Contact contact = new Contact();
                             contact.setId(contactIdentifier);

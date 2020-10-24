@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radq.adapter.FirebaseConnector;
-import com.aden.radq.helper.Base64Custom;
-import com.aden.radq.helper.Settings;
+import com.aden.radq.utils.Base64CustomConverter;
+import com.aden.radq.utils.FirebaseConnector;
+import com.aden.radq.utils.SettingsStorage;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -35,7 +35,7 @@ public class MyAccountActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     //Settings
-    private Settings settings;
+    private SettingsStorage settingsStorage;
 
     @Override
     public final void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MyAccountActivity extends AppCompatActivity {
         }
 
         //Load application settings
-        settings = new Settings(MyAccountActivity.this);
+        settingsStorage = new SettingsStorage(MyAccountActivity.this);
 
         btAccountLogin.setOnClickListener(v -> {
             closeKeyboard();
@@ -97,7 +97,7 @@ public class MyAccountActivity extends AppCompatActivity {
         etAccountEmail.setEnabled(true);
 
         //No user is logged. Overrides the last id in the settings file
-        settings.setIdentifierKey("");
+        settingsStorage.setIdentifierKey("");
 
         //Add Password field and change button description
         llLoginFields.addView(llPassword);
@@ -112,8 +112,8 @@ public class MyAccountActivity extends AppCompatActivity {
             if(task.isSuccessful()){
                 setViewsAsConnected();
 
-                String accountIdentifier = Base64Custom.encodeBase64(etAccountEmail.getText().toString());
-                settings.setIdentifierKey(accountIdentifier);
+                String accountIdentifier = Base64CustomConverter.encodeBase64(etAccountEmail.getText().toString());
+                settingsStorage.setIdentifierKey(accountIdentifier);
 
                 showSnackbar(getString(R.string.snackbar_logged_in));
             } else {
