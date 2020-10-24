@@ -2,7 +2,6 @@ package com.aden.radq;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -19,39 +18,43 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MyContactsActivity extends AppCompatActivity {
-    private static final String TAG = "MyContactsActivity";
 
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> myContacts;
+    ArrayAdapter<String> arrayAdapter;
+    ArrayList<String> myContacts;
+
+    //Firebase
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListenerMyContacts;
 
     @Override
-    protected void onStart() {
+    protected final void onStart() {
         super.onStart();
         databaseReference.addValueEventListener(valueEventListenerMyContacts);
     }
 
     @Override
-    protected void onStop() {
+    protected final void onStop() {
         super.onStop();
-        databaseReference.removeEventListener(valueEventListenerMyContacts);
+        if(valueEventListenerMyContacts != null) {
+            databaseReference.removeEventListener(valueEventListenerMyContacts);
+        }
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_contacts_activity);
 
-        Button btAddContact = (Button) findViewById(R.id.btAddContact);
-        ListView lvContacts = (ListView) findViewById(R.id.lvContacts);
+        //Initialize views
+        Button btAddContact = findViewById(R.id.btAddContact);
+        ListView lvContacts = findViewById(R.id.lvContacts);
 
         //Load settings
         Settings settings = new Settings(MyContactsActivity.this);
-        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
-        String ID = settings.getIdentifierKey();
+        String accountId = settings.getIdentifierKey();
 
         myContacts = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<>(
@@ -63,7 +66,7 @@ public class MyContactsActivity extends AppCompatActivity {
 
         databaseReference = FirebaseConnector.getFirebase().
                 child("contacts").
-                child(ID);
+                child(accountId);
 
         valueEventListenerMyContacts = new ValueEventListener() {
             @Override
@@ -71,9 +74,8 @@ public class MyContactsActivity extends AppCompatActivity {
                 myContacts.clear();
                 for(DataSnapshot data : snapshot.getChildren()){
                     Contact contact = data.getValue(Contact.class);
-                    myContacts.add(contact.getName());
+                    myContacts.add(Objects.requireNonNull(contact).getName());
                 }
-                Log.d(TAG, "MyContacts.size(): " + myContacts.size());
                 arrayAdapter.notifyDataSetChanged();
             }
 

@@ -25,8 +25,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_description"
-                android:textColor="@android:color/black"
+                android:text="@string/create_account_description"
+                android:textColor="@color/text_darker"
                 android:textSize="16sp" />
 
             <Space
@@ -43,7 +43,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/contactName" />
+                    android:labelFor="@id/etCreateAccountName"
+                    android:text="@string/name"
+                    android:textColor="@color/text" />
 
                 <EditText
                     android:id="@+id/etCreateAccountName"
@@ -52,8 +54,8 @@
                     android:layout_weight="3"
                     android:autofillHints=""
                     android:ems="10"
-                    android:hint="@string/groupName"
                     android:inputType="textPersonName"
+                    android:minHeight="48dp"
                     android:singleLine="true" />
             </LinearLayout>
 
@@ -67,7 +69,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/contact_email" />
+                    android:labelFor="@id/etCreateAccountEmail"
+                    android:text="@string/email"
+                    android:textColor="@color/text" />
 
                 <EditText
                     android:id="@+id/etCreateAccountEmail"
@@ -76,8 +80,9 @@
                     android:layout_weight="3"
                     android:autofillHints=""
                     android:ems="10"
-                    android:hint="@string/groupEmail"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp"
+                    android:singleLine="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -90,7 +95,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/contact_password" />
+                    android:labelFor="@id/etCreateAccountPassword"
+                    android:text="@string/password"
+                    android:textColor="@color/text" />
 
                 <EditText
                     android:id="@+id/etCreateAccountPassword"
@@ -99,7 +106,9 @@
                     android:layout_weight="3"
                     android:autofillHints=""
                     android:ems="10"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:singleLine="true" />
             </LinearLayout>
 
         </LinearLayout>

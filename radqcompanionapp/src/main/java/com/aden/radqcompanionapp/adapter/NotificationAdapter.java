@@ -16,6 +16,7 @@ import com.aden.radqcompanionapp.R;
 import com.aden.radqcompanionapp.model.Notification;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
@@ -35,7 +36,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         if(notifications != null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            view = layoutInflater.inflate(R.layout.notifications_custom,parent,false);
+            view = Objects.requireNonNull(layoutInflater).inflate(R.layout.notifications_custom,parent,false);
             LinearLayout llNotificationCustom = view.findViewById(R.id.llNotificationCustom);
             TextView tvNotification = view.findViewById(R.id.tvNotification);
             TextView tvTimeStamp = view.findViewById(R.id.tvTimeStamp);

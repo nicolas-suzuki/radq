@@ -26,10 +26,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme">
-        </activity>
+
+        <!-- USB Service -->
+        <service
+            android:enabled="true"
+            android:name="com.aden.radq.adapter.UsbService" />
 
         <!-- Loading Activity -->
         <activity android:name=".SplashScreenActivity"
@@ -38,6 +39,12 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/MainActivity">
         </activity>
 
         <!-- Camera Activity -->
@@ -53,7 +60,7 @@
             <activity
                 android:screenOrientation="landscape"
                 android:name=".EmergencyActivity"
-                android:theme="@style/AppTheme"
+                android:theme="@style/AppFullScreen"
                 android:parentActivityName=".CameraActivity"
                 android:label="@string/emergency_title">
             </activity>
@@ -64,14 +71,6 @@
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity"
             android:label="@string/notifications_title">
-        </activity>
-
-        <!-- Alarms Activity -->
-        <activity
-            android:name=".AlarmsActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/alarms_title">
         </activity>
 
         <!-- START SETTINGS Activity -->

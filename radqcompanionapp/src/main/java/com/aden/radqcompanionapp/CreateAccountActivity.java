@@ -2,11 +2,9 @@ package com.aden.radqcompanionapp;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +12,7 @@ import com.aden.radqcompanionapp.adapter.FirebaseConnector;
 import com.aden.radqcompanionapp.helper.Base64Custom;
 import com.aden.radqcompanionapp.helper.Settings;
 import com.aden.radqcompanionapp.model.Account;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -29,10 +24,12 @@ import java.util.Objects;
 public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = "CreateAccountActivity";
 
+    //Views
     private EditText etCreateAccountName;
     private EditText etCreateAccountPassword;
     private EditText etCreateAccountEmail;
 
+    //Firebase
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
@@ -44,6 +41,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
 
+        //Initialize views
         etCreateAccountName = findViewById(R.id.etCreateAccountName);
         etCreateAccountEmail = findViewById(R.id.etCreateAccountEmail);
         etCreateAccountPassword = findViewById(R.id.etCreateAccountPassword);
@@ -84,8 +82,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
                 account.setId(accountIdentifier);
 
+                //Add account to Firebase Database
                 databaseReference.child("accounts").child(account.getId()).setValue(account);
 
+                //Add current user key to Settings
                 settings.setIdentifierKey(accountIdentifier);
 
                 showSnackbar(getString(R.string.account_created));
@@ -110,10 +110,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
-    private void alertDialogBox(String e){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+    private void alertDialogBox(String message){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(CreateAccountActivity.this);
         dialog.setTitle(getString(R.string.default_alert_dialog_title));
-        dialog.setMessage(e);
+        dialog.setMessage(message);
         dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();

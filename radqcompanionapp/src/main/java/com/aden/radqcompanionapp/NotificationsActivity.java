@@ -1,7 +1,6 @@
 package com.aden.radqcompanionapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -19,54 +18,38 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class NotificationsActivity extends AppCompatActivity {
-    private static final String TAG = "NotificationsActivity";
 
     private ArrayList<Notification> notifications;
     private NotificationAdapter notificationAdapter;
 
-    private DatabaseReference databaseReference;
-
-    private ValueEventListener valueEventListenerNotifications;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        databaseReference.addValueEventListener(valueEventListenerNotifications);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        databaseReference.removeEventListener(valueEventListenerNotifications);
-    }
+    //Firebase
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notifications_activity);
 
+        //Initialize views
+        ListView lvNotifications = findViewById(R.id.lvNotifications);
+
         //Load settings
         Settings settings = new Settings(NotificationsActivity.this);
         String accountId = settings.getIdentifierKey();
-        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         databaseReference = FirebaseConnector.getFirebase().
-                child("accounts").
-                child(accountId).
-                child("notifications");
+                child("notifications").
+                child(accountId);
 
         notifications = new ArrayList<>();
-
-        ListView lvNotifications = findViewById(R.id.lvNotifications);
 
         notificationAdapter = new NotificationAdapter(NotificationsActivity.this, notifications);
 
         lvNotifications.setAdapter(notificationAdapter);
 
-        valueEventListenerNotifications = new ValueEventListener() {
+        ValueEventListener valueEventListenerNotifications = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d(TAG, "valueEventListenerNotifications. onDataChange");
                 notifications.clear();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Notification notification = data.getValue(Notification.class);
@@ -77,7 +60,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d(TAG, "valueEventListenerNotifications. onCancelled");
+
             }
         };
         databaseReference.addValueEventListener(valueEventListenerNotifications);

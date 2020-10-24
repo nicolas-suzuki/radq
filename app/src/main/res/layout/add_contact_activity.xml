@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_description"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_darker"
                 android:textSize="16sp" />
 
             <Space
@@ -41,17 +41,23 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="4"
-                    android:text="@string/add_contact_email" />
+                    android:gravity="center_horizontal"
+                    android:labelFor="@id/etCreateAccountEmail"
+                    android:text="@string/email"
+                    android:textColor="@color/text"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/etCreateAccountEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
+                    android:autofillHints=""
+                    android:contentDescription="@string/email"
                     android:inputType="textEmailAddress"
-                    android:autofillHints="" />
+                    android:minHeight="48dp"
+                    android:singleLine="true" />
             </LinearLayout>
 
         </LinearLayout>
@@ -66,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button_shape"
-            android:text="@string/save_bttn_settings"
+            android:text="@string/button_save"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

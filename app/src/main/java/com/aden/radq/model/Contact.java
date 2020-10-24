@@ -9,27 +9,27 @@ public class Contact {
     public Contact() {
     }
 
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public final void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
-    public String getEmail() {
+    public final String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public final void setEmail(String email) {
         this.email = email;
     }
 }

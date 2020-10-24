@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/clMainActivity"
     android:orientation="vertical">
 
     <LinearLayout
@@ -20,15 +19,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcome_title"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_darker"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcome_description"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp" />
+            android:textColor="@color/text"
+            android:textSize="16sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,12 +55,13 @@
                     android:hapticFeedbackEnabled="true" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:labelFor="@id/bttnCamera"
                     android:text="@string/camera"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@color/text_darker" />
 
             </LinearLayout>
 
@@ -81,34 +85,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:labelFor="@id/bttnNotifications"
                     android:text="@string/notifications_title"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/bttnAlarms"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:background="@drawable/alarm"
-                    android:contentDescription="@string/alarms_title"
-                    android:hapticFeedbackEnabled="true" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/alarms_title"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@color/text_darker" />
             </LinearLayout>
 
             <LinearLayout
@@ -132,8 +112,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:labelFor="@id/bttnSettings"
                     android:text="@string/settings_title"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@color/text_darker" />
             </LinearLayout>
 
         </LinearLayout>

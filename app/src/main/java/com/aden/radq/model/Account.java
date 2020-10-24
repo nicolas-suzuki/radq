@@ -3,7 +3,6 @@ package com.aden.radq.model;
 import com.google.firebase.database.Exclude;
 
 public class Account {
-    private static final String TAG = "Account";
 
     private String id;
     private String name;
@@ -11,40 +10,34 @@ public class Account {
     private String password;
 
     public Account(){
-
     }
 
     @Exclude
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public final void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
-    public String getEmail() {
+    public final String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public final void setEmail(String email) {
         this.email = email;
     }
 
-    @Exclude
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    public final void setPassword(String password) {
         this.password = password;
     }
 }

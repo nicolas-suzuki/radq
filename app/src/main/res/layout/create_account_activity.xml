@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clCreateContact"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/clCreateContact">
+    android:layout_gravity="bottom"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,8 +26,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_description"
-                android:textColor="@android:color/black"
+                android:text="@string/create_account_description"
+                android:textColor="@color/text_darker"
                 android:textSize="16sp" />
 
             <Space
@@ -43,7 +44,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/contactName" />
+                    android:labelFor="@id/etCreateAccountName"
+                    android:text="@string/name"
+                    android:textColor="@color/text"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/etCreateAccountName"
@@ -51,9 +55,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:autofillHints=""
+                    android:contentDescription="@string/name"
                     android:ems="10"
-                    android:hint="@string/groupName"
                     android:inputType="textPersonName"
+                    android:minHeight="48dp"
                     android:singleLine="true" />
             </LinearLayout>
 
@@ -67,7 +72,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/contact_email" />
+                    android:labelFor="@id/etCreateAccountEmail"
+                    android:text="@string/email"
+                    android:textColor="@color/text"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/etCreateAccountEmail"
@@ -75,9 +83,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:autofillHints=""
+                    android:contentDescription="@string/email"
                     android:ems="10"
-                    android:hint="@string/groupEmail"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -90,7 +99,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:text="@string/contact_password" />
+                    android:labelFor="@id/etCreateAccountPassword"
+                    android:text="@string/password"
+                    android:textColor="@color/text"
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/etCreateAccountPassword"
@@ -98,8 +110,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:autofillHints=""
+                    android:contentDescription="@string/password"
                     android:ems="10"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:singleLine="true" />
             </LinearLayout>
 
         </LinearLayout>
@@ -114,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button_shape"
-            android:text="@string/save_button"
+            android:text="@string/button_save"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
