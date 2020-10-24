@@ -25,7 +25,6 @@
     <string name="alert_not_logged_message">Looks like you are not logged. Please login to access RADQ.</string>
     <string name="logged_out">Logged out</string>
     <string name="logged_in">Logged in!</string>
-    <string name="unknown_error_logging_in">Unknown error while logging in</string>
     <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Button \"I\'m okay\" pressed after fall detected.</string>
     <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Button \"HELP\" pressed after fall detected.</string>
     <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Buttons not pressed. Time\'s over after fall detected.</string>

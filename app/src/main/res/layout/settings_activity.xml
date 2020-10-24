@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="48dp"
-                android:text="@string/switch_FrontBackCamera_txt"
+                android:text="@string/switch_front_back_camera"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />

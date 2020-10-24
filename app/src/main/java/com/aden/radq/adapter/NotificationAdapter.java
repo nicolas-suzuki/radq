@@ -16,6 +16,7 @@ import com.aden.radq.R;
 import com.aden.radq.model.Notification;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
@@ -24,18 +25,18 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
     public NotificationAdapter(@NonNull Context c, @NonNull ArrayList<Notification> objects) {
         super(c, 0 , objects);
-        this.notifications = objects;
-        this.context = c;
+        notifications = objects;
+        context = c;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public final View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = null;
         if(notifications != null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            view = layoutInflater.inflate(R.layout.notifications_custom,parent,false);
+            view = Objects.requireNonNull(layoutInflater).inflate(R.layout.notifications_custom,parent,false);
             LinearLayout llNotificationCustom = view.findViewById(R.id.llNotificationCustom);
             TextView tvNotification = view.findViewById(R.id.tvNotification);
             TextView tvTimeStamp = view.findViewById(R.id.tvTimeStamp);
@@ -58,6 +59,6 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
             }
             tvTimeStamp.setText(notificationX.getTimestamp());
         }
-        return view;
+        return Objects.requireNonNull(view);
     }
 }

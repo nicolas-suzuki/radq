@@ -2,8 +2,6 @@ package com.aden.radq;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,30 +13,31 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsActivity extends AppCompatActivity {
-    private static final String TAG = "SettingsActivity";
 
+    //Views
     private SwitchCompat swCameraFrontBack;
     private SwitchCompat swRobotInstructions;
 
     private Settings settings;
 
+    //Firebase
     private FirebaseAuth firebaseAuth;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
-        //Load settings
-        settings = new Settings(SettingsActivity.this);
-        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
-
+        //Initialize Views
+        Button btMyAccount = findViewById(R.id.btMyAccount);
+        Button btMyContacts = findViewById(R.id.btMyContacts);
         swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
         swRobotInstructions = findViewById(R.id.swRobotInstructions);
 
-        Button btMyAccount = findViewById(R.id.btMyAccount);
-        Button btMyContacts = findViewById(R.id.btMyContacts);
+        //Load settings
+        settings = new Settings(SettingsActivity.this);
 
+        //Initialize Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
         btMyContacts.setOnClickListener(v -> {
@@ -53,34 +52,30 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        btMyAccount.setOnClickListener(v -> openMyAccountActivity());
+
         swCameraFrontBack.setOnClickListener(v -> settings.setSwitchCameraFrontBack(swCameraFrontBack.isChecked()));
         swRobotInstructions.setOnClickListener(v -> settings.setRobotInstructions(swRobotInstructions.isChecked()));
-
-        btMyAccount.setOnClickListener(v -> openMyAccountActivity());
 
         updateData();
     }
 
     private void openMyContactsActivity() {
-        Log.d(TAG,"openMyContactsActivity()");
         Intent intent = new Intent(this, MyContactsActivity.class);
         startActivity(intent);
     }
 
     private void openMyAccountActivity() {
-        Log.d(TAG,"openMyAccountActivity()");
         Intent intent = new Intent(this, MyAccountActivity.class);
         startActivity(intent);
     }
 
-    public void updateData(){
-        Log.d(TAG, "updateData()");
+    public final void updateData(){
         swCameraFrontBack.setChecked(settings.getSwitchCameraFrontBack());
         swRobotInstructions.setChecked(settings.getRobotInstructions());
     }
 
     private void showSnackbar(String message){
-        Log.d(TAG,"showSnackbar()");
         Snackbar.make(findViewById(R.id.clSettingsActivity), message, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }

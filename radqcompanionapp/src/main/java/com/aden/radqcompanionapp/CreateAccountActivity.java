@@ -24,10 +24,12 @@ import java.util.Objects;
 public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = "CreateAccountActivity";
 
+    //Views
     private EditText etCreateAccountName;
     private EditText etCreateAccountPassword;
     private EditText etCreateAccountEmail;
 
+    //Firebase
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
@@ -39,6 +41,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
 
+        //Initialize views
         etCreateAccountName = findViewById(R.id.etCreateAccountName);
         etCreateAccountEmail = findViewById(R.id.etCreateAccountEmail);
         etCreateAccountPassword = findViewById(R.id.etCreateAccountPassword);
@@ -79,8 +82,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
                 account.setId(accountIdentifier);
 
+                //Add account to Firebase Database
                 databaseReference.child("accounts").child(account.getId()).setValue(account);
 
+                //Add current user key to Settings
                 settings.setIdentifierKey(accountIdentifier);
 
                 showSnackbar(getString(R.string.account_created));
@@ -105,10 +110,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
-    private void alertDialogBox(String e){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+    private void alertDialogBox(String message){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(CreateAccountActivity.this);
         dialog.setTitle(getString(R.string.default_alert_dialog_title));
-        dialog.setMessage(e);
+        dialog.setMessage(message);
         dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();

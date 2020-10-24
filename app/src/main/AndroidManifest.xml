@@ -19,8 +19,6 @@
         android:name="android.hardware.front.autofocus"
         android:required="false" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -73,14 +71,6 @@
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity"
             android:label="@string/notifications_title">
-        </activity>
-
-        <!-- Alarms Activity -->
-        <activity
-            android:name=".AlarmsActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/alarms_title">
         </activity>
 
         <!-- START SETTINGS Activity -->

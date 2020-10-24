@@ -1,7 +1,6 @@
 package com.aden.radq;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -22,12 +21,13 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Objects;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    private static final String TAG = "CreateAccountActivity";
 
+    //Views
     private EditText etCreateAccountName;
     private EditText etCreateAccountPassword;
     private EditText etCreateAccountEmail;
 
+    //Firebase
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
@@ -35,10 +35,11 @@ public class CreateAccountActivity extends AppCompatActivity {
     private Account account;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_activity);
 
+        //Initialize views
         etCreateAccountName = findViewById(R.id.etCreateAccountName);
         etCreateAccountEmail = findViewById(R.id.etCreateAccountEmail);
         etCreateAccountPassword = findViewById(R.id.etCreateAccountPassword);
@@ -50,15 +51,14 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         //Get application settings
         settings = new Settings(CreateAccountActivity.this);
-        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         btSaveCreateAccount.setOnClickListener(v -> {
             if(etCreateAccountName.getText().toString().isEmpty()){
                 showSnackbar(getString(R.string.error_empty_name_field));
             } else if (etCreateAccountEmail.getText().toString().isEmpty()){
-                showSnackbar(getString(R.string.error_empty_email_field));
+                showSnackbar(getString(R.string.snackbar_error_empty_email_field));
             } else if (etCreateAccountPassword.getText().toString().isEmpty()){
-                showSnackbar(getString(R.string.error_empty_password_field));
+                showSnackbar(getString(R.string.snackbar_error_empty_password_field));
             } else {
                 createAccount();
             }
@@ -66,7 +66,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void createAccount(){
-        Log.d(TAG,"createAccount()");
         firebaseAuth.createUserWithEmailAndPassword(
                 etCreateAccountEmail.getText().toString(),
                 etCreateAccountPassword.getText().toString()
@@ -79,8 +78,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
                 account.setId(accountIdentifier);
 
+                //Add account to Firebase Database
                 databaseReference.child("accounts").child(account.getId()).setValue(account);
 
+                //Add current user key to Settings
                 settings.setIdentifierKey(accountIdentifier);
 
                 showSnackbar(getString(R.string.account_created));
@@ -92,7 +93,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     exceptionError = getString(R.string.invalid_password);
                     alertDialogBox(exceptionError);
                 } catch (FirebaseAuthInvalidCredentialsException e) {
-                    exceptionError = getString(R.string.invalid_email);
+                    exceptionError = getString(R.string.dialog_message_invalid_email);
                     alertDialogBox(exceptionError);
                 } catch (FirebaseAuthUserCollisionException e) {
                     exceptionError = getString(R.string.email_already_in_use);
@@ -105,10 +106,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
-    private void alertDialogBox(String e){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle(getString(R.string.default_alert_dialog_title));
-        dialog.setMessage(e);
+    private void alertDialogBox(String message){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(CreateAccountActivity.this);
+        dialog.setTitle(getString(R.string.dialog_title_alert));
+        dialog.setMessage(message);
         dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();

@@ -15,10 +15,9 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         createNotificationChannel();
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
         finish();
     }
-
 
     private void createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

@@ -99,32 +99,6 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/bttnAlarms"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:background="@drawable/alarm"
-                    android:contentDescription="@string/alarms_title"
-                    android:hapticFeedbackEnabled="true" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:labelFor="@id/bttnAlarms"
-                    android:text="@string/alarms_title"
-                    android:textColor="@color/text_darker" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <ImageButton
                     android:id="@+id/bttnSettings"
                     android:layout_width="70dp"
                     android:layout_height="70dp"

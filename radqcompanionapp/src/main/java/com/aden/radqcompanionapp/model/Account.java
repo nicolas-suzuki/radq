@@ -6,6 +6,7 @@ public class Account {
     private String id;
     private String name;
     private String email;
+    private String password;
 
     public Account(){
 
@@ -37,6 +38,7 @@ public class Account {
     }
 
     public void setPassword(String password) {
+        this.password = password;
     }
 }
 

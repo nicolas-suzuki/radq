@@ -3,7 +3,6 @@ package com.aden.radqcompanionapp;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -19,35 +18,39 @@ import com.aden.radqcompanionapp.helper.Base64Custom;
 import com.aden.radqcompanionapp.helper.Settings;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "ContactLoginActivity";
 
+    //Views
     private EditText etAccountEmail;
     private EditText etAccountPassword;
     private Button btAccountLogin;
     private LinearLayout llPassword;
     private LinearLayout llLoginFields;
 
-    private Settings settings;
-
+    //Firebase
     private FirebaseAuth firebaseAuth;
+
+    //Settings
+    private Settings settings;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
+        //Initialize views
+        Button btCreateAccount = findViewById(R.id.btCreateAccount);
         etAccountEmail = findViewById(R.id.etAccountEmail);
         etAccountPassword = findViewById(R.id.etAccountPassword);
         btAccountLogin = findViewById(R.id.btAccountLogin);
-        Button btCreateAccount = findViewById(R.id.btCreateAccount);
         llPassword = findViewById(R.id.llPassword);
         llLoginFields = findViewById(R.id.llLoginFields);
 
-        //Firebase
+        //Initialize Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
         if (firebaseAuth.getCurrentUser() != null){
             setViewsAsConnected();
@@ -55,16 +58,13 @@ public class LoginActivity extends AppCompatActivity {
 
         //Load application settings
         settings = new Settings(LoginActivity.this);
-        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
 
         btAccountLogin.setOnClickListener(v -> {
             closeKeyboard();
             if(!isUserConnected()){
                 if(etAccountEmail.getText().toString().isEmpty()){
-                    Log.d(TAG,getString(R.string.error_empty_email_field));
                     showSnackbar(getString(R.string.error_empty_email_field));
                 } else if(etAccountPassword.getText().toString().isEmpty()) {
-                    Log.d(TAG,getString(R.string.error_empty_password_field));
                     showSnackbar(getString(R.string.error_empty_password_field));
                 } else {
                     validateLogin();
@@ -78,24 +78,24 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isUserConnected() {
-        Log.d(TAG,"isUserConnected()");
         return firebaseAuth.getCurrentUser() != null;
     }
 
     private void validateLogout(){
-        Log.d(TAG,"validateLogout()");
         firebaseAuth.signOut();
         showSnackbar(getString(R.string.logged_out));
 
-        settings.setIdentifierKey("");
         etAccountEmail.setEnabled(true);
 
+        //No user is logged. Overrides the last id in the settings file
+        settings.setIdentifierKey("");
+
+        //Add Password field and change button description
         llLoginFields.addView(llPassword);
         btAccountLogin.setText(getText(R.string.login_button));
     }
 
     private void validateLogin() {
-        Log.d(TAG, "validateLogin()");
         firebaseAuth.signInWithEmailAndPassword(
                 etAccountEmail.getText().toString(),
                 etAccountPassword.getText().toString()
@@ -108,13 +108,26 @@ public class LoginActivity extends AppCompatActivity {
 
                 showSnackbar(getString(R.string.logged_in));
             } else {
-                showSnackbar(getString(R.string.unknown_error_logging_in));
+                String exceptionError = ((FirebaseAuthException) Objects.requireNonNull(task.getException())).getErrorCode();
+                switch (exceptionError) {
+                    case "ERROR_INVALID_EMAIL":
+                        //alertDialogBox(getString(R.string.dialog_message_invalid_email));
+                        break;
+                    case "ERROR_WRONG_PASSWORD":
+                        //alertDialogBox(getString(R.string.dialog_message_wrong_password));
+                        break;
+                    case "ERROR_USER_NOT_FOUND":
+                        //alertDialogBox(getString(R.string.dialog_message_user_not_found));
+                        break;
+                    default:
+                        //alertDialogBox(getString(R.string.dialog_message_error_unknown_generic));
+                        break;
+                }
             }
         });
     }
 
     private void setViewsAsConnected(){
-        Log.d(TAG,"setViewsAsConnected()");
         etAccountEmail.setText(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail());
         etAccountEmail.setEnabled(false);
 
@@ -127,14 +140,12 @@ public class LoginActivity extends AppCompatActivity {
         if(isUserConnected()){
             alertDialogBox(getString(R.string.disconnect_before_proceed));
         } else {
-            Log.d(TAG,"openCreateAccountActivity()");
             Intent intent = new Intent(this, CreateAccountActivity.class);
             startActivity(intent);
         }
     }
 
     private void closeKeyboard(){
-        Log.d(TAG,"closeKeyboard()");
         View view = this.getCurrentFocus();
         if(view != null){
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -143,15 +154,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showSnackbar(String message){
-        Log.d(TAG,"showSnackbar()");
         Snackbar.make(findViewById(R.id.clLoginActivity), message, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 
-    private void alertDialogBox(String e){
+    private void alertDialogBox(String message){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(getString(R.string.default_alert_dialog_title));
-        dialog.setMessage(e);
+        dialog.setMessage(message);
         dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
