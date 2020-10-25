@@ -33,4 +33,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/btClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/button_shutdown_detection"
+            app:layout_constraintBottom_toTopOf="@+id/tvRobotInstructions"
+            app:layout_constraintEnd_toStartOf="@+id/CameraView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.366" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

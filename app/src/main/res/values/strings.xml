@@ -76,4 +76,5 @@
     <string name="toast_error_initializeDetection">Error: initializeDetection</string>
     <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Fall detection started.</string>
     <string name="version">Version</string>
+    <string name="button_shutdown_detection">Shutdown</string>
 </resources>

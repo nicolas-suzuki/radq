@@ -75,4 +75,5 @@
     <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda desativada. "</string>
     <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Detecção de queda iniciada.</string>
     <string name="version">Versão</string>
+    <string name="button_shutdown_detection">Desligar</string>
 </resources>
