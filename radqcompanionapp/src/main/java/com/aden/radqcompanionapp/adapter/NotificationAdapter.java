@@ -25,13 +25,13 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
     public NotificationAdapter(@NonNull Context c, @NonNull ArrayList<Notification> objects) {
         super(c, 0 , objects);
-        this.notifications = objects;
-        this.context = c;
+        notifications = objects;
+        context = c;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public final View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = null;
         if(notifications != null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -46,6 +46,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
             switch (notificationX.getNotification()) {
                 case "aW1va2F5YnV0dG9ucHJlc3NlZA":  //okay_button_pressed_code
                     tvNotification.setText(R.string.aW1va2F5YnV0dG9ucHJlc3NlZA);
+                    llNotificationCustom.setBackgroundColor(Color.parseColor("#ffb74d"));
                     break;
                 case "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA":  //not_okay_button_pressed_code
                     tvNotification.setText(R.string.aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA);
@@ -53,11 +54,20 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
                     break;
                 case "YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg":  //button_not_pressed_code
                     tvNotification.setText(R.string.YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg);
+                    llNotificationCustom.setBackgroundColor(Color.parseColor("#ff8a65"));
+                    break;
+                case "b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu":
+                    tvNotification.setText(R.string.b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu);
+                    llNotificationCustom.setBackgroundColor(Color.parseColor("#ff774c"));
+                    break;
+                case "c3RhcnRpbmdmYWxsZGV0ZWN0aW9u":
+                    tvNotification.setText(R.string.c3RhcnRpbmdmYWxsZGV0ZWN0aW9u);
+                    llNotificationCustom.setBackgroundColor(Color.parseColor("#73e573"));
                     break;
             }
             tvTimeStamp.setText(notificationX.getTimestamp());
         }
-        return view;
+        return Objects.requireNonNull(view);
     }
 }
 

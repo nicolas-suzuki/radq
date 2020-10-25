@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.aden.radqcompanionapp.adapter.FirebaseConnector;
-import com.aden.radqcompanionapp.helper.Settings;
+import com.aden.radqcompanionapp.utils.FirebaseConnector;
+import com.aden.radqcompanionapp.utils.SettingsStorage;
 import com.aden.radqcompanionapp.model.Notification;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,23 +37,25 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
 
         //Load settings
-        Settings settings = new Settings(MainActivity.this);
-        String accountId = settings.getIdentifierKey();
+        SettingsStorage settingsStorage = new SettingsStorage(MainActivity.this);
+        String accountId = settingsStorage.getIdentifierKey();
 
-        if(settings.getIdentifierKey() != null) {
-            if ((settings.getIdentifierKey().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {
+        if(settingsStorage.getIdentifierKey() != null) {
+            if ((settingsStorage.getIdentifierKey().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {
                 firebaseAuth.signOut();
             }
-            if ((firebaseAuth.getCurrentUser() == null) && (!settings.getIdentifierKey().isEmpty())) {
-                settings.setIdentifierKey("");
+            if ((firebaseAuth.getCurrentUser() == null) && (!settingsStorage.getIdentifierKey().isEmpty())) {
+                settingsStorage.setIdentifierKey("");
             }
         }
 
-        databaseReference = FirebaseConnector.getFirebase().
-                child("notifications").
-                child(accountId);
+        if(firebaseAuth.getCurrentUser() != null) {
+            databaseReference = FirebaseConnector.getFirebase().
+                    child("notifications").
+                    child(accountId);
 
-        notificationPopup();
+            notificationPopup();
+        }
 
         setContentView(R.layout.main_activity);
 
@@ -89,38 +93,49 @@ public class MainActivity extends AppCompatActivity {
 
     //Notifications PopUp
     private void notificationPopup(){
-        Query lastquery = databaseReference.orderByKey().limitToLast(1);
-        ValueEventListener valueEventListenerNotificationPop = lastquery.addValueEventListener(new ValueEventListener() {
+        Query lastQuery = databaseReference.orderByKey().limitToLast(1);
+        ValueEventListener valueEventListenerNotificationPop = lastQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("Test", "t");
-                Notification notification = null;
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    notification = data.getValue(Notification.class);
-                }
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "1")
-                        .setSmallIcon(R.drawable.notification)
-                        .setContentTitle(getText(R.string.radq_notification))
-                        .setPriority(NotificationCompat.PRIORITY_HIGH);
+                if(snapshot.getChildrenCount() != 0){
+                    Notification notification = new Notification();
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        notification = data.getValue(Notification.class);
+                    }
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "1")
+                            .setSmallIcon(R.drawable.notification)
+                            .setContentTitle(getText(R.string.radq_notification))
+                            .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-                CharSequence charSequence;
-                switch (notification.getNotification()) {
-                    case "aW1va2F5YnV0dG9ucHJlc3NlZA":
-                        charSequence = getText(R.string.aW1va2F5YnV0dG9ucHJlc3NlZA);
-                        builder.setContentText(charSequence);
-                        break;
-                    case "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA":
-                        charSequence = getText(R.string.aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA);
-                        builder.setContentText(charSequence);
-                        break;
-                    case "YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg":
-                        charSequence = getText(R.string.YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg);
-                        builder.setContentText(charSequence);
-                        break;
-                }
+                    if(notification != null){
+                        CharSequence charSequence;
+                        switch (notification.getNotification()) {
+                            case "aW1va2F5YnV0dG9ucHJlc3NlZA":
+                                charSequence = getText(R.string.aW1va2F5YnV0dG9ucHJlc3NlZA);
+                                builder.setContentText(charSequence);
+                                break;
+                            case "aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA":
+                                charSequence = getText(R.string.aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA);
+                                builder.setContentText(charSequence);
+                                break;
+                            case "YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg":
+                                charSequence = getText(R.string.YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg);
+                                builder.setContentText(charSequence);
+                                break;
+                            case "b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu":
+                                charSequence = getText(R.string.b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu);
+                                builder.setContentText(charSequence);
+                                break;
+                            case "c3RhcnRpbmdmYWxsZGV0ZWN0aW9u":
+                                charSequence = getText(R.string.c3RhcnRpbmdmYWxsZGV0ZWN0aW9u);
+                                builder.setContentText(charSequence);
+                                break;
+                        }
+                    }
 
-                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(MainActivity.this);
-                notificationManagerCompat.notify(100, builder.build());
+                    NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(MainActivity.this);
+                    notificationManagerCompat.notify(100, builder.build());
+                }//Else: no notifications found
             }
 
             @Override

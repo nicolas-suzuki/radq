@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button_shape"
-            android:text="@string/create_account_button"
+            android:text="@string/create_account"
             android:textColor="#FFFFFF" />
 
         <Space

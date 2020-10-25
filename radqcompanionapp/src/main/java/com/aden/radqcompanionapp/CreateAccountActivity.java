@@ -1,16 +1,15 @@
 package com.aden.radqcompanionapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radqcompanionapp.adapter.FirebaseConnector;
-import com.aden.radqcompanionapp.helper.Base64Custom;
-import com.aden.radqcompanionapp.helper.Settings;
+import com.aden.radqcompanionapp.utils.FirebaseConnector;
+import com.aden.radqcompanionapp.utils.Base64CustomConverter;
+import com.aden.radqcompanionapp.utils.SettingsStorage;
 import com.aden.radqcompanionapp.model.Account;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Objects;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    private static final String TAG = "CreateAccountActivity";
 
     //Views
     private EditText etCreateAccountName;
@@ -33,7 +31,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
-    private Settings settings;
+    private SettingsStorage settingsStorage;
     private Account account;
 
     @Override
@@ -52,8 +50,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         databaseReference = FirebaseConnector.getFirebase();
 
         //Get application settings
-        settings = new Settings(CreateAccountActivity.this);
-        Log.d("loggedUserID", "loggedUserID in " + TAG + " > "+ settings.getIdentifierKey());
+        settingsStorage = new SettingsStorage(CreateAccountActivity.this);
 
         btSaveCreateAccount.setOnClickListener(v -> {
             if(etCreateAccountName.getText().toString().isEmpty()){
@@ -69,7 +66,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private void createAccount(){
-        Log.d(TAG,"createAccount()");
         firebaseAuth.createUserWithEmailAndPassword(
                 etCreateAccountEmail.getText().toString(),
                 etCreateAccountPassword.getText().toString()
@@ -79,14 +75,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                 account.setName(etCreateAccountName.getText().toString());
                 account.setEmail(etCreateAccountEmail.getText().toString());
                 account.setPassword(etCreateAccountPassword.getText().toString());
-                String accountIdentifier = Base64Custom.encodeBase64(account.getEmail());
+                String accountIdentifier = Base64CustomConverter.encodeBase64(account.getEmail());
                 account.setId(accountIdentifier);
 
                 //Add account to Firebase Database
                 databaseReference.child("accounts").child(account.getId()).setValue(account);
 
                 //Add current user key to Settings
-                settings.setIdentifierKey(accountIdentifier);
+                settingsStorage.setIdentifierKey(accountIdentifier);
 
                 showSnackbar(getString(R.string.account_created));
             } else {

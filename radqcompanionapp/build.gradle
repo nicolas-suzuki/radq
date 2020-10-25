@@ -7,8 +7,8 @@ android {
         applicationId 'com.aden.radqcompanionapp'
         minSdkVersion 19
         targetSdkVersion 29
-        versionName '1.5'
-        versionCode 6
+        versionName '1.6'
+        versionCode 7
 
         multiDexEnabled true
 

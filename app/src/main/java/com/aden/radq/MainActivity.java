@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         //Load settings
         settingsStorage = new SettingsStorage(MainActivity.this);
 
-        myContacts = new ArrayList<>();
+        myContacts = new ArrayList<>(5);
 
         settingsStorage.getIdentifierKey();
         if ((settingsStorage.getIdentifierKey().isEmpty()) && (firebaseAuth.getCurrentUser() != null)) {

@@ -14,7 +14,7 @@
     <string name="emergency_title">Emergência</string>
     <string name="notifications_description">Notificações geradas pelo RADQ</string>
     <string name="text_seconds">segundos</string>
-    <string name="settings_description">Adicione ou troque seu contato de segurança e mais!</string>
+    <string name="settings_description">Adicione seu contato de emergência aqui utilizando o email!</string>
     <string name="email">Email</string>
     <string name="name">Nome</string>
     <string name="account_contact_description">Gerencie sua conta e adicione ou remova contatos.</string>
@@ -28,9 +28,8 @@
     <string name="invalid_password">Senha fraca. Por favor utilize uma senha maior que 6 caracteres.</string>
     <string name="email_already_in_use">Email já em uso</string>
     <string name="unknown_error_contact_register">Erro desconhecido ao se cadastrar</string>
-    <string name="create_account_button">Criar conta</string>
+    <string name="create_account">Criar conta</string>
     <string name="login_description">Entre com sua conta para conectar ao seu contato de emergência. Se não tiver uma conta, cadastre-se no botão abaixo.</string>
-    <string name="create_account_title">Criar conta</string>
     <string name="my_account_title">Minha conta</string>
     <string name="my_contacts_title">Meus contatos</string>
     <string name="add_contact_button">Adicione um contato</string>
@@ -43,7 +42,7 @@
     <string name="error_empty_name_field">Por favor forneça um nome</string>
     <string name="snackbar_error_empty_email_field">Por favor forneça um email</string>
     <string name="snackbar_error_empty_password_field">Por favor forneça uma senha</string>
-    <string name="alert_not_logged_title">Não conectado</string>
+    <string name="alert_not_logged_title">Não conectado…</string>
     <string name="alert_not_logged_message">Parece que você não está conectado. Por favor faça o login para ter acesso ao RADQ.</string>
     <string name="snackbar_contact_added_successfully">Contato adicionado com sucesso</string>
     <string name="snackbar_unknown_error_adding_contact">Erro desconhecido ao adicionar contato</string>
@@ -75,4 +74,5 @@
     <string name="toast_error_initializeDetection">Erro: initializeDetection</string>
     <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda desativada. "</string>
     <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Detecção de queda iniciada.</string>
+    <string name="version">Versão</string>
 </resources>

@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NotificationsActivity extends AppCompatActivity {
 
@@ -57,7 +58,7 @@ public class NotificationsActivity extends AppCompatActivity {
                 child(accountId).
                 child("notifications");
 
-        notifications = new ArrayList<>();
+        notifications = new ArrayList<>(10);
 
         notificationAdapter = new NotificationAdapter(NotificationsActivity.this, notifications);
 
@@ -71,6 +72,7 @@ public class NotificationsActivity extends AppCompatActivity {
                     Notification notification = data.getValue(Notification.class);
                     notifications.add(notification);
                 }
+                Collections.reverse(notifications);
                 notificationAdapter.notifyDataSetChanged();
             }
 

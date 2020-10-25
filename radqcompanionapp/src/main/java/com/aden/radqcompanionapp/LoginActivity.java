@@ -9,13 +9,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radqcompanionapp.adapter.FirebaseConnector;
-import com.aden.radqcompanionapp.helper.Base64Custom;
-import com.aden.radqcompanionapp.helper.Settings;
+import com.aden.radqcompanionapp.utils.FirebaseConnector;
+import com.aden.radqcompanionapp.utils.Base64CustomConverter;
+import com.aden.radqcompanionapp.utils.SettingsStorage;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -30,12 +31,13 @@ public class LoginActivity extends AppCompatActivity {
     private Button btAccountLogin;
     private LinearLayout llPassword;
     private LinearLayout llLoginFields;
+    private TextView tvRadqVersion;
 
     //Firebase
     private FirebaseAuth firebaseAuth;
 
     //Settings
-    private Settings settings;
+    private SettingsStorage settingsStorage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         btAccountLogin = findViewById(R.id.btAccountLogin);
         llPassword = findViewById(R.id.llPassword);
         llLoginFields = findViewById(R.id.llLoginFields);
+        tvRadqVersion = findViewById(R.id.tvRadqVersion);
 
         //Initialize Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
@@ -57,7 +60,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         //Load application settings
-        settings = new Settings(LoginActivity.this);
+        settingsStorage = new SettingsStorage(LoginActivity.this);
+
+        //Get RADQ Version
+        String radqVersion = getString(R.string.version) + " " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
+        tvRadqVersion.setText(radqVersion);
 
         btAccountLogin.setOnClickListener(v -> {
             closeKeyboard();
@@ -88,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         etAccountEmail.setEnabled(true);
 
         //No user is logged. Overrides the last id in the settings file
-        settings.setIdentifierKey("");
+        settingsStorage.setIdentifierKey("");
 
         //Add Password field and change button description
         llLoginFields.addView(llPassword);
@@ -103,24 +110,24 @@ public class LoginActivity extends AppCompatActivity {
             if(task.isSuccessful()){
                 setViewsAsConnected();
 
-                String accountIdentifier = Base64Custom.encodeBase64(etAccountEmail.getText().toString());
-                settings.setIdentifierKey(accountIdentifier);
+                String accountIdentifier = Base64CustomConverter.encodeBase64(etAccountEmail.getText().toString());
+                settingsStorage.setIdentifierKey(accountIdentifier);
 
                 showSnackbar(getString(R.string.logged_in));
             } else {
                 String exceptionError = ((FirebaseAuthException) Objects.requireNonNull(task.getException())).getErrorCode();
                 switch (exceptionError) {
                     case "ERROR_INVALID_EMAIL":
-                        //alertDialogBox(getString(R.string.dialog_message_invalid_email));
+                        alertDialogBox(getString(R.string.dialog_message_invalid_email));
                         break;
                     case "ERROR_WRONG_PASSWORD":
-                        //alertDialogBox(getString(R.string.dialog_message_wrong_password));
+                        alertDialogBox(getString(R.string.dialog_message_wrong_password));
                         break;
                     case "ERROR_USER_NOT_FOUND":
-                        //alertDialogBox(getString(R.string.dialog_message_user_not_found));
+                        alertDialogBox(getString(R.string.dialog_message_user_not_found));
                         break;
                     default:
-                        //alertDialogBox(getString(R.string.dialog_message_error_unknown_generic));
+                        alertDialogBox(getString(R.string.dialog_message_error_unknown_generic));
                         break;
                 }
             }

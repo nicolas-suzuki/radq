@@ -1,18 +1,18 @@
-package com.aden.radqcompanionapp.helper;
+package com.aden.radqcompanionapp.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class Settings {
+public class SettingsStorage {
 
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
 
-    private final String IDENTIFIER_KEY = "loggedUserID";
+    private static final String IDENTIFIER_KEY = "loggedUserID";
 
     @SuppressLint("CommitPrefEdits")
-    public Settings(Context parameterContext){
+    public SettingsStorage(Context parameterContext){
         int MODE = 0;
         String ARCHIVE = "radqcompanionapp.preferences";
         sharedPreferences = parameterContext.getSharedPreferences(ARCHIVE, MODE);
@@ -27,5 +27,4 @@ public class Settings {
     public String getIdentifierKey(){
         return sharedPreferences.getString(IDENTIFIER_KEY,"");
     }
-
 }

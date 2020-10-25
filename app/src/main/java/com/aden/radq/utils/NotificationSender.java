@@ -19,13 +19,9 @@ import java.util.Objects;
 public class NotificationSender {
     //Sends and stores notifications to contacts and current accountId
 
-    private String accountId;
+    private final String accountId;
 
     public NotificationSender(String accountId) {
-        this.setAccountId(accountId);
-    }
-
-    private void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 
@@ -67,7 +63,7 @@ public class NotificationSender {
                 child("contacts").
                 child(accountId);
 
-        ArrayList<String> myContactsId = new ArrayList<>();
+        ArrayList<String> myContactsId = new ArrayList<>(5);
         ValueEventListener valueEventListenerMyContacts = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

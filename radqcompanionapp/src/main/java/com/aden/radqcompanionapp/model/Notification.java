@@ -1,5 +1,6 @@
 package com.aden.radqcompanionapp.model;
 
+@SuppressWarnings("ALL")
 public class Notification {
 
     private String userId;

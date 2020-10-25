@@ -12,13 +12,9 @@ import java.util.Objects;
 
 public class AlarmSound {
     private SoundPool soundAlarmPool;
-    private Context context;
+    private final Context context;
 
     public AlarmSound(Context context) {
-        this.setContext(context);
-    }
-
-    public void setContext(Context context) {
         this.context = context;
     }
 

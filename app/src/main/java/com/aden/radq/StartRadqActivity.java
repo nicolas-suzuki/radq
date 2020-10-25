@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -60,14 +59,13 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
     private boolean firstDetection = true;
     private int framesToConfirmFall = 0;
     private Date startTime;
-    private CoefficientOfVariationCalculator coefficient;
 
     private NotificationSender notificationSender;
 
     /////////////////////////////////// Robot variables section ///////////////////////////////////
     //Robot control by height
     private int countHeightsDetected = 0;
-    private final List<Integer> listOfHeights = new ArrayList<>();
+    private final List<Integer> listOfHeights = new ArrayList<>(3);
 
     //Robot instructions
     private TextView tvRobotInstructions;
@@ -101,9 +99,6 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
         //Notification
         notificationSender = new NotificationSender(accountId);
         notificationSender.send("c3RhcnRpbmdmYWxsZGV0ZWN0aW9u");
-
-        //Fall confirmation
-        coefficient = new CoefficientOfVariationCalculator();
 
         //Check which camera will be used frontal or back. By default, frontal camera.
         if (settingsStorage.getSwitchCameraFrontBack()) {
@@ -164,7 +159,6 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
     @Override
     protected final void onDestroy() {
         super.onDestroy();
-        Log.d("Test","onDestroy");
         //Detection
         if (cameraBridgeViewBase != null) {
             cameraBridgeViewBase.disableView();
@@ -181,7 +175,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
             detectionEssential.setInput(imageBlob);
 
             java.util.List<Mat> result = new java.util.ArrayList<>(2);
-            List<String> outBlobNames = new java.util.ArrayList<>();
+            List<String> outBlobNames = new java.util.ArrayList<>(2);
             outBlobNames.add(0, "yolo_16");
             outBlobNames.add(1, "yolo_23");
 
@@ -190,13 +184,15 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
             //Detection threshold
             float confThreshold = 0.3f;
 
-            List<Integer> clsIds = new ArrayList<>();
-            List<Float> confs = new ArrayList<>();
-            List<Rect> rects = new ArrayList<>();
+            List<Integer> clsIds = new ArrayList<>(2);
+            List<Float> confs = new ArrayList<>(2);
+            List<Rect> rects = new ArrayList<>(2);
 
-            for (int i = 0; i < result.size(); ++i) {
+            int size = result.size();
+            for (int i = 0; i < size; ++i) {
                 Mat level = result.get(i);
-                for (int j = 0; j < level.rows(); ++j) {
+                int rows = level.rows();
+                for (int j = 0; j < rows; ++j) {
                     Mat row = level.row(j);
                     Mat scores = row.colRange(5, level.cols());
                     Core.MinMaxLocResult mm = Core.minMaxLoc(scores);
@@ -222,7 +218,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
                                 countHeightsDetected++;
                             } else {
                                 countHeightsDetected = 0;
-                                double coefficientOfVariationResult = coefficient.calculate(listOfHeights);
+                                double coefficientOfVariationResult = CoefficientOfVariationCalculator.calculate(listOfHeights);
                                 listOfHeights.clear();
                                 String command;
                                 if (coefficientOfVariationResult < 15.0) {
@@ -295,7 +291,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
                                     String command = "emergencia"; //Emergency
                                     usbService.write(command.getBytes());
                                 }
-                                initiateAlarm();
+                                openEmergencyActivity();
                             } else {
                                 //False alarm
                                 framesToConfirmFall = 0;
@@ -349,7 +345,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
         }
     }
 
-    private void initiateAlarm() {
+    private void openEmergencyActivity() {
         Intent intent = new Intent(StartRadqActivity.this, EmergencyActivity.class);
         startActivity(intent);
     }

@@ -56,7 +56,7 @@ public class MyContactsActivity extends AppCompatActivity {
         SettingsStorage settingsStorage = new SettingsStorage(MyContactsActivity.this);
         String accountId = settingsStorage.getIdentifierKey();
 
-        myContacts = new ArrayList<>();
+        myContacts = new ArrayList<>(5);
         arrayAdapter = new ArrayAdapter<>(
                 MyContactsActivity.this,
                 android.R.layout.simple_list_item_1,

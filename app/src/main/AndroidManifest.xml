@@ -96,7 +96,7 @@
                     android:name=".CreateAccountActivity"
                     android:theme="@style/AppTheme"
                     android:parentActivityName=".MyAccountActivity"
-                    android:label="@string/create_account_title">
+                    android:label="@string/create_account">
                 </activity>
 
             <!-- Contacts Activity -->

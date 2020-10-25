@@ -3,6 +3,7 @@ package com.aden.radq;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -31,8 +32,13 @@ public class SettingsActivity extends AppCompatActivity {
         //Initialize Views
         Button btMyAccount = findViewById(R.id.btMyAccount);
         Button btMyContacts = findViewById(R.id.btMyContacts);
+        TextView tvRadqVersion = findViewById(R.id.tvRadqVersion);
         swCameraFrontBack = findViewById(R.id.swCameraFrontBack);
         swRobotInstructions = findViewById(R.id.swRobotInstructions);
+
+        //Get RADQ Version
+        String radqVersion = getString(R.string.version) + " " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
+        tvRadqVersion.setText(radqVersion);
 
         //Load settings
         settingsStorage = new SettingsStorage(SettingsActivity.this);

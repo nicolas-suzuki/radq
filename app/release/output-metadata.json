@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.aden.radq",
+  "applicationId": "com.aden.radqcompanionapp",
   "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 28,
-      "versionName": "3.10.1",
-      "outputFile": "app-release.apk"
+      "versionCode": 6,
+      "versionName": "1.5",
+      "outputFile": "radqcompanionapp-release.apk"
     }
   ]
 }

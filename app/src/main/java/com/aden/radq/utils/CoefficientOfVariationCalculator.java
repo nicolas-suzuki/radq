@@ -4,11 +4,7 @@ import java.util.List;
 
 public class CoefficientOfVariationCalculator {
 
-    public CoefficientOfVariationCalculator() {
-
-    }
-
-    public double calculate(List<Integer> heights){
+    public static double calculate(List<Integer> heights){
         double sum = 0D;
         double summation = 0D;
         double standardDeviation;

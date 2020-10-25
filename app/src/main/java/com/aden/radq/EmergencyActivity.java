@@ -24,17 +24,17 @@ public class EmergencyActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
 
     //Views
-    private Button btImNotOkay;
+    Button btImNotOkay;
     private ConstraintLayout clEmergency;
     private LinearLayout llButtons;
-    private TextView tvContactWillBeContacted;
+    TextView tvContactWillBeContacted;
     private TextView tvEmergencyTitle;
     private Space spaceEmergency;
 
     //Play Alarm Sound
     private AlarmSound alarmSound;
 
-    private NotificationSender notificationSender;
+    NotificationSender notificationSender;
 
     @Override
     protected final void onStop() {
@@ -120,7 +120,7 @@ public class EmergencyActivity extends AppCompatActivity {
         });
     }
 
-    private void contactContacted(){
+    void contactContacted(){
         ((ViewGroup) llButtons.getParent()).removeView(llButtons);
         ((ViewGroup) spaceEmergency.getParent()).removeView(spaceEmergency);
         ((ViewGroup) tvContactWillBeContacted.getParent()).removeView(tvContactWillBeContacted);

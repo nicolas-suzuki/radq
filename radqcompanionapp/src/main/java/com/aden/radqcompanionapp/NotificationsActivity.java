@@ -6,9 +6,9 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.aden.radqcompanionapp.adapter.FirebaseConnector;
+import com.aden.radqcompanionapp.utils.FirebaseConnector;
 import com.aden.radqcompanionapp.adapter.NotificationAdapter;
-import com.aden.radqcompanionapp.helper.Settings;
+import com.aden.radqcompanionapp.utils.SettingsStorage;
 import com.aden.radqcompanionapp.model.Notification;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,11 +16,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NotificationsActivity extends AppCompatActivity {
 
-    private ArrayList<Notification> notifications;
-    private NotificationAdapter notificationAdapter;
+    ArrayList<Notification> notifications;
+    NotificationAdapter notificationAdapter;
 
     //Firebase
     DatabaseReference databaseReference;
@@ -34,14 +35,14 @@ public class NotificationsActivity extends AppCompatActivity {
         ListView lvNotifications = findViewById(R.id.lvNotifications);
 
         //Load settings
-        Settings settings = new Settings(NotificationsActivity.this);
-        String accountId = settings.getIdentifierKey();
+        SettingsStorage settingsStorage = new SettingsStorage(NotificationsActivity.this);
+        String accountId = settingsStorage.getIdentifierKey();
 
         databaseReference = FirebaseConnector.getFirebase().
                 child("notifications").
                 child(accountId);
 
-        notifications = new ArrayList<>();
+        notifications = new ArrayList<>(10);
 
         notificationAdapter = new NotificationAdapter(NotificationsActivity.this, notifications);
 
@@ -55,6 +56,7 @@ public class NotificationsActivity extends AppCompatActivity {
                     Notification notification = data.getValue(Notification.class);
                     notifications.add(notification);
                 }
+                Collections.reverse(notifications);
                 notificationAdapter.notifyDataSetChanged();
             }
 

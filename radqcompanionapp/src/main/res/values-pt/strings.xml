@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notifications_title">Notificações</string>
-    <string name="welcome_title">Bem-vindo ao RADQ Companion!</string>
+    <string name="welcome_title">Bem-vindo ao RADQ para Contatos!</string>
     <string name="welcome_description">Essa aplicação é destinada aos contatos de usuários que utilizam o Robô RADQ. Ela mostra todas as notificações de robôs em que você foi adicionado como contato.</string>
     <string name="notifications_description">Notificações geradas pelo RADQ</string>
     <string name="email">Email</string>
@@ -19,10 +19,10 @@
     <string name="error_empty_name_field">Por favor forneça um nome</string>
     <string name="error_empty_email_field">Por favor forneça um email válido</string>
     <string name="error_empty_password_field">Por favor forneça uma senha</string>
-    <string name="alert_not_logged_title">Não conectado</string>
+    <string name="alert_not_logged_title">Não conectado…</string>
     <string name="alert_not_logged_message">Parece que você não está conectado. Por favor faça o login para ter acesso ao RADQ.</string>
-    <string name="logged_out">Desconectado</string>
-    <string name="logged_in">Conected!</string>
+    <string name="logged_out">Desconectado!</string>
+    <string name="logged_in">Conectado!</string>
     <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Botão \"Estou bem\" pressionado após detecção de queda.</string>
     <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Botão \"AJUDA!\" pressionado após detecção de queda.</string>
     <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Botões não pressionados. Tempo expirado, após detecção de queda.</string>
@@ -33,4 +33,14 @@
     <string name="manage_account">Gerencie sua conta</string>
     <string name="radq_notification">RADQ necessita de sua atenção!</string>
     <string name="notification_channel_description">Todas as notificações do RADQ</string>
+    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda desativada. "</string>
+    <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Detecção de queda iniciada.</string>
+    <string name="dialog_message_wrong_password">Senha incorreta</string>
+    <string name="dialog_message_user_not_found">Usuário não encontrado</string>
+    <string name="dialog_message_error_unknown_generic">Erro desconhecido</string>
+    <string name="dialog_message_invalid_email">Email inválido</string>
+    <string name="version">Versão</string>
+    <string name="app_initials">RADQ para Contatos</string>
+    <string name="my_account_title">Minha conta</string>
+    <string name="create_account">Criar conta</string>
 </resources>

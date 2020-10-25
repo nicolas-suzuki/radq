@@ -2,6 +2,7 @@ package com.aden.radqcompanionapp.model;
 
 import com.google.firebase.database.Exclude;
 
+@SuppressWarnings("ALL")
 public class Account {
     private String id;
     private String name;

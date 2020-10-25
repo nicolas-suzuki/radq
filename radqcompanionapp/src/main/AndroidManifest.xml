@@ -30,6 +30,7 @@
             android:name=".NotificationsActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity"
+            android:label="@string/notifications_title"
             >
         </activity>
 
@@ -38,6 +39,7 @@
             android:name=".LoginActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity"
+            android:label="@string/my_account_title"
             >
         </activity>
 
@@ -46,6 +48,7 @@
                 android:name=".CreateAccountActivity"
                 android:theme="@style/AppTheme"
                 android:parentActivityName=".LoginActivity"
+                android:label="@string/create_account"
                 >
             </activity>
     </application>
