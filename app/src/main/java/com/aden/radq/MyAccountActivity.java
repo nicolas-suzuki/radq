@@ -19,6 +19,8 @@ import com.aden.radq.utils.SettingsStorage;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -91,6 +93,17 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     private void validateLogout(){
+        String accountIdentifier = Base64CustomConverter.encodeBase64(etAccountEmail.getText().toString());
+        settingsStorage.setIdentifierKey(accountIdentifier);
+
+        //Remove phone key to current connected user
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseConnector.getFirebase();
+        databaseReference.child("accounts")
+                .child(accountIdentifier)
+                .child("phoneKey")
+                .removeValue();
+
         firebaseAuth.signOut();
         showSnackbar(getString(R.string.snackbar_logged_out));
 
@@ -114,6 +127,14 @@ public class MyAccountActivity extends AppCompatActivity {
 
                 String accountIdentifier = Base64CustomConverter.encodeBase64(etAccountEmail.getText().toString());
                 settingsStorage.setIdentifierKey(accountIdentifier);
+
+                //Add phone key to current connected user
+                DatabaseReference databaseReference;
+                databaseReference = FirebaseConnector.getFirebase();
+                databaseReference.child("accounts")
+                        .child(accountIdentifier)
+                        .child("phoneKey")
+                        .setValue(settingsStorage.getPhoneKey());
 
                 showSnackbar(getString(R.string.snackbar_logged_in));
             } else {

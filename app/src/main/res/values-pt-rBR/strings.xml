@@ -72,7 +72,7 @@
     <string name="toast_action_usb_disconnected">USB desconectado</string>
     <string name="toast_action_usb_device_not_supported">Dispositivo USB não suportado</string>
     <string name="toast_error_initializeDetection">Erro: initializeDetection</string>
-    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda desativada. "</string>
+    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda parada. "</string>
     <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Detecção de queda iniciada.</string>
     <string name="version">Versão</string>
     <string name="button_shutdown_detection">Desligar</string>

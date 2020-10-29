@@ -3,9 +3,17 @@ package com.aden.radq;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.aden.radq.utils.SettingsStorage;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +27,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         workOnAdditionalFiles();
+        createToken();
 
         startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
         finish();
@@ -78,5 +87,16 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void showSnackbar(String message){
         Snackbar.make(findViewById(R.id.clSettingsActivity), message, Snackbar.LENGTH_LONG)
                 .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
+    }
+
+    private void createToken(){
+        SettingsStorage settingsStorage = new SettingsStorage(this);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                String token = Objects.requireNonNull(task.getResult()).getToken();
+                settingsStorage.setPhoneKey(token);
+            }
+        });
     }
 }
