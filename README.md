@@ -9,13 +9,13 @@ Systems' tests were made on flat environments, both wide opened and closed, and 
 
 ## Tech
 
-###### RADQ uses the following open-source projects to work:
+RADQ uses the following open-source projects to work:
 * [UsbSerial](https://github.com/felHR85/UsbSerial) - responsible for communications between an Android phone and an Arduino board
 * [Darknet](https://github.com/AlexeyAB/darknet) - neural network framework used to perform object recognition
 * [Android-Deep-Learning-with-OpenCV](https://github.com/ivangrov/Android-Deep-Learning-with-OpenCV) - special thanks for this particular repository that helped us on making the recognition using Yolo in Android happen
 * [LabelImg](https://github.com/tzutalin/labelImg) - a graphical image annotation tool used to mark the images with our desired objects in order to deliver it to the Darknet framework
 
-###### Also used:
+Also used:
 * [Firebase](https://firebase.google.com/) - responsible for user authentication, alerts storage and notification delivery to contacts
 * [Java](https://www.java.com/) - the application was built using Java Language
 * [Android Studio](https://developer.android.com/studio) - the entire development were made using the Android Studio IDE and also the initial application tests
