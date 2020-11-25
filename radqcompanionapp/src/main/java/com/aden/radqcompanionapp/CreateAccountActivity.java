@@ -77,6 +77,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 account.setPassword(etCreateAccountPassword.getText().toString());
                 String accountIdentifier = Base64CustomConverter.encodeBase64(account.getEmail());
                 account.setId(accountIdentifier);
+                account.setPhoneKey(settingsStorage.getPhoneKey());
 
                 //Add account to Firebase Database
                 databaseReference.child("accounts").child(account.getId()).setValue(account);

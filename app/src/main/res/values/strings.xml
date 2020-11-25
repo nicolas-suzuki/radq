@@ -54,7 +54,7 @@
     <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Button \“I\'m okay\” pressed after fall detected.</string>
     <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Button \“HELP\” pressed after fall detected.</string>
     <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Buttons not pressed. Time\'s over after fall detected.</string>
-    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">Fall detection deactivated.</string>
+    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">Fall detection stopped.</string>
     <string name="dialog_message_disconnect_before_proceed">Please, logout from your current session before proceed.</string>
     <string name="advanced_settings">Advanced settingsStorage</string>
     <string name="my_contacts_description">Here\'s a list of your current contacts. If you would like to add one, click on the button below.</string>
@@ -76,4 +76,5 @@
     <string name="toast_error_initializeDetection">Error: initializeDetection</string>
     <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Fall detection started.</string>
     <string name="version">Version</string>
+    <string name="button_shutdown_detection">Shutdown</string>
 </resources>

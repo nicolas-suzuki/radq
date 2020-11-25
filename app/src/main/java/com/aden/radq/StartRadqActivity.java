@@ -9,7 +9,9 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +90,15 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
         //Settings
         SettingsStorage settingsStorage = new SettingsStorage(StartRadqActivity.this);
         String accountId = settingsStorage.getIdentifierKey();
+
+        //Close Detection Button
+        Button button = findViewById(R.id.btClose);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //Robot instructions
         isRobotInstructionsEnabled = settingsStorage.getRobotInstructions();

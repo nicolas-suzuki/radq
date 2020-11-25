@@ -8,6 +8,7 @@ public class Account {
     private String name;
     private String email;
     private String password;
+    private String phoneKey;
 
     public Account(){
 
@@ -40,6 +41,14 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhoneKey() {
+        return phoneKey;
+    }
+
+    public void setPhoneKey(String phoneKey) {
+        this.phoneKey = phoneKey;
     }
 }
 

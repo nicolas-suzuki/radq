@@ -13,6 +13,7 @@ public class SettingsStorage {
     private static final String IDENTIFIER_KEY = "loggedUserID";
     private static final String SWITCH_CAMERA_FRONT_BACK = "switchCameraFrontBack";
     private static final String ROBOT_INSTRUCTIONS = "switchRobotInstructions";
+    private static final String PHONE_KEY = "phoneKey";
 
     //ALL SETTERS MUST HAVE A "editor.commit()" AT THE END OF THE METHOD
     @SuppressLint("CommitPrefEdits")
@@ -30,6 +31,15 @@ public class SettingsStorage {
 
     public final String getIdentifierKey(){
         return sharedPreferences.getString(IDENTIFIER_KEY,"");
+    }
+
+    public final void setPhoneKey(String phoneKey){
+        editor.putString(PHONE_KEY, phoneKey);
+        editor.commit();
+    }
+
+    public final String getPhoneKey(){
+        return sharedPreferences.getString(PHONE_KEY,"");
     }
 
     public final void setSwitchCameraFrontBack(Boolean switchCameraFrontBack){

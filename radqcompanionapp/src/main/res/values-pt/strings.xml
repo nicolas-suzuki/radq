@@ -33,7 +33,7 @@
     <string name="manage_account">Gerencie sua conta</string>
     <string name="radq_notification">RADQ necessita de sua atenção!</string>
     <string name="notification_channel_description">Todas as notificações do RADQ</string>
-    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda desativada. "</string>
+    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda parada. "</string>
     <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Detecção de queda iniciada.</string>
     <string name="dialog_message_wrong_password">Senha incorreta</string>
     <string name="dialog_message_user_not_found">Usuário não encontrado</string>
@@ -43,4 +43,10 @@
     <string name="app_initials">RADQ para Contatos</string>
     <string name="my_account_title">Minha conta</string>
     <string name="create_account">Criar conta</string>
+    <string name="radq_notification_error_body">Nenhuma mensagem encontrada. Por favor, clique aqui!</string>
+    <string name="channel_name_fall_detected_okay">Botão \"Estou Bem!\" pressionado</string>
+    <string name="channel_name_fall_detected_not_okay">Botão  \"AJUDA!\" pressionado</string>
+    <string name="channel_name_fall_detected_no_buttons_pressed">Nenhum botão pressionado</string>
+    <string name="channel_name_detection_stopped">Detecção de queda parada</string>
+    <string name="channel_name_detection_started">Detecção de queda iniciada</string>
 </resources>
