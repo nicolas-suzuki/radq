@@ -3,8 +3,11 @@ RADQ is an Android application that has integration with an Arduino Robot, with 
 
 ## Background
 An autonomous robot has the goal to perform many objectives and desired tasks in different environments without human intervention. They use to be used in many different areas such as logistics, production lines, or in the health field, for example.
+
 When it comes to the health field, the autonomous robot can be used with the goal of monitoring patients, mainly if they are elderly or have any kind of disability. To ensure the patients' safety, it is essential for the development of a monitoring system for this group in particular.
+
 This project presents the development of an autonomous system, making use of an Arduino controller and a smartphone to monitor the elderly and/or people with disabilities to detect probable falls streamlining the service that those people might need through emergency contact notifications.
+
 Systems' tests were made on flat environments, both wide opened and closed, and got a good result considering both autonomous mobility, and fall detection.
 
 ## Tech
