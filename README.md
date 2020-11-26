@@ -17,6 +17,7 @@ RADQ uses the following open-source projects to work:
 * [Darknet](https://github.com/AlexeyAB/darknet) - neural network framework used to perform object recognition
 * [Android-Deep-Learning-with-OpenCV](https://github.com/ivangrov/Android-Deep-Learning-with-OpenCV) - special thanks for this particular repository that helped us on making the recognition using Yolo in Android happen
 * [LabelImg](https://github.com/tzutalin/labelImg) - a graphical image annotation tool used to mark the images with our desired objects in order to deliver it to the Darknet framework
+* [Fallen People Detection Capabilities Using Assistive Robot](http://agamenon.tsc.uah.es/Investigacion/gram/papers/fall_detection/FPDS_dataset.zip) - special thanks to this paper which we were able to use the FPDS dataset in order to train fallen people using the YOLO v3 model.
 
 Also used:
 * [Firebase](https://firebase.google.com/) - responsible for user authentication, alerts storage and notification delivery to contacts
