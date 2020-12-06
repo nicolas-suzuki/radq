@@ -1,5 +1,5 @@
 # RADQ
-  RADQ is an Android application that has integration with an Arduino Robot, with the ability to follow an user by its object recognition capabilty and alert contacts if the user falls and requires assistance.
+  RADQ (Robô Autônomo Detector de Quedas - Fall Detector Autonomous Robot) is an Android application that has integration with an Arduino Robot, with the ability to follow an user by its object recognition capabilty and alert contacts if the user falls and requires assistance.
 
 ## Background
   An autonomous robot has the goal to perform many objectives and desired tasks in different environments without human intervention. They use to be used in many different areas such as logistics, production lines, or in the health field, for example.
