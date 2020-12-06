@@ -26,6 +26,11 @@ Also used:
 * [Google Colaboratory](https://colab.research.google.com/) - a computational solution used to execute the Darknet framework
 * [Roboflow](https://roboflow.com/) - a web service created to augment the dataset of images used to train the neural network 
 
+Arts by:
+* [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect)
+* [itim2101](https://www.flaticon.com/authors/itim2101)
+* [Freepik](https://www.flaticon.com/authors/freepik)
+
 ## Idealized by
 * [André Bittencourt](https://github.com/DeBittencourt) (DeBittencourt)
 * [Davi Merotto](https://github.com/DaviMerotto) (DaviMerotto)
