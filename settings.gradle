@@ -1,0 +1,5 @@
+include ':opencv'
+include ':usbserial'
+include ':app'
+include ':radqcompanionapp'
+rootProject.name = "Robô Autônomo Detector de Quedas"

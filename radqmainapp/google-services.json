@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "884321221831",
+    "firebase_url": "https://radq-4ae8a.firebaseio.com",
+    "project_id": "radq-4ae8a",
+    "storage_bucket": "radq-4ae8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884321221831:android:75831fb56a7f732229d2e2",
+        "android_client_info": {
+          "package_name": "com.aden.radq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884321221831-6kdugcqqcqps0vkh2sqoo8097g1umkol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aden.radq",
+            "certificate_hash": "7c70b9cff43625dcd253dcad36274a870f4c4451"
+          }
+        },
+        {
+          "client_id": "884321221831-ufin505n8dlpri0b2r77g1nmfn27ajha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpsivrslx0Stwdunxt9uXFK6E8Gp9sEgg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884321221831-ufin505n8dlpri0b2r77g1nmfn27ajha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

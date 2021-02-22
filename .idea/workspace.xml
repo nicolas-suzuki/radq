@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="02bec969-5e94-4345-8954-0d08e4fb62c2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/arduino/ArduinoControl.ino" beforeDir="false" afterPath="$PROJECT_DIR$/arduino/ArduinoControl.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/opencv/javadoc/org/opencv/android/CameraGLSurfaceView.CameraTextureListener.html" beforeDir="false" afterPath="$PROJECT_DIR$/opencv/javadoc/org/opencv/android/CameraGLSurfaceView.CameraTextureListener.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/opencv/javadoc/org/opencv/core/MatOfFloat4.html" beforeDir="false" afterPath="$PROJECT_DIR$/opencv/javadoc/org/opencv/core/MatOfFloat4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/opencv/javadoc/org/opencv/features2d/AKAZE.html" beforeDir="false" afterPath="$PROJECT_DIR$/opencv/javadoc/org/opencv/features2d/AKAZE.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/opencv/javadoc/org/opencv/objdetect/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/opencv/javadoc/org/opencv/objdetect/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/opencv/src/org/opencv/android/LoaderCallbackInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/opencv/src/org/opencv/android/LoaderCallbackInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/opencv/src/org/opencv/features2d/FlannBasedMatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/opencv/src/org/opencv/features2d/FlannBasedMatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/.firebaserc" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/.firebaserc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/functions/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/functions/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@firebase/component/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@firebase/component/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@firebase/component/dist/index.esm.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@firebase/component/dist/index.esm.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@firebase/logger/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@firebase/logger/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@firebase/logger/dist/index.esm2017.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@firebase/logger/dist/index.esm2017.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@google-cloud/storage/node_modules/readable-stream/passthrough.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@google-cloud/storage/node_modules/readable-stream/passthrough.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/deps/envoy-api/envoy/api/v2/listener.proto" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/deps/envoy-api/envoy/api/v2/listener.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/deps/envoy-api/envoy/config/filter/http/aws_lambda/v2alpha/aws_lambda.proto" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/deps/envoy-api/envoy/config/filter/http/aws_lambda/v2alpha/aws_lambda.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/deps/envoy-api/envoy/config/listener/v2/api_listener.proto" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/deps/envoy-api/envoy/config/listener/v2/api_listener.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/deps/envoy-api/envoy/config/trace/v3/dynamic_ot.proto" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/deps/envoy-api/envoy/config/trace/v3/dynamic_ot.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/deps/googleapis/google/api/system_parameter.proto" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/deps/googleapis/google/api/system_parameter.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/node_modules/@types/node/perf_hooks.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/node_modules/@types/node/perf_hooks.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/envoy/api/v2/endpoint/ClusterStats.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/envoy/api/v2/endpoint/ClusterStats.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/envoy/type/SemanticVersion.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/envoy/type/SemanticVersion.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/google/protobuf/BoolValue.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/google/protobuf/BoolValue.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/google/protobuf/StringValue.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/google/protobuf/StringValue.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/validate/FieldRules.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/src/generated/validate/FieldRules.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@grpc/grpc-js/src/load-balancer-lrs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@grpc/grpc-js/src/load-balancer-lrs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@protobufjs/pool/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@protobufjs/pool/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@protobufjs/utf8/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@protobufjs/utf8/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@protobufjs/utf8/tests/data/utf8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@protobufjs/utf8/tests/data/utf8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/@types/node/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/@types/node/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/ansi-styles/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/ansi-styles/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/bytes/History.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/bytes/History.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/content-type/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/content-type/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/cookie-signature/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/cookie-signature/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/cors/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/cors/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/crypto-random-string/license" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/crypto-random-string/license" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/date-and-time/locale/az.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/date-and-time/locale/az.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/date-and-time/locale/nl.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/date-and-time/locale/nl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/debug/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/debug/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/dicer/bench/parted-bench-multipart-parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/dicer/bench/parted-bench-multipart-parser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/event-target-shim/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/event-target-shim/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/express/lib/view.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/express/lib/view.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/express/node_modules/debug/src/debug.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/express/node_modules/debug/src/debug.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/extend/.jscs.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/extend/.jscs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/extend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/extend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/fast-text-encoding/compile.sh" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/fast-text-encoding/compile.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/faye-websocket/lib/faye/websocket/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/faye-websocket/lib/faye/websocket/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/firebase-admin/lib/messaging/messaging-api-request-internal.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/firebase-admin/lib/messaging/messaging-api-request-internal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/firebase-admin/lib/utils/api-request.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/firebase-admin/lib/utils/api-request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/forwarded/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/forwarded/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/get-caller-file/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/get-caller-file/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/get-caller-file/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/get-caller-file/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/google-gax/protos/google/api/expr/v1alpha1/syntax.proto" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/google-gax/protos/google/api/expr/v1alpha1/syntax.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/google-gax/protos/google/api/servicecontrol/v1/metric_value.proto" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/google-gax/protos/google/api/servicecontrol/v1/metric_value.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/google-gax/protos/google/protobuf/compiler/ruby/ruby_generated_code_proto2.proto" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/google-gax/protos/google/protobuf/compiler/ruby/ruby_generated_code_proto2.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/iconv-lite/encodings/internal.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/iconv-lite/encodings/internal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/iconv-lite/encodings/tables/cp949.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/iconv-lite/encodings/tables/cp949.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/inherits/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/inherits/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/is-typedarray/LICENSE.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/is-typedarray/LICENSE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/_baseIsMatch.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/_baseIsMatch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/_getAllKeysIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/_getAllKeysIn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/before.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/before.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/cloneDeepWith.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/cloneDeepWith.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/curryRight.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/curryRight.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/date.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/date.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/defaultsDeep.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/defaultsDeep.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/forInRight.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/forInRight.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/isArguments.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/isArguments.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/isBuffer.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/isBuffer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/isFunction.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/isFunction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/isNative.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/isNative.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/isObject.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/isObject.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/remove.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/remove.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/toJSON.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/toJSON.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/upperFirst.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/upperFirst.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/fp/where.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/fp/where.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/isArrayLike.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/isArrayLike.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/isObject.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/isObject.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/isString.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/isString.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/lang.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/lang.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/number.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/number.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/reverse.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/reverse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/uniqBy.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/uniqBy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/lodash/values.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/lodash/values.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/negotiator/HISTORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/negotiator/HISTORY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/node-forge/dist/prime.worker.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/node-forge/dist/prime.worker.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/p-limit/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/p-limit/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/protobufjs/cli/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/protobufjs/cli/util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/protobufjs/dist/minimal/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/protobufjs/dist/minimal/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/protobufjs/ext/descriptor/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/protobufjs/ext/descriptor/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/protobufjs/node_modules/@types/node/globals.global.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/protobufjs/node_modules/@types/node/globals.global.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/protobufjs/node_modules/@types/node/http.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/protobufjs/node_modules/@types/node/http.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/protobufjs/node_modules/@types/node/process.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/protobufjs/node_modules/@types/node/process.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/proxy-addr/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/proxy-addr/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/pump/test-node.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/pump/test-node.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/pumpify/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/pumpify/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/raw-body/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/raw-body/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/require-directory/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/require-directory/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/send/node_modules/debug/node.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/send/node_modules/debug/node.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/send/node_modules/debug/src/node.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/send/node_modules/debug/src/node.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/stream-events/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/stream-events/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/stubs/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/stubs/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/stubs/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/stubs/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/type-is/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/type-is/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/typedarray-to-buffer/test/basic.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/typedarray-to-buffer/test/basic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/utils-merge/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/utils-merge/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/uuid/dist/esm-node/stringify.js" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/uuid/dist/esm-node/stringify.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/node_modules/xdg-basedir/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/node_modules/xdg-basedir/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/src/main/java/com/aden/radqcompanionapp/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/src/main/java/com/aden/radqcompanionapp/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqcompanionapp/src/main/java/com/aden/radqcompanionapp/adapter/NotificationAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/radqcompanionapp/src/main/java/com/aden/radqcompanionapp/adapter/NotificationAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqmainapp/src/main/jniLibs/mips/libopencv_java3.so" beforeDir="false" afterPath="$PROJECT_DIR$/radqmainapp/src/main/jniLibs/mips/libopencv_java3.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqmainapp/src/main/res/layout/my_contacts_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/radqmainapp/src/main/res/layout/my_contacts_activity.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/radqmainapp/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" afterPath="$PROJECT_DIR$/radqmainapp/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="revision1" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ooJDLtrtPPK2OXGRE22wTrCnvI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Android\Projects\radq" />
+      <recent name="D:\Android\Projects\radq\Code" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="02bec969-5e94-4345-8954-0d08e4fb62c2" name="Default Changelist" comment="" />
+      <created>1613946892429</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613946892429</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Revision 1 after final delivery">
+      <created>1613948344173</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1613948344173</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Revision 1 after final delivery" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revision 1 after final delivery" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="845" y="382" width="774" height="498" key="#Notifications" timestamp="1613947196984">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="845" y="382" width="774" height="498" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1613947196984" />
+    <state x="468" y="88" key="CommitChangelistDialog2" timestamp="1613948322026">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="468" y="88" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1613948322026" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1613947218601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1613947218601" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1613948620564">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1613948620564" />
+    <state x="570" y="340" width="585" height="534" key="find.popup" timestamp="1613947685493">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="570" y="340" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1613947685493" />
+  </component>
+</project>
