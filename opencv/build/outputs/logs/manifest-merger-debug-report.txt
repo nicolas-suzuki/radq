@@ -1,37 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
+ADDED from D:\Github\radq\opencv\AndroidManifest.xml:2:1-4:12
+INJECTED from D:\Github\radq\opencv\AndroidManifest.xml:2:1-4:12
+INJECTED from D:\Github\radq\opencv\AndroidManifest.xml:2:1-4:12
 	package
-		ADDED from D:\TCC\radq\opencv\AndroidManifest.xml:2:11-31
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
-	android:versionName
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
-		ADDED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
+		ADDED from D:\Github\radq\opencv\AndroidManifest.xml:2:11-31
+		INJECTED from D:\Github\radq\opencv\AndroidManifest.xml
+		INJECTED from D:\Github\radq\opencv\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-	android:versionCode
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
-		ADDED from D:\TCC\radq\opencv\AndroidManifest.xml:2:1-4:12
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
+		ADDED from D:\Github\radq\opencv\AndroidManifest.xml:2:1-4:12
 uses-sdk
-ADDED from D:\TCC\radq\opencv\AndroidManifest.xml:3:5-16
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:3:5-16
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:3:5-16
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:3:5-16
-INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml:3:5-16
+ADDED from D:\Github\radq\opencv\AndroidManifest.xml:3:5-16
+INJECTED from D:\Github\radq\opencv\AndroidManifest.xml:3:5-16
+INJECTED from D:\Github\radq\opencv\AndroidManifest.xml:3:5-16
+INJECTED from D:\Github\radq\opencv\AndroidManifest.xml:3:5-16
+INJECTED from D:\Github\radq\opencv\AndroidManifest.xml:3:5-16
 	android:targetSdkVersion
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
-		ADDED from D:\TCC\radq\opencv\AndroidManifest.xml:3:5-16
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
+		INJECTED from D:\Github\radq\opencv\AndroidManifest.xml
+		ADDED from D:\Github\radq\opencv\AndroidManifest.xml:3:5-16
+		INJECTED from D:\Github\radq\opencv\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
-		ADDED from D:\TCC\radq\opencv\AndroidManifest.xml:3:5-16
-		INJECTED from D:\TCC\radq\opencv\AndroidManifest.xml
+		INJECTED from D:\Github\radq\opencv\AndroidManifest.xml
+		ADDED from D:\Github\radq\opencv\AndroidManifest.xml:3:5-16
+		INJECTED from D:\Github\radq\opencv\AndroidManifest.xml
