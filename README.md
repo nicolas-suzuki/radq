@@ -1,5 +1,3 @@
-[![Codacy Security Scan](https://github.com/nicolas-suzuki/radq/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/nicolas-suzuki/radq/actions/workflows/codacy-analysis.yml) [![CodeQL](https://github.com/nicolas-suzuki/radq/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/nicolas-suzuki/radq/actions/workflows/codeql-analysis.yml)
-
 # RADQ
   RADQ (Robô Autônomo Detector de Quedas - Fall Detector Autonomous Robot) is an Android application that has integration with an Arduino Robot, with the ability to follow an user by its object recognition capabilty and alert contacts if the user falls and requires assistance.
 
