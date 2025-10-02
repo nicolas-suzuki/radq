@@ -3,11 +3,14 @@ manifest
 ADDED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml:2:1-4:12
 INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml:2:1-4:12
 	package
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml:3:7-27
 		INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml:2:11-69
 uses-sdk
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml:3:5-16
-INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml:3:5-16
-INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml:3:5-16
+INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml
+INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml
 	android:targetSdkVersion
 		INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\opencv\AndroidManifest.xml
 	android:minSdkVersion

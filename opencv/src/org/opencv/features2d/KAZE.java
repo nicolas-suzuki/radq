@@ -3,316 +3,301 @@
 //
 package org.opencv.features2d;
 
-// C++: class KAZE
-//javadoc: KAZE
+import org.opencv.features2d.Feature2D;
+import org.opencv.features2d.KAZE;
 
+// C++: class KAZE
+/**
+ * Class implementing the KAZE keypoint detector and descriptor extractor, described in CITE: ABD12 .
+ *
+ * <b>Note:</b> AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
+ * F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
+ * (ECCV), Fiorenze, Italy, October 2012.
+ */
 public class KAZE extends Feature2D {
 
+    protected KAZE(long addr) { super(addr); }
+
+    // internal usage only
+    public static KAZE __fromPtr__(long addr) { return new KAZE(addr); }
+
+    // C++: enum DiffusivityType (cv.KAZE.DiffusivityType)
     public static final int
             DIFF_PM_G1 = 0,
             DIFF_PM_G2 = 1,
             DIFF_WEICKERT = 2,
             DIFF_CHARBONNIER = 3;
 
-    protected KAZE(long addr) {
-        super(addr);
-    }
-
-    // internal usage only
-    public static KAZE __fromPtr__(long addr) {
-        return new KAZE(addr);
-    }
-
 
     //
-    // C++: static Ptr_KAZE cv::KAZE::create(bool extended = false, bool upright = false, float threshold = 0.001f, int nOctaves = 4, int nOctaveLayers = 4, int diffusivity = KAZE::DIFF_PM_G2)
+    // C++: static Ptr_KAZE cv::KAZE::create(bool extended = false, bool upright = false, float threshold = 0.001f, int nOctaves = 4, int nOctaveLayers = 4, KAZE_DiffusivityType diffusivity = KAZE::DIFF_PM_G2)
     //
 
-    //javadoc: KAZE::create(extended, upright, threshold, nOctaves, nOctaveLayers, diffusivity)
+    /**
+     * The KAZE constructor
+     *
+     *     @param extended Set to enable extraction of extended (128-byte) descriptor.
+     *     @param upright Set to enable use of upright descriptors (non rotation-invariant).
+     *     @param threshold Detector response threshold to accept point
+     *     @param nOctaves Maximum octave evolution of the image
+     *     @param nOctaveLayers Default number of sublevels per scale level
+     *     @param diffusivity Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
+     *     DIFF_CHARBONNIER
+     * @return automatically generated
+     */
     public static KAZE create(boolean extended, boolean upright, float threshold, int nOctaves, int nOctaveLayers, int diffusivity) {
-
-        KAZE retVal = KAZE.__fromPtr__(create_0(extended, upright, threshold, nOctaves, nOctaveLayers, diffusivity));
-
-        return retVal;
+        return KAZE.__fromPtr__(create_0(extended, upright, threshold, nOctaves, nOctaveLayers, diffusivity));
     }
 
-    //javadoc: KAZE::create(extended, upright, threshold, nOctaves, nOctaveLayers)
+    /**
+     * The KAZE constructor
+     *
+     *     @param extended Set to enable extraction of extended (128-byte) descriptor.
+     *     @param upright Set to enable use of upright descriptors (non rotation-invariant).
+     *     @param threshold Detector response threshold to accept point
+     *     @param nOctaves Maximum octave evolution of the image
+     *     @param nOctaveLayers Default number of sublevels per scale level
+     *     DIFF_CHARBONNIER
+     * @return automatically generated
+     */
     public static KAZE create(boolean extended, boolean upright, float threshold, int nOctaves, int nOctaveLayers) {
-
-        KAZE retVal = KAZE.__fromPtr__(create_1(extended, upright, threshold, nOctaves, nOctaveLayers));
-
-        return retVal;
+        return KAZE.__fromPtr__(create_1(extended, upright, threshold, nOctaves, nOctaveLayers));
     }
 
-    //javadoc: KAZE::create(extended, upright, threshold, nOctaves)
+    /**
+     * The KAZE constructor
+     *
+     *     @param extended Set to enable extraction of extended (128-byte) descriptor.
+     *     @param upright Set to enable use of upright descriptors (non rotation-invariant).
+     *     @param threshold Detector response threshold to accept point
+     *     @param nOctaves Maximum octave evolution of the image
+     *     DIFF_CHARBONNIER
+     * @return automatically generated
+     */
     public static KAZE create(boolean extended, boolean upright, float threshold, int nOctaves) {
-
-        KAZE retVal = KAZE.__fromPtr__(create_2(extended, upright, threshold, nOctaves));
-
-        return retVal;
+        return KAZE.__fromPtr__(create_2(extended, upright, threshold, nOctaves));
     }
 
-    //javadoc: KAZE::create(extended, upright, threshold)
+    /**
+     * The KAZE constructor
+     *
+     *     @param extended Set to enable extraction of extended (128-byte) descriptor.
+     *     @param upright Set to enable use of upright descriptors (non rotation-invariant).
+     *     @param threshold Detector response threshold to accept point
+     *     DIFF_CHARBONNIER
+     * @return automatically generated
+     */
     public static KAZE create(boolean extended, boolean upright, float threshold) {
-
-        KAZE retVal = KAZE.__fromPtr__(create_3(extended, upright, threshold));
-
-        return retVal;
+        return KAZE.__fromPtr__(create_3(extended, upright, threshold));
     }
 
-    //javadoc: KAZE::create(extended, upright)
+    /**
+     * The KAZE constructor
+     *
+     *     @param extended Set to enable extraction of extended (128-byte) descriptor.
+     *     @param upright Set to enable use of upright descriptors (non rotation-invariant).
+     *     DIFF_CHARBONNIER
+     * @return automatically generated
+     */
     public static KAZE create(boolean extended, boolean upright) {
-
-        KAZE retVal = KAZE.__fromPtr__(create_4(extended, upright));
-
-        return retVal;
+        return KAZE.__fromPtr__(create_4(extended, upright));
     }
 
-    //javadoc: KAZE::create(extended)
+    /**
+     * The KAZE constructor
+     *
+     *     @param extended Set to enable extraction of extended (128-byte) descriptor.
+     *     DIFF_CHARBONNIER
+     * @return automatically generated
+     */
     public static KAZE create(boolean extended) {
-
-        KAZE retVal = KAZE.__fromPtr__(create_5(extended));
-
-        return retVal;
+        return KAZE.__fromPtr__(create_5(extended));
     }
 
-    //javadoc: KAZE::create()
+    /**
+     * The KAZE constructor
+     *
+     *     DIFF_CHARBONNIER
+     * @return automatically generated
+     */
     public static KAZE create() {
-
-        KAZE retVal = KAZE.__fromPtr__(create_6());
-
-        return retVal;
+        return KAZE.__fromPtr__(create_6());
     }
-
-
-    //
-    // C++:  String cv::KAZE::getDefaultName()
-    //
-
-    // C++: static Ptr_KAZE cv::KAZE::create(bool extended = false, bool upright = false, float threshold = 0.001f, int nOctaves = 4, int nOctaveLayers = 4, int diffusivity = KAZE::DIFF_PM_G2)
-    private static native long create_0(boolean extended, boolean upright, float threshold, int nOctaves, int nOctaveLayers, int diffusivity);
-
-
-    //
-    // C++:  bool cv::KAZE::getExtended()
-    //
-
-    private static native long create_1(boolean extended, boolean upright, float threshold, int nOctaves, int nOctaveLayers);
-
-
-    //
-    // C++:  bool cv::KAZE::getUpright()
-    //
-
-    private static native long create_2(boolean extended, boolean upright, float threshold, int nOctaves);
-
-
-    //
-    // C++:  double cv::KAZE::getThreshold()
-    //
-
-    private static native long create_3(boolean extended, boolean upright, float threshold);
-
-
-    //
-    // C++:  int cv::KAZE::getDiffusivity()
-    //
-
-    private static native long create_4(boolean extended, boolean upright);
-
-
-    //
-    // C++:  int cv::KAZE::getNOctaveLayers()
-    //
-
-    private static native long create_5(boolean extended);
-
-
-    //
-    // C++:  int cv::KAZE::getNOctaves()
-    //
-
-    private static native long create_6();
-
-
-    //
-    // C++:  void cv::KAZE::setDiffusivity(int diff)
-    //
-
-    // C++:  String cv::KAZE::getDefaultName()
-    private static native String getDefaultName_0(long nativeObj);
 
 
     //
     // C++:  void cv::KAZE::setExtended(bool extended)
     //
 
-    // C++:  bool cv::KAZE::getExtended()
-    private static native boolean getExtended_0(long nativeObj);
-
-
-    //
-    // C++:  void cv::KAZE::setNOctaveLayers(int octaveLayers)
-    //
-
-    // C++:  bool cv::KAZE::getUpright()
-    private static native boolean getUpright_0(long nativeObj);
-
-
-    //
-    // C++:  void cv::KAZE::setNOctaves(int octaves)
-    //
-
-    // C++:  double cv::KAZE::getThreshold()
-    private static native double getThreshold_0(long nativeObj);
-
-
-    //
-    // C++:  void cv::KAZE::setThreshold(double threshold)
-    //
-
-    // C++:  int cv::KAZE::getDiffusivity()
-    private static native int getDiffusivity_0(long nativeObj);
-
-
-    //
-    // C++:  void cv::KAZE::setUpright(bool upright)
-    //
-
-    // C++:  int cv::KAZE::getNOctaveLayers()
-    private static native int getNOctaveLayers_0(long nativeObj);
-
-    // C++:  int cv::KAZE::getNOctaves()
-    private static native int getNOctaves_0(long nativeObj);
-
-    // C++:  void cv::KAZE::setDiffusivity(int diff)
-    private static native void setDiffusivity_0(long nativeObj, int diff);
-
-    // C++:  void cv::KAZE::setExtended(bool extended)
-    private static native void setExtended_0(long nativeObj, boolean extended);
-
-    // C++:  void cv::KAZE::setNOctaveLayers(int octaveLayers)
-    private static native void setNOctaveLayers_0(long nativeObj, int octaveLayers);
-
-    // C++:  void cv::KAZE::setNOctaves(int octaves)
-    private static native void setNOctaves_0(long nativeObj, int octaves);
-
-    // C++:  void cv::KAZE::setThreshold(double threshold)
-    private static native void setThreshold_0(long nativeObj, double threshold);
-
-    // C++:  void cv::KAZE::setUpright(bool upright)
-    private static native void setUpright_0(long nativeObj, boolean upright);
-
-    // native support for java finalize()
-    private static native void delete(long nativeObj);
-
-    //javadoc: KAZE::getDefaultName()
-    public String getDefaultName() {
-
-        String retVal = getDefaultName_0(nativeObj);
-
-        return retVal;
-    }
-
-    //javadoc: KAZE::getExtended()
-    public boolean getExtended() {
-
-        boolean retVal = getExtended_0(nativeObj);
-
-        return retVal;
-    }
-
-    //javadoc: KAZE::setExtended(extended)
     public void setExtended(boolean extended) {
-
         setExtended_0(nativeObj, extended);
-
-        return;
     }
 
-    //javadoc: KAZE::getUpright()
-    public boolean getUpright() {
 
-        boolean retVal = getUpright_0(nativeObj);
+    //
+    // C++:  bool cv::KAZE::getExtended()
+    //
 
-        return retVal;
+    public boolean getExtended() {
+        return getExtended_0(nativeObj);
     }
 
-    //javadoc: KAZE::setUpright(upright)
+
+    //
+    // C++:  void cv::KAZE::setUpright(bool upright)
+    //
+
     public void setUpright(boolean upright) {
-
         setUpright_0(nativeObj, upright);
-
-        return;
     }
 
-    //javadoc: KAZE::getThreshold()
-    public double getThreshold() {
 
-        double retVal = getThreshold_0(nativeObj);
+    //
+    // C++:  bool cv::KAZE::getUpright()
+    //
 
-        return retVal;
+    public boolean getUpright() {
+        return getUpright_0(nativeObj);
     }
 
-    //javadoc: KAZE::setThreshold(threshold)
+
+    //
+    // C++:  void cv::KAZE::setThreshold(double threshold)
+    //
+
     public void setThreshold(double threshold) {
-
         setThreshold_0(nativeObj, threshold);
-
-        return;
     }
 
-    //javadoc: KAZE::getDiffusivity()
-    public int getDiffusivity() {
 
-        int retVal = getDiffusivity_0(nativeObj);
+    //
+    // C++:  double cv::KAZE::getThreshold()
+    //
 
-        return retVal;
+    public double getThreshold() {
+        return getThreshold_0(nativeObj);
     }
 
-    //javadoc: KAZE::setDiffusivity(diff)
-    public void setDiffusivity(int diff) {
 
-        setDiffusivity_0(nativeObj, diff);
+    //
+    // C++:  void cv::KAZE::setNOctaves(int octaves)
+    //
 
-        return;
-    }
-
-    //javadoc: KAZE::getNOctaveLayers()
-    public int getNOctaveLayers() {
-
-        int retVal = getNOctaveLayers_0(nativeObj);
-
-        return retVal;
-    }
-
-    //javadoc: KAZE::setNOctaveLayers(octaveLayers)
-    public void setNOctaveLayers(int octaveLayers) {
-
-        setNOctaveLayers_0(nativeObj, octaveLayers);
-
-        return;
-    }
-
-    //javadoc: KAZE::getNOctaves()
-    public int getNOctaves() {
-
-        int retVal = getNOctaves_0(nativeObj);
-
-        return retVal;
-    }
-
-    //javadoc: KAZE::setNOctaves(octaves)
     public void setNOctaves(int octaves) {
-
         setNOctaves_0(nativeObj, octaves);
-
-        return;
     }
+
+
+    //
+    // C++:  int cv::KAZE::getNOctaves()
+    //
+
+    public int getNOctaves() {
+        return getNOctaves_0(nativeObj);
+    }
+
+
+    //
+    // C++:  void cv::KAZE::setNOctaveLayers(int octaveLayers)
+    //
+
+    public void setNOctaveLayers(int octaveLayers) {
+        setNOctaveLayers_0(nativeObj, octaveLayers);
+    }
+
+
+    //
+    // C++:  int cv::KAZE::getNOctaveLayers()
+    //
+
+    public int getNOctaveLayers() {
+        return getNOctaveLayers_0(nativeObj);
+    }
+
+
+    //
+    // C++:  void cv::KAZE::setDiffusivity(KAZE_DiffusivityType diff)
+    //
+
+    public void setDiffusivity(int diff) {
+        setDiffusivity_0(nativeObj, diff);
+    }
+
+
+    //
+    // C++:  KAZE_DiffusivityType cv::KAZE::getDiffusivity()
+    //
+
+    public int getDiffusivity() {
+        return getDiffusivity_0(nativeObj);
+    }
+
+
+    //
+    // C++:  String cv::KAZE::getDefaultName()
+    //
+
+    public String getDefaultName() {
+        return getDefaultName_0(nativeObj);
+    }
+
 
     @Override
     protected void finalize() throws Throwable {
         delete(nativeObj);
     }
+
+
+
+    // C++: static Ptr_KAZE cv::KAZE::create(bool extended = false, bool upright = false, float threshold = 0.001f, int nOctaves = 4, int nOctaveLayers = 4, KAZE_DiffusivityType diffusivity = KAZE::DIFF_PM_G2)
+    private static native long create_0(boolean extended, boolean upright, float threshold, int nOctaves, int nOctaveLayers, int diffusivity);
+    private static native long create_1(boolean extended, boolean upright, float threshold, int nOctaves, int nOctaveLayers);
+    private static native long create_2(boolean extended, boolean upright, float threshold, int nOctaves);
+    private static native long create_3(boolean extended, boolean upright, float threshold);
+    private static native long create_4(boolean extended, boolean upright);
+    private static native long create_5(boolean extended);
+    private static native long create_6();
+
+    // C++:  void cv::KAZE::setExtended(bool extended)
+    private static native void setExtended_0(long nativeObj, boolean extended);
+
+    // C++:  bool cv::KAZE::getExtended()
+    private static native boolean getExtended_0(long nativeObj);
+
+    // C++:  void cv::KAZE::setUpright(bool upright)
+    private static native void setUpright_0(long nativeObj, boolean upright);
+
+    // C++:  bool cv::KAZE::getUpright()
+    private static native boolean getUpright_0(long nativeObj);
+
+    // C++:  void cv::KAZE::setThreshold(double threshold)
+    private static native void setThreshold_0(long nativeObj, double threshold);
+
+    // C++:  double cv::KAZE::getThreshold()
+    private static native double getThreshold_0(long nativeObj);
+
+    // C++:  void cv::KAZE::setNOctaves(int octaves)
+    private static native void setNOctaves_0(long nativeObj, int octaves);
+
+    // C++:  int cv::KAZE::getNOctaves()
+    private static native int getNOctaves_0(long nativeObj);
+
+    // C++:  void cv::KAZE::setNOctaveLayers(int octaveLayers)
+    private static native void setNOctaveLayers_0(long nativeObj, int octaveLayers);
+
+    // C++:  int cv::KAZE::getNOctaveLayers()
+    private static native int getNOctaveLayers_0(long nativeObj);
+
+    // C++:  void cv::KAZE::setDiffusivity(KAZE_DiffusivityType diff)
+    private static native void setDiffusivity_0(long nativeObj, int diff);
+
+    // C++:  KAZE_DiffusivityType cv::KAZE::getDiffusivity()
+    private static native int getDiffusivity_0(long nativeObj);
+
+    // C++:  String cv::KAZE::getDefaultName()
+    private static native String getDefaultName_0(long nativeObj);
+
+    // native support for java finalize()
+    private static native void delete(long nativeObj);
 
 }

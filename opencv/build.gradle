@@ -14,7 +14,9 @@ android {
     defaultConfig {
         targetSdkVersion 34
     }
-
+    buildFeatures {
+        buildConfig true
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

@@ -1,8 +1,9 @@
 package org.opencv.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.opencv.core.CvType;
-import org.opencv.core.DMatch;
-import org.opencv.core.KeyPoint;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfDMatch;
@@ -12,13 +13,12 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.MatOfPoint3f;
 import org.opencv.core.Point;
 import org.opencv.core.Point3;
-import org.opencv.core.Rect;
-import org.opencv.core.Rect2d;
-import org.opencv.core.RotatedRect;
 import org.opencv.core.Size;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.opencv.core.Rect;
+import org.opencv.core.RotatedRect;
+import org.opencv.core.Rect2d;
+import org.opencv.core.DMatch;
+import org.opencv.core.KeyPoint;
 
 public class Converters {
 
@@ -39,44 +39,44 @@ public class Converters {
         int count = (pts != null) ? pts.size() : 0;
         if (count > 0) {
             switch (typeDepth) {
-                case CvType.CV_32S: {
-                    res = new Mat(count, 1, CvType.CV_32SC2);
-                    int[] buff = new int[count * 2];
-                    for (int i = 0; i < count; i++) {
-                        Point p = pts.get(i);
-                        buff[i * 2] = (int) p.x;
-                        buff[i * 2 + 1] = (int) p.y;
-                    }
-                    res.put(0, 0, buff);
+            case CvType.CV_32S: {
+                res = new Mat(count, 1, CvType.CV_32SC2);
+                int[] buff = new int[count * 2];
+                for (int i = 0; i < count; i++) {
+                    Point p = pts.get(i);
+                    buff[i * 2] = (int) p.x;
+                    buff[i * 2 + 1] = (int) p.y;
                 }
+                res.put(0, 0, buff);
+            }
                 break;
 
-                case CvType.CV_32F: {
-                    res = new Mat(count, 1, CvType.CV_32FC2);
-                    float[] buff = new float[count * 2];
-                    for (int i = 0; i < count; i++) {
-                        Point p = pts.get(i);
-                        buff[i * 2] = (float) p.x;
-                        buff[i * 2 + 1] = (float) p.y;
-                    }
-                    res.put(0, 0, buff);
+            case CvType.CV_32F: {
+                res = new Mat(count, 1, CvType.CV_32FC2);
+                float[] buff = new float[count * 2];
+                for (int i = 0; i < count; i++) {
+                    Point p = pts.get(i);
+                    buff[i * 2] = (float) p.x;
+                    buff[i * 2 + 1] = (float) p.y;
                 }
+                res.put(0, 0, buff);
+            }
                 break;
 
-                case CvType.CV_64F: {
-                    res = new Mat(count, 1, CvType.CV_64FC2);
-                    double[] buff = new double[count * 2];
-                    for (int i = 0; i < count; i++) {
-                        Point p = pts.get(i);
-                        buff[i * 2] = p.x;
-                        buff[i * 2 + 1] = p.y;
-                    }
-                    res.put(0, 0, buff);
+            case CvType.CV_64F: {
+                res = new Mat(count, 1, CvType.CV_64FC2);
+                double[] buff = new double[count * 2];
+                for (int i = 0; i < count; i++) {
+                    Point p = pts.get(i);
+                    buff[i * 2] = p.x;
+                    buff[i * 2 + 1] = p.y;
                 }
+                res.put(0, 0, buff);
+            }
                 break;
 
-                default:
-                    throw new IllegalArgumentException("'typeDepth' can be CV_32S, CV_32F or CV_64F");
+            default:
+                throw new IllegalArgumentException("'typeDepth' can be CV_32S, CV_32F or CV_64F");
             }
         } else {
             res = new Mat();
@@ -101,47 +101,47 @@ public class Converters {
         int count = (pts != null) ? pts.size() : 0;
         if (count > 0) {
             switch (typeDepth) {
-                case CvType.CV_32S: {
-                    res = new Mat(count, 1, CvType.CV_32SC3);
-                    int[] buff = new int[count * 3];
-                    for (int i = 0; i < count; i++) {
-                        Point3 p = pts.get(i);
-                        buff[i * 3] = (int) p.x;
-                        buff[i * 3 + 1] = (int) p.y;
-                        buff[i * 3 + 2] = (int) p.z;
-                    }
-                    res.put(0, 0, buff);
+            case CvType.CV_32S: {
+                res = new Mat(count, 1, CvType.CV_32SC3);
+                int[] buff = new int[count * 3];
+                for (int i = 0; i < count; i++) {
+                    Point3 p = pts.get(i);
+                    buff[i * 3] = (int) p.x;
+                    buff[i * 3 + 1] = (int) p.y;
+                    buff[i * 3 + 2] = (int) p.z;
                 }
+                res.put(0, 0, buff);
+            }
                 break;
 
-                case CvType.CV_32F: {
-                    res = new Mat(count, 1, CvType.CV_32FC3);
-                    float[] buff = new float[count * 3];
-                    for (int i = 0; i < count; i++) {
-                        Point3 p = pts.get(i);
-                        buff[i * 3] = (float) p.x;
-                        buff[i * 3 + 1] = (float) p.y;
-                        buff[i * 3 + 2] = (float) p.z;
-                    }
-                    res.put(0, 0, buff);
+            case CvType.CV_32F: {
+                res = new Mat(count, 1, CvType.CV_32FC3);
+                float[] buff = new float[count * 3];
+                for (int i = 0; i < count; i++) {
+                    Point3 p = pts.get(i);
+                    buff[i * 3] = (float) p.x;
+                    buff[i * 3 + 1] = (float) p.y;
+                    buff[i * 3 + 2] = (float) p.z;
                 }
+                res.put(0, 0, buff);
+            }
                 break;
 
-                case CvType.CV_64F: {
-                    res = new Mat(count, 1, CvType.CV_64FC3);
-                    double[] buff = new double[count * 3];
-                    for (int i = 0; i < count; i++) {
-                        Point3 p = pts.get(i);
-                        buff[i * 3] = p.x;
-                        buff[i * 3 + 1] = p.y;
-                        buff[i * 3 + 2] = p.z;
-                    }
-                    res.put(0, 0, buff);
+            case CvType.CV_64F: {
+                res = new Mat(count, 1, CvType.CV_64FC3);
+                double[] buff = new double[count * 3];
+                for (int i = 0; i < count; i++) {
+                    Point3 p = pts.get(i);
+                    buff[i * 3] = p.x;
+                    buff[i * 3 + 1] = p.y;
+                    buff[i * 3 + 2] = p.z;
                 }
+                res.put(0, 0, buff);
+            }
                 break;
 
-                default:
-                    throw new IllegalArgumentException("'typeDepth' can be CV_32S, CV_32F or CV_64F");
+            default:
+                throw new IllegalArgumentException("'typeDepth' can be CV_32S, CV_32F or CV_64F");
             }
         } else {
             res = new Mat();
@@ -159,11 +159,11 @@ public class Converters {
 
     public static void Mat_to_vector_Point(Mat m, List<Point> pts) {
         if (pts == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
         int count = m.rows();
         int type = m.type();
         if (m.cols() != 1)
-            throw new java.lang.IllegalArgumentException("Input Mat should have one column\n" + m);
+            throw new IllegalArgumentException("Input Mat should have one column\n" + m);
 
         pts.clear();
         if (type == CvType.CV_32SC2) {
@@ -185,7 +185,7 @@ public class Converters {
                 pts.add(new Point(buff[i * 2], buff[i * 2 + 1]));
             }
         } else {
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "Input Mat should be of CV_32SC2, CV_32FC2 or CV_64FC2 type\n" + m);
         }
     }
@@ -204,11 +204,11 @@ public class Converters {
 
     public static void Mat_to_vector_Point3(Mat m, List<Point3> pts) {
         if (pts == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
         int count = m.rows();
         int type = m.type();
         if (m.cols() != 1)
-            throw new java.lang.IllegalArgumentException("Input Mat should have one column\n" + m);
+            throw new IllegalArgumentException("Input Mat should have one column\n" + m);
 
         pts.clear();
         if (type == CvType.CV_32SC3) {
@@ -230,7 +230,7 @@ public class Converters {
                 pts.add(new Point3(buff[i * 3], buff[i * 3 + 1], buff[i * 3 + 2]));
             }
         } else {
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "Input Mat should be of CV_32SC3, CV_32FC3 or CV_64FC3 type\n" + m);
         }
     }
@@ -255,10 +255,10 @@ public class Converters {
 
     public static void Mat_to_vector_Mat(Mat m, List<Mat> mats) {
         if (mats == null)
-            throw new java.lang.IllegalArgumentException("mats == null");
+            throw new IllegalArgumentException("mats == null");
         int count = m.rows();
         if (CvType.CV_32SC2 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_32SC2 != m.type() ||  m.cols()!=1\n" + m);
 
         mats.clear();
@@ -289,10 +289,10 @@ public class Converters {
 
     public static void Mat_to_vector_float(Mat m, List<Float> fs) {
         if (fs == null)
-            throw new java.lang.IllegalArgumentException("fs == null");
+            throw new IllegalArgumentException("fs == null");
         int count = m.rows();
         if (CvType.CV_32FC1 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_32FC1 != m.type() ||  m.cols()!=1\n" + m);
 
         fs.clear();
@@ -322,10 +322,10 @@ public class Converters {
 
     public static void Mat_to_vector_uchar(Mat m, List<Byte> us) {
         if (us == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
         int count = m.rows();
         if (CvType.CV_8UC1 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_8UC1 != m.type() ||  m.cols()!=1\n" + m);
 
         us.clear();
@@ -372,10 +372,10 @@ public class Converters {
 
     public static void Mat_to_vector_int(Mat m, List<Integer> is) {
         if (is == null)
-            throw new java.lang.IllegalArgumentException("is == null");
+            throw new IllegalArgumentException("is == null");
         int count = m.rows();
         if (CvType.CV_32SC1 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_32SC1 != m.type() ||  m.cols()!=1\n" + m);
 
         is.clear();
@@ -388,10 +388,10 @@ public class Converters {
 
     public static void Mat_to_vector_char(Mat m, List<Byte> bs) {
         if (bs == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
         int count = m.rows();
         if (CvType.CV_8SC1 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_8SC1 != m.type() ||  m.cols()!=1\n" + m);
 
         bs.clear();
@@ -424,10 +424,10 @@ public class Converters {
 
     public static void Mat_to_vector_Rect(Mat m, List<Rect> rs) {
         if (rs == null)
-            throw new java.lang.IllegalArgumentException("rs == null");
+            throw new IllegalArgumentException("rs == null");
         int count = m.rows();
         if (CvType.CV_32SC4 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_32SC4 != m.type() ||  m.rows()!=1\n" + m);
 
         rs.clear();
@@ -460,11 +460,11 @@ public class Converters {
 
     public static void Mat_to_vector_Rect2d(Mat m, List<Rect2d> rs) {
         if (rs == null)
-            throw new java.lang.IllegalArgumentException("rs == null");
+            throw new IllegalArgumentException("rs == null");
         int count = m.rows();
         if (CvType.CV_64FC4 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
-                    "CvType.CV_64FC4 != m.type() ||  m.rows()!=1\n" + m);
+            throw new IllegalArgumentException(
+                                                         "CvType.CV_64FC4 != m.type() ||  m.rows()!=1\n" + m);
 
         rs.clear();
         double[] buff = new double[4 * count];
@@ -499,10 +499,10 @@ public class Converters {
 
     public static void Mat_to_vector_KeyPoint(Mat m, List<KeyPoint> kps) {
         if (kps == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
         int count = m.rows();
         if (CvType.CV_64FC(7) != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_64FC(7) != m.type() ||  m.cols()!=1\n" + m);
 
         kps.clear();
@@ -519,8 +519,7 @@ public class Converters {
         Mat res;
         int lCount = (pts != null) ? pts.size() : 0;
         if (lCount > 0) {
-            for (MatOfPoint vpt : pts)
-                mats.add(vpt);
+            mats.addAll(pts);
             res = vector_Mat_to_Mat(mats);
         } else {
             res = new Mat();
@@ -530,10 +529,10 @@ public class Converters {
 
     public static void Mat_to_vector_vector_Point(Mat m, List<MatOfPoint> pts) {
         if (pts == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
 
         if (m == null)
-            throw new java.lang.IllegalArgumentException("Input Mat can't be null");
+            throw new IllegalArgumentException("Input Mat can't be null");
 
         List<Mat> mats = new ArrayList<Mat>(m.rows());
         Mat_to_vector_Mat(m, mats);
@@ -548,10 +547,10 @@ public class Converters {
     // vector_vector_Point2f
     public static void Mat_to_vector_vector_Point2f(Mat m, List<MatOfPoint2f> pts) {
         if (pts == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
 
         if (m == null)
-            throw new java.lang.IllegalArgumentException("Input Mat can't be null");
+            throw new IllegalArgumentException("Input Mat can't be null");
 
         List<Mat> mats = new ArrayList<Mat>(m.rows());
         Mat_to_vector_Mat(m, mats);
@@ -568,8 +567,7 @@ public class Converters {
         Mat res;
         int lCount = (pts != null) ? pts.size() : 0;
         if (lCount > 0) {
-            for (MatOfPoint2f vpt : pts)
-                mats.add(vpt);
+            mats.addAll(pts);
             res = vector_Mat_to_Mat(mats);
         } else {
             res = new Mat();
@@ -580,10 +578,10 @@ public class Converters {
     // vector_vector_Point3f
     public static void Mat_to_vector_vector_Point3f(Mat m, List<MatOfPoint3f> pts) {
         if (pts == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
 
         if (m == null)
-            throw new java.lang.IllegalArgumentException("Input Mat can't be null");
+            throw new IllegalArgumentException("Input Mat can't be null");
 
         List<Mat> mats = new ArrayList<Mat>(m.rows());
         Mat_to_vector_Mat(m, mats);
@@ -600,8 +598,7 @@ public class Converters {
         Mat res;
         int lCount = (pts != null) ? pts.size() : 0;
         if (lCount > 0) {
-            for (MatOfPoint3f vpt : pts)
-                mats.add(vpt);
+            mats.addAll(pts);
             res = vector_Mat_to_Mat(mats);
         } else {
             res = new Mat();
@@ -614,8 +611,7 @@ public class Converters {
         Mat res;
         int lCount = (kps != null) ? kps.size() : 0;
         if (lCount > 0) {
-            for (MatOfKeyPoint vkp : kps)
-                mats.add(vkp);
+            mats.addAll(kps);
             res = vector_Mat_to_Mat(mats);
         } else {
             res = new Mat();
@@ -625,10 +621,10 @@ public class Converters {
 
     public static void Mat_to_vector_vector_KeyPoint(Mat m, List<MatOfKeyPoint> kps) {
         if (kps == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
 
         if (m == null)
-            throw new java.lang.IllegalArgumentException("Input Mat can't be null");
+            throw new IllegalArgumentException("Input Mat can't be null");
 
         List<Mat> mats = new ArrayList<Mat>(m.rows());
         Mat_to_vector_Mat(m, mats);
@@ -659,10 +655,10 @@ public class Converters {
 
     public static void Mat_to_vector_double(Mat m, List<Double> ds) {
         if (ds == null)
-            throw new java.lang.IllegalArgumentException("ds == null");
+            throw new IllegalArgumentException("ds == null");
         int count = m.rows();
         if (CvType.CV_64FC1 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_64FC1 != m.type() ||  m.cols()!=1\n" + m);
 
         ds.clear();
@@ -695,10 +691,10 @@ public class Converters {
 
     public static void Mat_to_vector_DMatch(Mat m, List<DMatch> matches) {
         if (matches == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
         int count = m.rows();
         if (CvType.CV_64FC4 != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_64FC4 != m.type() ||  m.cols()!=1\n" + m);
 
         matches.clear();
@@ -714,8 +710,7 @@ public class Converters {
         Mat res;
         int lCount = (lvdm != null) ? lvdm.size() : 0;
         if (lCount > 0) {
-            for (MatOfDMatch vdm : lvdm)
-                mats.add(vdm);
+            mats.addAll(lvdm);
             res = vector_Mat_to_Mat(mats);
         } else {
             res = new Mat();
@@ -725,10 +720,10 @@ public class Converters {
 
     public static void Mat_to_vector_vector_DMatch(Mat m, List<MatOfDMatch> lvdm) {
         if (lvdm == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
 
         if (m == null)
-            throw new java.lang.IllegalArgumentException("Input Mat can't be null");
+            throw new IllegalArgumentException("Input Mat can't be null");
 
         List<Mat> mats = new ArrayList<Mat>(m.rows());
         Mat_to_vector_Mat(m, mats);
@@ -746,8 +741,7 @@ public class Converters {
         Mat res;
         int lCount = (lvb != null) ? lvb.size() : 0;
         if (lCount > 0) {
-            for (MatOfByte vb : lvb)
-                mats.add(vb);
+            mats.addAll(lvb);
             res = vector_Mat_to_Mat(mats);
         } else {
             res = new Mat();
@@ -757,10 +751,10 @@ public class Converters {
 
     public static void Mat_to_vector_vector_char(Mat m, List<List<Byte>> llb) {
         if (llb == null)
-            throw new java.lang.IllegalArgumentException("Output List can't be null");
+            throw new IllegalArgumentException("Output List can't be null");
 
         if (m == null)
-            throw new java.lang.IllegalArgumentException("Input Mat can't be null");
+            throw new IllegalArgumentException("Input Mat can't be null");
 
         List<Mat> mats = new ArrayList<Mat>(m.rows());
         Mat_to_vector_Mat(m, mats);
@@ -781,11 +775,11 @@ public class Converters {
             float[] buff = new float[5 * count];
             for (int i = 0; i < count; i++) {
                 RotatedRect r = rs.get(i);
-                buff[5 * i] = (float) r.center.x;
-                buff[5 * i + 1] = (float) r.center.y;
-                buff[5 * i + 2] = (float) r.size.width;
-                buff[5 * i + 3] = (float) r.size.height;
-                buff[5 * i + 4] = (float) r.angle;
+                buff[5 * i] = (float)r.center.x;
+                buff[5 * i + 1] = (float)r.center.y;
+                buff[5 * i + 2] = (float)r.size.width;
+                buff[5 * i + 3] = (float)r.size.height;
+                buff[5 * i + 4] = (float)r.angle;
             }
             res.put(0, 0, buff);
         } else {
@@ -796,10 +790,10 @@ public class Converters {
 
     public static void Mat_to_vector_RotatedRect(Mat m, List<RotatedRect> rs) {
         if (rs == null)
-            throw new java.lang.IllegalArgumentException("rs == null");
+            throw new IllegalArgumentException("rs == null");
         int count = m.rows();
         if (CvType.CV_32FC(5) != m.type() || m.cols() != 1)
-            throw new java.lang.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     "CvType.CV_32FC5 != m.type() ||  m.rows()!=1\n" + m);
 
         rs.clear();
