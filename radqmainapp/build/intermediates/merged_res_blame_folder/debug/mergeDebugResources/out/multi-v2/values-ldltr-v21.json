@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.aden.radq.radqmainapp-mergeDebugResources-20:/values-ldltr-v21/values-ldltr-v21.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Nicolas\\.gradle\\caches\\8.13\\transforms\\619af2590f42af14c590107031d16930\\transformed\\appcompat-1.2.0\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "112",
+                        "endOffsets": "163"
+                    }
+                }
+            ]
+        }
+    ]
+}

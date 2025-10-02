@@ -1,18 +1,18 @@
-apply plugin: 'com.android.library'
-
 buildscript {
     repositories {
         mavenCentral()
     }
 }
 
-android {
-    compileSdkVersion 29
+plugins {
+    id 'com.android.library'
+}
 
+android {
+    compileSdkVersion 34
+    namespace "org.opencv"
     defaultConfig {
-        targetSdkVersion 29
-        versionCode 2480
-        versionName "2.4.8"
+        targetSdkVersion 34
     }
 
     sourceSets {

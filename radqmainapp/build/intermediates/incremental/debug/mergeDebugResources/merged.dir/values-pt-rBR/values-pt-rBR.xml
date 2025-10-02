@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="YnV0dG9ubm90cHJlc3NlZHRpbWVzb3Zlcg">Botões não pressionados. Tempo expirado, após detecção de queda.</string>
+    <string name="aW1ub3Rva2F5YnV0dG9ucHJlc3NlZA">Botão \“AJUDA!\” pressionado após detecção de queda.</string>
+    <string name="aW1va2F5YnV0dG9ucHJlc3NlZA">Botão \“Estou bem\” pressionado após detecção de queda.</string>
+    <string msgid="5976598919945601918" name="abc_action_bar_home_description">"Navegar para a página inicial"</string>
+    <string msgid="8388173803310557296" name="abc_action_bar_up_description">"Navegar para cima"</string>
+    <string msgid="3937310113216875497" name="abc_action_menu_overflow_description">"Mais opções"</string>
+    <string msgid="4692188335987374352" name="abc_action_mode_done">"Concluído"</string>
+    <string msgid="1189761859438369441" name="abc_activity_chooser_view_see_all">"Ver tudo"</string>
+    <string msgid="2165779757652331008" name="abc_activitychooserview_choose_application">"Selecionar um app"</string>
+    <string msgid="4215997306490295099" name="abc_capital_off">"DESATIVADO"</string>
+    <string msgid="884982626291842264" name="abc_capital_on">"ATIVADO"</string>
+    <string msgid="8833365367933412986" name="abc_menu_alt_shortcut_label">"Alt+"</string>
+    <string msgid="2223301931652355242" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
+    <string msgid="838001238306846836" name="abc_menu_delete_shortcut_label">"delete"</string>
+    <string msgid="7986526966204849475" name="abc_menu_enter_shortcut_label">"enter"</string>
+    <string msgid="375214403600139847" name="abc_menu_function_shortcut_label">"Function+"</string>
+    <string msgid="4192209724446364286" name="abc_menu_meta_shortcut_label">"Meta+"</string>
+    <string msgid="4741552369836443843" name="abc_menu_shift_shortcut_label">"Shift+"</string>
+    <string msgid="5473865519181928982" name="abc_menu_space_shortcut_label">"espaço"</string>
+    <string msgid="6180552449598693998" name="abc_menu_sym_shortcut_label">"Sym+"</string>
+    <string msgid="5520303668377388990" name="abc_prepend_shortcut_label">"Menu+"</string>
+    <string msgid="7208076849092622260" name="abc_search_hint">"Pesquisar…"</string>
+    <string msgid="3741173234950517107" name="abc_searchview_description_clear">"Limpar consulta"</string>
+    <string msgid="693312494995508443" name="abc_searchview_description_query">"Consulta de pesquisa"</string>
+    <string msgid="3417662926640357176" name="abc_searchview_description_search">"Pesquisar"</string>
+    <string msgid="1486535517437947103" name="abc_searchview_description_submit">"Enviar consulta"</string>
+    <string msgid="2293578557972875415" name="abc_searchview_description_voice">"Pesquisa por voz"</string>
+    <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"Compartilhar com"</string>
+    <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"Compartilhar com <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
+    <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"Recolher"</string>
+    <string name="account_contact_description">Gerencie sua conta e adicione ou remova contatos.</string>
+    <string name="account_created">Conta criada!</string>
+    <string name="add_contact_button">Adicione um contato</string>
+    <string name="add_contacts_title">Adicione contatos</string>
+    <string name="advanced_settings">Configurações avançadas</string>
+    <string name="alert_not_logged_message">Parece que você não está conectado. Por favor faça o login para ter acesso ao RADQ.</string>
+    <string name="alert_not_logged_title">Não conectado…</string>
+    <string name="b3ZlcnJpZGUgb3IgYmF0dGVyeSBsb3cu">"Detecção de queda parada. "</string>
+    <string name="button_login">Conectar</string>
+    <string name="button_logout">Desconectar</string>
+    <string name="button_save">Salvar</string>
+    <string name="button_shutdown_detection">Desligar</string>
+    <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Detecção de queda iniciada.</string>
+    <string name="camera">Iniciar RADQ</string>
+    <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Ativar"</string>
+    <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> só funciona com o Google Play Services ativado."</string>
+    <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Ativar o Google Play Services"</string>
+    <string msgid="9115728400623041681" name="common_google_play_services_install_button">"Instalar"</string>
+    <string msgid="8179894293032530091" name="common_google_play_services_install_text">"O app <ns1:g id="APP_NAME">%1$s</ns1:g> não funciona sem o Google Play Services, o qual não está instalado no seu dispositivo."</string>
+    <string msgid="7442193194585196676" name="common_google_play_services_install_title">"Instalar o Google Play Services"</string>
+    <string msgid="4293541511340436975" name="common_google_play_services_notification_channel_name">"Disponibilidade do Google Play Services"</string>
+    <string msgid="180394615667698242" name="common_google_play_services_notification_ticker">"Erro do Google Play Services"</string>
+    <string msgid="2518680582564677258" name="common_google_play_services_unknown_issue">"O app <ns1:g id="APP_NAME">%1$s</ns1:g> está com problemas com o Google Play Services. Tente novamente."</string>
+    <string msgid="5501187292256987189" name="common_google_play_services_unsupported_text">"O app <ns1:g id="APP_NAME">%1$s</ns1:g> não funciona sem o Google Play Services, o qual não é compatível com seu dispositivo."</string>
+    <string msgid="8172070149091615356" name="common_google_play_services_update_button">"Atualizar"</string>
+    <string msgid="7773943415006962566" name="common_google_play_services_update_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> só funciona com uma versão atualizada do Google Play Services."</string>
+    <string msgid="8706675115216073244" name="common_google_play_services_update_title">"Atualizar o Google Play Services"</string>
+    <string msgid="7894275749778928941" name="common_google_play_services_updating_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> não funciona sem o Google Play Services, o qual está sendo atualizado no momento."</string>
+    <string msgid="2804989272736383918" name="common_google_play_services_wear_update_text">"É necessária uma nova versão do Google Play Services. Ele será atualizado em breve."</string>
+    <string msgid="5201977337835724196" name="common_open_on_phone">"Abrir no smartphone"</string>
+    <string msgid="3441753203274453993" name="common_signin_button_text">"Fazer login"</string>
+    <string msgid="669893613918351210" name="common_signin_button_text_long">"Fazer login com o Google"</string>
+    <string name="contact_alert_dialog_message">Você deve adicionar um contato na página de configurações antes de usar o RADQ.</string>
+    <string name="contact_alert_dialog_title">Nenhum contato encontrado…</string>
+    <string name="contacts_contacted">Contatos contatados!</string>
+    <string msgid="3209159573327985035" name="copy">"Copiar"</string>
+    <string name="create_account">Criar conta</string>
+    <string name="create_account_description">Crie sua conta RADQ aqui.</string>
+    <string name="dialog_message_disconnect_before_proceed">Por favor, desconecte-se de sua sessão atual antes de continuar.</string>
+    <string name="dialog_message_error_unknown_generic">Erro desconhecido</string>
+    <string name="dialog_message_invalid_email">Email inválido</string>
+    <string name="dialog_message_loading_contacts">Seus contatos estão sendo carregados. Essa operação não deve levar mais do que alguns segundos.</string>
+    <string name="dialog_message_user_not_found">Usuário não encontrado</string>
+    <string name="dialog_message_wrong_password">Senha incorreta</string>
+    <string name="dialog_title_alert">Alerta!</string>
+    <string name="dialog_title_loading_contacts">Por favor aguarde um instante…</string>
+    <string name="email">Email</string>
+    <string name="email_already_in_use">Email já em uso</string>
+    <string name="emergency_contact_will_be_contacted">"Contato de emergência será contatado em "</string>
+    <string name="emergency_title">Emergência</string>
+    <string name="error_empty_name_field">Por favor forneça um nome</string>
+    <string name="error_no_email">Por favor digite um email válido</string>
+    <string msgid="1234962710353108940" name="expand_button_title">"Avançado"</string>
+    <string name="fall_detected_text">Queda detectada!</string>
+    <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Diversos"</string>
+    <string name="imNotOkay">AJUDA!</string>
+    <string name="imOkay">Estou bem!</string>
+    <string name="invalid_password">Senha fraca. Por favor utilize uma senha maior que 6 caracteres.</string>
+    <string name="login_description">Entre com sua conta para conectar ao seu contato de emergência. Se não tiver uma conta, cadastre-se no botão abaixo.</string>
+    <string name="my_account_title">Minha conta</string>
+    <string name="my_contacts_description">Aqui está uma lista dos seus atuais contatos. Se quiser adicionar um, clique no botão abaixo.</string>
+    <string name="my_contacts_title">Meus contatos</string>
+    <string name="name">Nome</string>
+    <string name="not_logged_in">Não conectado</string>
+    <string msgid="478774118347071097" name="not_set">"Não definido"</string>
+    <string name="notifications_description">Notificações geradas pelo RADQ</string>
+    <string name="notifications_title">Notificações</string>
+    <string name="password">Senha</string>
+    <string name="person_detected_text">Pessoa detectada</string>
+    <string msgid="7961817945132860002" name="preference_copied">"\"<ns1:g id="SUMMARY">%1$s</ns1:g>\" copiado para a área de transferência."</string>
+    <string name="robot_instruction_forward">Frente</string>
+    <string name="robot_instruction_stop">Parar</string>
+    <string name="robot_instructions_backwards">Trás</string>
+    <string msgid="6264217191555673260" name="search_menu_title">"Pesquisar"</string>
+    <string name="settings_description">Adicione seu contato de emergência aqui utilizando o email!</string>
+    <string name="settings_title">Configurações</string>
+    <string name="snackbar_contact_added_successfully">Contato adicionado com sucesso</string>
+    <string name="snackbar_error_contact_not_found">Nenhum contato  encontrado com o email fornecido</string>
+    <string name="snackbar_error_empty_email_field">Por favor forneça um email</string>
+    <string name="snackbar_error_empty_password_field">Por favor forneça uma senha</string>
+    <string name="snackbar_logged_in">Conectado!</string>
+    <string name="snackbar_logged_out">Desconectado!</string>
+    <string name="snackbar_unknown_error_adding_contact">Erro desconhecido ao adicionar contato</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="5190123168583152844" name="summary_collapsed_preference_list">"<ns1:g id="CURRENT_ITEMS">%1$s</ns1:g>, <ns1:g id="ADDED_ITEMS">%2$s</ns1:g>"</string>
+    <string name="switch_enable_robot_instructions">Habilitar instruções visuais do robô</string>
+    <string name="switch_front_back_camera">Ativar câmera traseira</string>
+    <string name="text_seconds">segundos</string>
+    <string name="toast_action_no_usb">USB não conectado</string>
+    <string name="toast_action_usb_device_not_supported">Dispositivo USB não suportado</string>
+    <string name="toast_action_usb_disconnected">USB desconectado</string>
+    <string name="toast_action_usb_permission_granted">USB permissão concedida</string>
+    <string name="toast_action_usb_permission_not_granted">USB permissão negada</string>
+    <string name="toast_error_OpenCVLoader">Erro: OpenCVLoader</string>
+    <string name="toast_error_initializeDetection">Erro: initializeDetection</string>
+    <string name="unknown_error_contact_register">Erro desconhecido ao se cadastrar</string>
+    <string msgid="5138405918326871307" name="v7_preference_off">"DESATIVADO"</string>
+    <string msgid="27351710992731591" name="v7_preference_on">"ATIVADO"</string>
+    <string name="version">Versão</string>
+    <string name="welcome_description">Seu robô autônomo detector de quedas.</string>
+    <string name="welcome_title">Bem-vindo ao RADQ!</string>
+</resources>

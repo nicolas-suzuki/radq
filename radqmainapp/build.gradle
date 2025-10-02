@@ -1,8 +1,13 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.firebase.firebase-perf'
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion 29
-
+    compileSdkVersion 36
+    namespace  "com.aden.radq"
     defaultConfig {
         applicationId 'com.aden.radq'
         minSdkVersion 19
@@ -57,7 +62,3 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
-
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'com.google.firebase.firebase-perf'

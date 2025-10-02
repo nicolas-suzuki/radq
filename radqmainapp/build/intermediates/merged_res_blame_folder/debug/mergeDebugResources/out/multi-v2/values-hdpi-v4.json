@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.aden.radq.radqmainapp-mergeDebugResources-20:/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Nicolas\\.gradle\\caches\\8.13\\transforms\\619af2590f42af14c590107031d16930\\transformed\\appcompat-1.2.0\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}

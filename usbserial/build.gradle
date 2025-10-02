@@ -1,4 +1,6 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+}
 
 def artifact = "usbserial.jar"
 
@@ -6,8 +8,8 @@ android {
 
     group = 'com.felhr.usbserial'
     version = "?"
-    compileSdkVersion 29
-
+    compileSdkVersion 36
+    namespace "com.aden.usbserial"
 
     compileOptions {
         encoding "UTF-8"

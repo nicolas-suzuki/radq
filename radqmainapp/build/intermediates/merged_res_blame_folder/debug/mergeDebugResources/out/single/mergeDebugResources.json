@@ -1,0 +1,146 @@
+[
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-mdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-hdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_create_account_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/create_account_activity.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/drawable_elder_low_resolution.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/drawable/elder_low_resolution.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_emergency_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/emergency_activity.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/raw_yolov3_tiny_weights.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/raw/yolov3_tiny_weights"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_settings_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/settings_activity.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/raw_yolov3_tiny_cfg.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/raw/yolov3_tiny_cfg"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_start_radq_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/start_radq_activity.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/raw_alarm_sound.wav.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/raw/alarm_sound.wav"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xxxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/drawable_button_shape.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/drawable/button_shape.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_notifications_custom.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/notifications_custom.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/drawable_notification.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/drawable/notification.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xxhdpi/ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_add_contact_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/add_contact_activity.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_main_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/main_activity.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_my_contacts_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/my_contacts_activity.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/drawable_background_splashscreen.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/drawable/background_splashscreen.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_my_account_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/my_account_activity.xml"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/drawable_settings.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/drawable/settings.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/drawable_cam.webp.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/drawable/cam.webp"
+    },
+    {
+        "merged": "com.aden.radq.radqmainapp-debug-22:/layout_notifications_activity.xml.flat",
+        "source": "com.aden.radq.radqmainapp-main-24:/layout/notifications_activity.xml"
+    }
+]
