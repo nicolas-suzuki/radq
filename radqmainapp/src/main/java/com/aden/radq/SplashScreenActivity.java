@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aden.radq.utils.SettingsStorage;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -51,6 +48,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         if (!isCfgHere){
             File cfgFile = new File(path + "yolov3-tiny.cfg");
+            Log.d("SplashScreen", "weightsFile path: " + cfgFile.getPath());
             InputStream inputStream = getResources().openRawResource(R.raw.yolov3_tiny_cfg);
             try (FileOutputStream fileOutputStream = new FileOutputStream(cfgFile)) {
                 byte[] buf = new byte[1024];
@@ -61,12 +59,14 @@ public class SplashScreenActivity extends AppCompatActivity {
                 fileOutputStream.close();
                 inputStream.close();
             } catch (Exception e) {
+                Log.e("SplashScreen", "Error loading cfg: " + e);
                 showSnackbar("Error loading cfg");
             }
         }
 
         if (!isWeightsHere){
             File weightsFile = new File(path + "yolov3-tiny.weights");
+            Log.d("SplashScreen", "weightsFile path: " + weightsFile.getPath());
             InputStream inputStream = getResources().openRawResource(R.raw.yolov3_tiny_weights);
             try (FileOutputStream fileOutputStream = new FileOutputStream(weightsFile)) {
                 byte[] buf = new byte[1024];
@@ -77,6 +77,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 fileOutputStream.close();
                 inputStream.close();
             } catch (Exception e) {
+                Log.e("SplashScreen", "Error loading weight: " + e);
                 showSnackbar("Error loading weight");
             }
         }
@@ -91,25 +92,18 @@ public class SplashScreenActivity extends AppCompatActivity {
         SettingsStorage settingsStorage = new SettingsStorage(this);
 
         FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w("SplashScreen", "Fetching FCM registration token failed", task.getException());
-                        return;
-                    }
+            .addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    Log.w("SplashScreen", "Fetching FCM registration token failed", task.getException());
+                    return;
+                }
 
-                    // Get new FCM registration token
-                    String token = task.getResult();
+                // Get new FCM registration token
+                String token = task.getResult();
 
-                    // TODO: Send token to your server or store it as needed
-                    Log.d("SplashScreen", "FCM Token: " + token);
-                });
+                settingsStorage.setPhoneKey(token);
+                Log.d("SplashScreen", "FCM Token: " + token);
+            });
 
-//        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-//                String token = Objects.requireNonNull(task.getResult()).getToken();
-//                settingsStorage.setPhoneKey(token);
-//            }
-//        });
     }
 }
