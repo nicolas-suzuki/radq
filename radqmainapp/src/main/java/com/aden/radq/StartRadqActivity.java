@@ -22,7 +22,7 @@ import com.aden.radq.utils.CoefficientOfVariationCalculator;
 import com.aden.radq.utils.NotificationSender;
 import com.aden.radq.utils.SettingsStorage;
 
-import org.opencv.android.BaseLoaderCallback;
+//import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
@@ -31,8 +31,10 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfRect;
+import org.opencv.core.MatOfRect2d;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Rect2d;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.dnn.Dnn;
@@ -54,7 +56,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
 
     //Camera connection + detection specific variables
     CameraBridgeViewBase cameraBridgeViewBase;
-    private BaseLoaderCallback baseLoaderCallback;
+    //private BaseLoaderCallback baseLoaderCallback;
     private Net detectionEssential;
 
     //Fall confirmation
@@ -119,20 +121,31 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
             //Use Frontal Camera
             cameraBridgeViewBase.setCameraIndex(1);
         }
-
+        System.out.println("1");
         //OpenCV specific
-        baseLoaderCallback = new BaseLoaderCallback(this) {
-            @Override
-            public void onManagerConnected(int status) {
-                super.onManagerConnected(status);
-                if (status == BaseLoaderCallback.SUCCESS) {
-                    cameraBridgeViewBase.enableView();
-                    checkIfDetectionStarted();
-                } else {
-                    super.onManagerConnected(status);
-                }
-            }
-        };
+        if (OpenCVLoader.initLocal()) {
+            (Toast.makeText(this, "OpenCV loaded successfully!", Toast.LENGTH_LONG)).show();
+            System.out.println("2");
+        } else {
+            //Log.e(TAG, "OpenCV initialization failed!");
+            (Toast.makeText(this, "OpenCV initialization failed!", Toast.LENGTH_LONG)).show();
+            System.out.println("3");
+            return;
+        }
+        cameraBridgeViewBase.enableView();
+        checkIfDetectionStarted();
+        //baseLoaderCallback = new BaseLoaderCallback(this) {
+        //    @Override
+        //    public void onManagerConnected(int status) {
+        //        super.onManagerConnected(status);
+        //        if (status == BaseLoaderCallback.SUCCESS) {
+        //            cameraBridgeViewBase.enableView();
+        //            checkIfDetectionStarted();
+        //        } else {
+        //            super.onManagerConnected(status);
+        //        }
+        //    }
+        //};
     }
 
     @Override
@@ -140,8 +153,9 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
         super.onResume();
 
         //Detection
-        if (OpenCVLoader.initDebug()) {
-            baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
+        if (OpenCVLoader.initLocal()) {
+            //baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
+            Toast.makeText(this, "OpenCV loaded successfully!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_error_OpenCVLoader), Toast.LENGTH_SHORT).show();
         }
@@ -264,15 +278,15 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
                 // Apply non-maximum suppression procedure.
                 float nmsThresh = 0.3f;
                 MatOfFloat confidences = new MatOfFloat(Converters.vector_float_to_Mat(confs));
-                Rect[] boxesArray = rects.toArray(new Rect[0]);
-                MatOfRect boxes = new MatOfRect(boxesArray);
+                Rect2d[] boxesArray = rects.toArray(new Rect2d[0]);
+                MatOfRect2d boxes = new MatOfRect2d(boxesArray);
                 MatOfInt indices = new MatOfInt();
                 Dnn.NMSBoxes(boxes, confidences, confThreshold, nmsThresh, indices);
 
                 // Draw result boxes (make sure to return frames to avoid unnecessary calculations)
                 int[] ind = indices.toArray();
                 for (int idx : ind) {
-                    Rect box = boxesArray[idx];
+                    Rect2d box = boxesArray[idx];
                     int idGuy = clsIds.get(idx);
                     float conf = confs.get(idx);
                     int intConf = (int) (conf * 100);
@@ -284,7 +298,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
                             startTime = Calendar.getInstance().getTime();
                             firstDetection = false;
                         }
-                        Imgproc.putText(frame, getString(R.string.fall_detected_text) + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
+                        Imgproc.putText(frame, getString(R.string.fall_detected_text) + " " + intConf + "%", box.tl(), Imgproc.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(255, 0, 0), 5);
 
                         framesToConfirmFall++;
@@ -314,7 +328,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
                         }
                     } else if (idGuy == 1) {
                         // Person detected
-                        Imgproc.putText(frame, getString(R.string.person_detected_text) + " " + intConf + "%", box.tl(), Core.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
+                        Imgproc.putText(frame, getString(R.string.person_detected_text) + " " + intConf + "%", box.tl(), Imgproc.FONT_HERSHEY_SIMPLEX, 2, new Scalar(255, 255, 0), 2);
                         Imgproc.rectangle(frame, box.tl(), box.br(), new Scalar(0, 255, 0), 2);
                         return frame;
                     }

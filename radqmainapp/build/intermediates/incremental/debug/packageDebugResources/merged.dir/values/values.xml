@@ -30,7 +30,6 @@
     <string name="contacts_contacted">"Contacts contacted!"</string>
     <string name="create_account">Create account</string>
     <string name="create_account_description">Create your RADQ account here.</string>
-    <string name="default_web_client_id" translatable="false">884321221831-ufin505n8dlpri0b2r77g1nmfn27ajha.apps.googleusercontent.com</string>
     <string name="dialog_message_disconnect_before_proceed">Please, logout from your current session before proceed.</string>
     <string name="dialog_message_error_unknown_generic">Unknown error</string>
     <string name="dialog_message_invalid_email">Invalid email</string>
@@ -46,12 +45,11 @@
     <string name="error_empty_name_field">Please provide a name</string>
     <string name="error_no_email">Please type a valid email</string>
     <string name="fall_detected_text">Fall detected!</string>
-    <string name="firebase_database_url" translatable="false">https://radq-4ae8a.firebaseio.com</string>
-    <string name="gcm_defaultSenderId" translatable="false">884321221831</string>
-    <string name="google_api_key" translatable="false">AIzaSyCpsivrslx0Stwdunxt9uXFK6E8Gp9sEgg</string>
-    <string name="google_app_id" translatable="false">1:884321221831:android:75831fb56a7f732229d2e2</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCpsivrslx0Stwdunxt9uXFK6E8Gp9sEgg</string>
-    <string name="google_storage_bucket" translatable="false">radq-4ae8a.appspot.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">608185492071</string>
+    <string name="google_api_key" translatable="false">AIzaSyDK5Y7h_oL7nq94mYmYKar1BIZx8AJ6HxY</string>
+    <string name="google_app_id" translatable="false">1:608185492071:android:346531c7a0a31767f62ac2</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDK5Y7h_oL7nq94mYmYKar1BIZx8AJ6HxY</string>
+    <string name="google_storage_bucket" translatable="false">radq-c73b8.firebasestorage.app</string>
     <string name="imNotOkay">HELP!</string>
     <string name="imOkay">I\'m Okay!</string>
     <string name="invalid_password">Weak password. Please use a password longer than 6 characters.</string>
@@ -66,7 +64,7 @@
     <string name="password">Password</string>
     <string name="person_detected_text">Person detected</string>
     <string name="positive_button" translatable="false">OK</string>
-    <string name="project_id" translatable="false">radq-4ae8a</string>
+    <string name="project_id" translatable="false">radq-c73b8</string>
     <string name="robot_instruction_forward">Forward</string>
     <string name="robot_instruction_stop">Stop</string>
     <string name="robot_instructions_backwards">Backwards</string>

@@ -37,7 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
         swRobotInstructions = findViewById(R.id.swRobotInstructions);
 
         //Get RADQ Version
-        String radqVersion = getString(R.string.version) + " " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
+        String radqVersion = getString(R.string.version); //+ " " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
         tvRadqVersion.setText(radqVersion);
 
         //Load settings

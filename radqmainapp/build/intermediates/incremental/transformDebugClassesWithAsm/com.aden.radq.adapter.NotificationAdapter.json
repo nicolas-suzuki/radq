@@ -1,0 +1,1 @@
+{"className":"com.aden.radq.adapter.NotificationAdapter","classAnnotations":[],"interfaces":["android.widget.Adapter","android.widget.Filterable","android.widget.ListAdapter","android.widget.SpinnerAdapter","android.widget.ThemedSpinnerAdapter"],"superClasses":["android.widget.ArrayAdapter","android.widget.BaseAdapter","java.lang.Object"]}

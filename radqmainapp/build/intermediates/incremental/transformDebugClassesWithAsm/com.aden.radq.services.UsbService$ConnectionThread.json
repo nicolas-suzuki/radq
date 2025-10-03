@@ -1,0 +1,1 @@
+{"className":"com.aden.radq.services.UsbService$ConnectionThread","classAnnotations":[],"interfaces":["java.lang.Runnable"],"superClasses":["java.lang.Thread","java.lang.Object"]}

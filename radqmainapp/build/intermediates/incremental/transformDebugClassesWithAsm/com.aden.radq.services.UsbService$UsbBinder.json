@@ -1,0 +1,1 @@
+{"className":"com.aden.radq.services.UsbService$UsbBinder","classAnnotations":[],"interfaces":["android.os.IBinder"],"superClasses":["android.os.Binder","java.lang.Object"]}

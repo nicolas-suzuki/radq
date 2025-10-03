@@ -1,0 +1,1 @@
+{"className":"com.aden.radq.services.UsbService","classAnnotations":[],"interfaces":["android.content.ComponentCallbacks","android.content.ComponentCallbacks2"],"superClasses":["android.app.Service","android.content.ContextWrapper","android.content.Context","java.lang.Object"]}

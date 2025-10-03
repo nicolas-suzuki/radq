@@ -2359,7 +2359,6 @@ string contacts_contacted
 string copy
 string create_account
 string create_account_description
-string default_web_client_id
 string dialog_message_disconnect_before_proceed
 string dialog_message_error_unknown_generic
 string dialog_message_invalid_email
@@ -2381,7 +2380,6 @@ string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string fall_detected_text
 string fcm_fallback_notification_channel_label
-string firebase_database_url
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id

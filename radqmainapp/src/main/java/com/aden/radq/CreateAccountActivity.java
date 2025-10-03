@@ -83,7 +83,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                 databaseReference.child("accounts")
                         .child(account.getId())
                         .setValue(account);
-
                 //Add current user key to Settings
                 settingsStorage.setIdentifierKey(accountIdentifier);
 

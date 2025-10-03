@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-120:12
-INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-120:12
-INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-120:12
-INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-120:12
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-121:12
+INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-121:12
+INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-121:12
+INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-121:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.2] C:\Users\Nicolas\.gradle\caches\8.13\transforms\5ca26e57345136189b851085fe87e195\transformed\constraintlayout-2.0.2\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.preference:preference:1.1.1] C:\Users\Nicolas\.gradle\caches\8.13\transforms\9b379651d5365781aa16680631dfea42\transformed\preference-1.1.1\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.material:material:1.2.1] C:\Users\Nicolas\.gradle\caches\8.13\transforms\86ab08c7c9aafcacce643410dcf74902\transformed\material-1.2.1\AndroidManifest.xml:17:1-24:12
@@ -94,6 +94,10 @@ MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] C:\Us
 MERGED from [com.google.android.datatransport:transport-backend-cct:2.2.0] C:\Users\Nicolas\.gradle\caches\8.13\transforms\aacd9c3a64bf01e23ea182dbcda48927\transformed\jetified-transport-backend-cct-2.2.0\AndroidManifest.xml:26:5-67
 	android:name
 		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:7:22-64
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:8:5-76
+	android:name
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:8:22-74
 uses-feature#android.hardware.camera
 ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:9:5-11:35
 	android:required
@@ -119,8 +123,8 @@ ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidMa
 	android:name
 		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:19:9-56
 application
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:22:5-119:19
-INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:22:5-119:19
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:22:5-120:19
+INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:22:5-120:19
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.2] C:\Users\Nicolas\.gradle\caches\8.13\transforms\5ca26e57345136189b851085fe87e195\transformed\constraintlayout-2.0.2\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.0.2] C:\Users\Nicolas\.gradle\caches\8.13\transforms\5ca26e57345136189b851085fe87e195\transformed\constraintlayout-2.0.2\AndroidManifest.xml:9:5-20
 MERGED from [com.google.android.material:material:1.2.1] C:\Users\Nicolas\.gradle\caches\8.13\transforms\86ab08c7c9aafcacce643410dcf74902\transformed\material-1.2.1\AndroidManifest.xml:22:5-20
@@ -184,113 +188,115 @@ ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidMa
 	android:name
 		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:33:13-61
 activity#com.aden.radq.SplashScreenActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:36:9-42:20
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:36:9-43:20
+	android:exported
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:38:13-36
 	android:theme
 		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:37:13-48
 	android:name
 		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:36:19-55
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:38:13-41:29
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:39:13-42:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:39:17-69
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:40:17-69
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:39:25-66
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:40:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:40:17-77
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:41:17-77
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:40:27-74
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:41:27-74
 activity#com.aden.radq.MainActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:45:9-48:20
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:46:9-49:20
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:47:13-48
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:48:13-48
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:46:13-41
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:47:13-41
 activity#com.aden.radq.StartRadqActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:51:9-58:20
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:52:9-59:20
 	android:screenOrientation
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:53:13-50
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:54:13-50
 	android:parentActivityName
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:55:13-55
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:56:13-55
 	android:label
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:57:13-29
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:58:13-29
 	android:launchMode
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:56:13-43
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:57:13-43
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:54:13-58
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:55:13-58
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:52:13-46
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:53:13-46
 activity#com.aden.radq.EmergencyActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:61:13-67:24
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:62:13-68:24
 	android:screenOrientation
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:62:17-54
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:63:17-54
 	android:parentActivityName
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:65:17-64
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:66:17-64
 	android:label
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:66:17-56
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:67:17-56
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:64:17-53
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:65:17-53
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:63:17-50
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:64:17-50
 activity#com.aden.radq.NotificationsActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:70:9-75:20
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:71:9-76:20
 	android:parentActivityName
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:73:13-55
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:74:13-55
 	android:label
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:74:13-56
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:75:13-56
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:72:13-44
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:73:13-44
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:71:13-50
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:72:13-50
 activity#com.aden.radq.SettingsActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:79:9-84:20
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:80:9-85:20
 	android:parentActivityName
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:82:13-55
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:83:13-55
 	android:label
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:83:13-51
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:84:13-51
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:81:13-44
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:82:13-44
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:80:13-45
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:81:13-45
 activity#com.aden.radq.MyAccountActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:87:13-92:24
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:88:13-93:24
 	android:parentActivityName
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:90:17-63
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:91:17-63
 	android:label
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:91:17-57
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:92:17-57
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:89:17-48
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:90:17-48
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:88:17-50
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:89:17-50
 activity#com.aden.radq.CreateAccountActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:95:17-100:28
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:96:17-101:28
 	android:parentActivityName
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:98:21-68
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:99:21-68
 	android:label
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:99:21-59
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:100:21-59
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:97:21-52
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:98:21-52
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:96:21-58
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:97:21-58
 activity#com.aden.radq.MyContactsActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:103:13-108:24
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:104:13-109:24
 	android:parentActivityName
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:106:17-63
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:107:17-63
 	android:label
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:107:17-58
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:108:17-58
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:105:17-48
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:106:17-48
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:104:17-51
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:105:17-51
 activity#com.aden.radq.AddContactActivity
-ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:111:17-116:28
+ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:112:17-117:28
 	android:parentActivityName
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:114:21-69
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:115:21-69
 	android:label
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:115:21-63
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:116:21-63
 	android:theme
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:113:21-52
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:114:21-52
 	android:name
-		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:112:21-55
+		ADDED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:113:21-55
 uses-sdk
 INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml
@@ -504,9 +510,9 @@ ADDED from [com.google.firebase:firebase-messaging:20.3.0] C:\Users\Nicolas\.gra
 	android:name
 		ADDED from [com.google.firebase:firebase-messaging:20.3.0] C:\Users\Nicolas\.gradle\caches\8.13\transforms\6d16f3cecd93fbb572e8b90c4eb8204f\transformed\jetified-firebase-messaging-20.3.0\AndroidManifest.xml:40:17-119
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-IMPLIED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-120:12 reason: org.opencv has a targetSdkVersion < 4
+IMPLIED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-121:12 reason: org.opencv has a targetSdkVersion < 4
 uses-permission#android.permission.READ_PHONE_STATE
-IMPLIED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-120:12 reason: org.opencv has a targetSdkVersion < 4
+IMPLIED from C:\Users\Nicolas\Documents\GitHub\radq\radqmainapp\src\main\AndroidManifest.xml:2:1-121:12 reason: org.opencv has a targetSdkVersion < 4
 meta-data#com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar
 ADDED from [com.google.firebase:firebase-datatransport:17.0.3] C:\Users\Nicolas\.gradle\caches\8.13\transforms\0bd8294bfb65a3b19ec63700cabacdd0\transformed\jetified-firebase-datatransport-17.0.3\AndroidManifest.xml:28:13-30:85
 	android:value
