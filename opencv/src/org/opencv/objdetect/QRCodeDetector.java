@@ -4,16 +4,13 @@
 package org.opencv.objdetect;
 
 import org.opencv.core.Mat;
+import org.opencv.objdetect.QRCodeDetector;
 
 // C++: class QRCodeDetector
-//javadoc: QRCodeDetector
 
-public class QRCodeDetector {
+public class QRCodeDetector extends GraphicalCodeDetector {
 
-    protected final long nativeObj;
-    protected QRCodeDetector(long addr) { nativeObj = addr; }
-
-    public long getNativeObjAddr() { return nativeObj; }
+    protected QRCodeDetector(long addr) { super(addr); }
 
     // internal usage only
     public static QRCodeDetector __fromPtr__(long addr) { return new QRCodeDetector(addr); }
@@ -22,110 +19,148 @@ public class QRCodeDetector {
     // C++:   cv::QRCodeDetector::QRCodeDetector()
     //
 
-    //javadoc: QRCodeDetector::QRCodeDetector()
-    public   QRCodeDetector()
-    {
-        
-        nativeObj = QRCodeDetector_0();
-        
-        return;
+    public QRCodeDetector() {
+        super(QRCodeDetector_0());
     }
 
 
     //
-    // C++:  String cv::QRCodeDetector::decode(Mat img, Mat points, Mat& straight_qrcode = Mat())
+    // C++:  QRCodeDetector cv::QRCodeDetector::setEpsX(double epsX)
     //
 
-    //javadoc: QRCodeDetector::decode(img, points, straight_qrcode)
-    public  String decode(Mat img, Mat points, Mat straight_qrcode)
-    {
-        
-        String retVal = decode_0(nativeObj, img.nativeObj, points.nativeObj, straight_qrcode.nativeObj);
-        
-        return retVal;
-    }
-
-    //javadoc: QRCodeDetector::decode(img, points)
-    public  String decode(Mat img, Mat points)
-    {
-        
-        String retVal = decode_1(nativeObj, img.nativeObj, points.nativeObj);
-        
-        return retVal;
+    /**
+     * sets the epsilon used during the horizontal scan of QR code stop marker detection.
+     *      @param epsX Epsilon neighborhood, which allows you to determine the horizontal pattern
+     *      of the scheme 1:1:3:1:1 according to QR code standard.
+     * @return automatically generated
+     */
+    public QRCodeDetector setEpsX(double epsX) {
+        return new QRCodeDetector(setEpsX_0(nativeObj, epsX));
     }
 
 
     //
-    // C++:  String cv::QRCodeDetector::detectAndDecode(Mat img, Mat& points = Mat(), Mat& straight_qrcode = Mat())
+    // C++:  QRCodeDetector cv::QRCodeDetector::setEpsY(double epsY)
     //
 
-    //javadoc: QRCodeDetector::detectAndDecode(img, points, straight_qrcode)
-    public  String detectAndDecode(Mat img, Mat points, Mat straight_qrcode)
-    {
-        
-        String retVal = detectAndDecode_0(nativeObj, img.nativeObj, points.nativeObj, straight_qrcode.nativeObj);
-        
-        return retVal;
-    }
-
-    //javadoc: QRCodeDetector::detectAndDecode(img, points)
-    public  String detectAndDecode(Mat img, Mat points)
-    {
-        
-        String retVal = detectAndDecode_1(nativeObj, img.nativeObj, points.nativeObj);
-        
-        return retVal;
-    }
-
-    //javadoc: QRCodeDetector::detectAndDecode(img)
-    public  String detectAndDecode(Mat img)
-    {
-        
-        String retVal = detectAndDecode_2(nativeObj, img.nativeObj);
-        
-        return retVal;
+    /**
+     * sets the epsilon used during the vertical scan of QR code stop marker detection.
+     *      @param epsY Epsilon neighborhood, which allows you to determine the vertical pattern
+     *      of the scheme 1:1:3:1:1 according to QR code standard.
+     * @return automatically generated
+     */
+    public QRCodeDetector setEpsY(double epsY) {
+        return new QRCodeDetector(setEpsY_0(nativeObj, epsY));
     }
 
 
     //
-    // C++:  bool cv::QRCodeDetector::detect(Mat img, Mat& points)
+    // C++:  QRCodeDetector cv::QRCodeDetector::setUseAlignmentMarkers(bool useAlignmentMarkers)
     //
 
-    //javadoc: QRCodeDetector::detect(img, points)
-    public  boolean detect(Mat img, Mat points)
-    {
-        
-        boolean retVal = detect_0(nativeObj, img.nativeObj, points.nativeObj);
-        
-        return retVal;
+    /**
+     * use markers to improve the position of the corners of the QR code
+     *
+     * alignmentMarkers using by default
+     * @param useAlignmentMarkers automatically generated
+     * @return automatically generated
+     */
+    public QRCodeDetector setUseAlignmentMarkers(boolean useAlignmentMarkers) {
+        return new QRCodeDetector(setUseAlignmentMarkers_0(nativeObj, useAlignmentMarkers));
     }
 
 
     //
-    // C++:  void cv::QRCodeDetector::setEpsX(double epsX)
+    // C++:  String cv::QRCodeDetector::decodeCurved(Mat img, Mat points, Mat& straight_qrcode = Mat())
     //
 
-    //javadoc: QRCodeDetector::setEpsX(epsX)
-    public  void setEpsX(double epsX)
-    {
-        
-        setEpsX_0(nativeObj, epsX);
-        
-        return;
+    /**
+     * Decodes QR code on a curved surface in image once it's found by the detect() method.
+     *
+     *      Returns UTF8-encoded output string or empty string if the code cannot be decoded.
+     *      @param img grayscale or color (BGR) image containing QR code.
+     *      @param points Quadrangle vertices found by detect() method (or some other algorithm).
+     *      @param straight_qrcode The optional output image containing rectified and binarized QR code
+     * @return automatically generated
+     */
+    public String decodeCurved(Mat img, Mat points, Mat straight_qrcode) {
+        return decodeCurved_0(nativeObj, img.nativeObj, points.nativeObj, straight_qrcode.nativeObj);
+    }
+
+    /**
+     * Decodes QR code on a curved surface in image once it's found by the detect() method.
+     *
+     *      Returns UTF8-encoded output string or empty string if the code cannot be decoded.
+     *      @param img grayscale or color (BGR) image containing QR code.
+     *      @param points Quadrangle vertices found by detect() method (or some other algorithm).
+     * @return automatically generated
+     */
+    public String decodeCurved(Mat img, Mat points) {
+        return decodeCurved_1(nativeObj, img.nativeObj, points.nativeObj);
     }
 
 
     //
-    // C++:  void cv::QRCodeDetector::setEpsY(double epsY)
+    // C++:  string cv::QRCodeDetector::detectAndDecodeCurved(Mat img, Mat& points = Mat(), Mat& straight_qrcode = Mat())
     //
 
-    //javadoc: QRCodeDetector::setEpsY(epsY)
-    public  void setEpsY(double epsY)
-    {
-        
-        setEpsY_0(nativeObj, epsY);
-        
-        return;
+    /**
+     * Both detects and decodes QR code on a curved surface
+     *
+     *      @param img grayscale or color (BGR) image containing QR code.
+     *      @param points optional output array of vertices of the found QR code quadrangle. Will be empty if not found.
+     *      @param straight_qrcode The optional output image containing rectified and binarized QR code
+     * @return automatically generated
+     */
+    public String detectAndDecodeCurved(Mat img, Mat points, Mat straight_qrcode) {
+        return detectAndDecodeCurved_0(nativeObj, img.nativeObj, points.nativeObj, straight_qrcode.nativeObj);
+    }
+
+    /**
+     * Both detects and decodes QR code on a curved surface
+     *
+     *      @param img grayscale or color (BGR) image containing QR code.
+     *      @param points optional output array of vertices of the found QR code quadrangle. Will be empty if not found.
+     * @return automatically generated
+     */
+    public String detectAndDecodeCurved(Mat img, Mat points) {
+        return detectAndDecodeCurved_1(nativeObj, img.nativeObj, points.nativeObj);
+    }
+
+    /**
+     * Both detects and decodes QR code on a curved surface
+     *
+     *      @param img grayscale or color (BGR) image containing QR code.
+     * @return automatically generated
+     */
+    public String detectAndDecodeCurved(Mat img) {
+        return detectAndDecodeCurved_2(nativeObj, img.nativeObj);
+    }
+
+
+    //
+    // C++:  QRCodeEncoder_ECIEncodings cv::QRCodeDetector::getEncoding(int codeIdx = 0)
+    //
+
+    /**
+     * Returns a kind of encoding for the decoded info from the latest REF: decode or REF: detectAndDecode call
+     *     @param codeIdx an index of the previously decoded QR code.
+     *                    When REF: decode or REF: detectAndDecode is used, valid value is zero.
+     *                    For REF: decodeMulti or REF: detectAndDecodeMulti use indices corresponding to the output order.
+     * @return automatically generated
+     */
+    public int getEncoding(int codeIdx) {
+        return getEncoding_0(nativeObj, codeIdx);
+    }
+
+    /**
+     * Returns a kind of encoding for the decoded info from the latest REF: decode or REF: detectAndDecode call
+     *                    When REF: decode or REF: detectAndDecode is used, valid value is zero.
+     *                    For REF: decodeMulti or REF: detectAndDecodeMulti use indices corresponding to the output order.
+     * @return automatically generated
+     */
+    public int getEncoding() {
+        return getEncoding_1(nativeObj);
     }
 
 
@@ -139,23 +174,27 @@ public class QRCodeDetector {
     // C++:   cv::QRCodeDetector::QRCodeDetector()
     private static native long QRCodeDetector_0();
 
-    // C++:  String cv::QRCodeDetector::decode(Mat img, Mat points, Mat& straight_qrcode = Mat())
-    private static native String decode_0(long nativeObj, long img_nativeObj, long points_nativeObj, long straight_qrcode_nativeObj);
-    private static native String decode_1(long nativeObj, long img_nativeObj, long points_nativeObj);
+    // C++:  QRCodeDetector cv::QRCodeDetector::setEpsX(double epsX)
+    private static native long setEpsX_0(long nativeObj, double epsX);
 
-    // C++:  String cv::QRCodeDetector::detectAndDecode(Mat img, Mat& points = Mat(), Mat& straight_qrcode = Mat())
-    private static native String detectAndDecode_0(long nativeObj, long img_nativeObj, long points_nativeObj, long straight_qrcode_nativeObj);
-    private static native String detectAndDecode_1(long nativeObj, long img_nativeObj, long points_nativeObj);
-    private static native String detectAndDecode_2(long nativeObj, long img_nativeObj);
+    // C++:  QRCodeDetector cv::QRCodeDetector::setEpsY(double epsY)
+    private static native long setEpsY_0(long nativeObj, double epsY);
 
-    // C++:  bool cv::QRCodeDetector::detect(Mat img, Mat& points)
-    private static native boolean detect_0(long nativeObj, long img_nativeObj, long points_nativeObj);
+    // C++:  QRCodeDetector cv::QRCodeDetector::setUseAlignmentMarkers(bool useAlignmentMarkers)
+    private static native long setUseAlignmentMarkers_0(long nativeObj, boolean useAlignmentMarkers);
 
-    // C++:  void cv::QRCodeDetector::setEpsX(double epsX)
-    private static native void setEpsX_0(long nativeObj, double epsX);
+    // C++:  String cv::QRCodeDetector::decodeCurved(Mat img, Mat points, Mat& straight_qrcode = Mat())
+    private static native String decodeCurved_0(long nativeObj, long img_nativeObj, long points_nativeObj, long straight_qrcode_nativeObj);
+    private static native String decodeCurved_1(long nativeObj, long img_nativeObj, long points_nativeObj);
 
-    // C++:  void cv::QRCodeDetector::setEpsY(double epsY)
-    private static native void setEpsY_0(long nativeObj, double epsY);
+    // C++:  string cv::QRCodeDetector::detectAndDecodeCurved(Mat img, Mat& points = Mat(), Mat& straight_qrcode = Mat())
+    private static native String detectAndDecodeCurved_0(long nativeObj, long img_nativeObj, long points_nativeObj, long straight_qrcode_nativeObj);
+    private static native String detectAndDecodeCurved_1(long nativeObj, long img_nativeObj, long points_nativeObj);
+    private static native String detectAndDecodeCurved_2(long nativeObj, long img_nativeObj);
+
+    // C++:  QRCodeEncoder_ECIEncodings cv::QRCodeDetector::getEncoding(int codeIdx = 0)
+    private static native int getEncoding_0(long nativeObj, int codeIdx);
+    private static native int getEncoding_1(long nativeObj);
 
     // native support for java finalize()
     private static native void delete(long nativeObj);
