@@ -122,6 +122,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
         //OpenCV specific
         if (OpenCVLoader.initLocal()) {
             Log.i("OpenCV", "OpenCV loaded successfully");
+            cameraBridgeViewBase.setCameraPermissionGranted();
             cameraBridgeViewBase.enableView();
             checkIfDetectionStarted();
         } else {
