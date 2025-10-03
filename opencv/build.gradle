@@ -11,8 +11,6 @@ android {
 
     defaultConfig {
         targetSdkVersion 29
-        versionCode 2480
-        versionName "2.4.8"
     }
 
     sourceSets {

@@ -87,3 +87,6 @@ lint/tmp/
 # Android Profiling
 *.hprof
 app/release/radq_3.1.apk.old
+/.idea
+/.idea
+/.idea
