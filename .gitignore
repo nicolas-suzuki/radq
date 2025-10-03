@@ -88,3 +88,5 @@ lint/tmp/
 *.hprof
 /.idea
 /opencv/build
+radqcompanionapp/google-services.json
+radqmainapp/google-services.json
