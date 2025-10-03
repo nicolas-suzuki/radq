@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "608185492071",
+    "project_id": "radq-c73b8",
+    "storage_bucket": "radq-c73b8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608185492071:android:346531c7a0a31767f62ac2",
+        "android_client_info": {
+          "package_name": "com.aden.radq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK5Y7h_oL7nq94mYmYKar1BIZx8AJ6HxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -86,7 +86,13 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
-app/release/radq_3.1.apk.old
 /.idea
-/.idea
-/.idea
+/opencv/build
+radqcompanionapp/google-services.json
+radqmainapp/google-services.json
+/caches
+/wrapper
+/native
+/daemon
+/android
+/.tmp/

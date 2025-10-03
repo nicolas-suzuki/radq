@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.front.autofocus"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_initials"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- USB Service -->
+        <service
+            android:enabled="true"
+            android:name="com.aden.radq.services.UsbService" />
+
+        <!-- Loading Activity -->
+        <activity android:name=".SplashScreenActivity"
+            android:theme="@style/SplashScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/MainActivity">
+        </activity>
+
+        <!-- Camera Activity -->
+        <activity
+            android:name=".StartRadqActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeBlackActionBar"
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop"
+            android:label="">
+        </activity>
+
+            <!-- Emergency Activity -->
+            <activity
+                android:screenOrientation="landscape"
+                android:name=".EmergencyActivity"
+                android:theme="@style/AppFullScreen"
+                android:parentActivityName=".StartRadqActivity"
+                android:label="@string/emergency_title">
+            </activity>
+
+        <!-- Notifications Activity -->
+        <activity
+            android:name=".NotificationsActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/notifications_title">
+        </activity>
+
+        <!-- START SETTINGS Activity -->
+        <!-- Settings Activity -->
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/settings_title">
+        </activity>
+
+            <!-- My Account Login Activity -->
+            <activity
+                android:name=".MyAccountActivity"
+                android:theme="@style/AppTheme"
+                android:parentActivityName=".SettingsActivity"
+                android:label="@string/my_account_title">
+            </activity>
+
+                <!-- Create Account Activity -->
+                <activity
+                    android:name=".CreateAccountActivity"
+                    android:theme="@style/AppTheme"
+                    android:parentActivityName=".MyAccountActivity"
+                    android:label="@string/create_account">
+                </activity>
+
+            <!-- Contacts Activity -->
+            <activity
+                android:name=".MyContactsActivity"
+                android:theme="@style/AppTheme"
+                android:parentActivityName=".SettingsActivity"
+                android:label="@string/my_contacts_title">
+            </activity>
+
+                <!-- Add Contact Activity -->
+                <activity
+                    android:name=".AddContactActivity"
+                    android:theme="@style/AppTheme"
+                    android:parentActivityName=".MyContactsActivity"
+                    android:label="@string/add_contacts_title">
+                </activity>
+
+        <!-- END SETTINGS -->
+    </application>
+</manifest>
