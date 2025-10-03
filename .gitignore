@@ -90,3 +90,9 @@ lint/tmp/
 /opencv/build
 radqcompanionapp/google-services.json
 radqmainapp/google-services.json
+/caches
+/wrapper
+/native
+/daemon
+/android
+/.tmp/
