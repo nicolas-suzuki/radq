@@ -8,7 +8,7 @@ buildscript {
 
 android {
     compileSdkVersion 29
-
+    namespace "org.opencv"
     defaultConfig {
         targetSdkVersion 29
     }
