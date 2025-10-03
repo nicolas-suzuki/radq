@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
@@ -121,19 +122,17 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
             //Use Frontal Camera
             cameraBridgeViewBase.setCameraIndex(1);
         }
-        System.out.println("1");
+        cameraBridgeViewBase.setCameraPermissionGranted();
+
         //OpenCV specific
         if (OpenCVLoader.initLocal()) {
-            (Toast.makeText(this, "OpenCV loaded successfully!", Toast.LENGTH_LONG)).show();
-            System.out.println("2");
+            Log.i("OpenCV", "OpenCV loaded successfully!");
+            cameraBridgeViewBase.enableView();
+            checkIfDetectionStarted();
         } else {
-            //Log.e(TAG, "OpenCV initialization failed!");
-            (Toast.makeText(this, "OpenCV initialization failed!", Toast.LENGTH_LONG)).show();
-            System.out.println("3");
-            return;
+            Log.e("OpenCV", "OpenCV initialization failed!");
         }
-        cameraBridgeViewBase.enableView();
-        checkIfDetectionStarted();
+
         //baseLoaderCallback = new BaseLoaderCallback(this) {
         //    @Override
         //    public void onManagerConnected(int status) {
