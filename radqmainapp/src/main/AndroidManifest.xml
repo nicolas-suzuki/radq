@@ -33,7 +33,8 @@
 
         <!-- Loading Activity -->
         <activity android:name=".SplashScreenActivity"
-            android:theme="@style/SplashScreen">
+            android:theme="@style/SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
