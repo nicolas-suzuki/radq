@@ -2,6 +2,7 @@ package com.aden.radq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
         //Get RADQ Version
         String radqVersion = getString(R.string.version) + " " + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
         tvRadqVersion.setText(radqVersion);
+        Log.i("Settings", "RADQ Version: " + radqVersion);
 
         //Load settings
         settingsStorage = new SettingsStorage(SettingsActivity.this);
@@ -49,11 +51,13 @@ public class SettingsActivity extends AppCompatActivity {
         btMyContacts.setOnClickListener(v -> {
             if(firebaseAuth.getCurrentUser() != null){
                 if(settingsStorage.getIdentifierKey().isEmpty()){
+                    Log.w("Settings", "User not logged in");
                     showSnackbar(getString(R.string.not_logged_in));
                 } else {
                     openMyContactsActivity();
                 }
             } else {
+                Log.w("Settings", "User not logged in");
                 showSnackbar(getString(R.string.not_logged_in));
             }
         });
