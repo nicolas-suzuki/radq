@@ -3,6 +3,7 @@ package com.aden.radq;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -138,21 +139,9 @@ public class MyAccountActivity extends AppCompatActivity {
 
                 showSnackbar(getString(R.string.snackbar_logged_in));
             } else {
-                String exceptionError = ((FirebaseAuthException) Objects.requireNonNull(task.getException())).getErrorCode();
-                switch (exceptionError){
-                    case "ERROR_INVALID_EMAIL":
-                        alertDialogBox(getString(R.string.dialog_message_invalid_email));
-                        break;
-                    case "ERROR_WRONG_PASSWORD":
-                        alertDialogBox(getString(R.string.dialog_message_wrong_password));
-                        break;
-                    case "ERROR_USER_NOT_FOUND":
-                        alertDialogBox(getString(R.string.dialog_message_user_not_found));
-                        break;
-                    default:
-                        alertDialogBox(getString(R.string.dialog_message_error_unknown_generic));
-                        break;
-                }
+                String exceptionError = Objects.requireNonNull(task.getException()).getMessage();
+                Log.d("Login", exceptionError);
+                alertDialogBox(getString(R.string.invalid_login_credentials));
             }
         });
     }

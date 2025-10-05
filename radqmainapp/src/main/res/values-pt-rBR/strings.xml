@@ -76,4 +76,5 @@
     <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Detecção de queda iniciada.</string>
     <string name="version">Versão</string>
     <string name="button_shutdown_detection">Desligar</string>
+    <string name="invalid_login_credentials">Credenciais de login inválidas</string>
 </resources>

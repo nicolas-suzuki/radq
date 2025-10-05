@@ -77,4 +77,5 @@
     <string name="c3RhcnRpbmdmYWxsZGV0ZWN0aW9u">Fall detection started.</string>
     <string name="version">Version</string>
     <string name="button_shutdown_detection">Shutdown</string>
+    <string name="invalid_login_credentials">Invalid login credentials</string>
 </resources>
