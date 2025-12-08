@@ -6,14 +6,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aden.radqcompanionapp.utils.SettingsStorage;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.Objects;
 
@@ -63,12 +59,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void createToken(){
         SettingsStorage settingsStorage = new SettingsStorage(this);
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                String token = Objects.requireNonNull(task.getResult()).getToken();
-                settingsStorage.setPhoneKey(token);
-            }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+            String token = Objects.requireNonNull(task.getResult()).getToken();
+            settingsStorage.setPhoneKey(token);
         });
     }
 }

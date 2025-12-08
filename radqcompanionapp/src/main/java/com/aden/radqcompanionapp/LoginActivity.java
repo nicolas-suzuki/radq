@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button btAccountLogin;
     private LinearLayout llPassword;
     private LinearLayout llLoginFields;
-    private TextView tvRadqVersion;
 
     //Firebase
     private FirebaseAuth firebaseAuth;
@@ -52,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         btAccountLogin = findViewById(R.id.btAccountLogin);
         llPassword = findViewById(R.id.llPassword);
         llLoginFields = findViewById(R.id.llLoginFields);
-        tvRadqVersion = findViewById(R.id.tvRadqVersion);
+        TextView tvRadqVersion = findViewById(R.id.tvRadqVersion);
 
         //Initialize Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
