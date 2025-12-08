@@ -1,6 +1,9 @@
 package com.aden.radq;
 
+import static com.aden.radq.utils.NotificationView.showSnackbar;
+
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -12,7 +15,6 @@ import com.aden.radq.model.Contact;
 import com.aden.radq.utils.Base64CustomConverter;
 import com.aden.radq.utils.FirebaseConnector;
 import com.aden.radq.utils.SettingsStorage;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +25,7 @@ import java.util.Objects;
 public class AddContactActivity extends AppCompatActivity {
     //Views
     private EditText etContactEmail;
+    private View thisRootView;
 
     String contactIdentifier;
 
@@ -35,6 +38,7 @@ public class AddContactActivity extends AppCompatActivity {
     public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_contact_activity);
+        thisRootView = findViewById(R.id.clAddContactActivity);
 
         //Initialize views
         Button btAddContact = findViewById(R.id.btSaveCreateAccount);
@@ -45,7 +49,7 @@ public class AddContactActivity extends AppCompatActivity {
 
         btAddContact.setOnClickListener(v -> {
             if(etContactEmail.getText().toString().isEmpty()){
-                showSnackbar(getString(R.string.error_no_email));
+                showSnackbar(thisRootView, getString(R.string.error_no_email));
             } else {
                 contactIdentifier = Base64CustomConverter.encodeBase64(etContactEmail.getText().toString());
 
@@ -56,7 +60,9 @@ public class AddContactActivity extends AppCompatActivity {
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getValue() != null){
+                        if(snapshot.getValue() == null){
+                            showSnackbar(thisRootView, getString(R.string.snackbar_error_contact_not_found));
+                        } else {
                             //Get contact data
                             Account contactAccount = snapshot.getValue(Account.class);
 
@@ -75,13 +81,11 @@ public class AddContactActivity extends AppCompatActivity {
 
                             databaseReference.setValue(contact).addOnCompleteListener(AddContactActivity.this, task -> {
                                 if(task.isSuccessful()){
-                                    showSnackbar(getString(R.string.snackbar_contact_added_successfully));
+                                    showSnackbar(thisRootView, getString(R.string.snackbar_contact_added_successfully));
                                 } else {
-                                    showSnackbar(getString(R.string.snackbar_unknown_error_adding_contact));
+                                    showSnackbar(thisRootView, getString(R.string.snackbar_unknown_error_adding_contact));
                                 }
                             });
-                        } else {
-                            showSnackbar(getString(R.string.snackbar_error_contact_not_found));
                         }
                     }
 
@@ -92,10 +96,5 @@ public class AddContactActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    void showSnackbar(String message){
-        Snackbar.make(findViewById(R.id.clAddContactActivity), message, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 }

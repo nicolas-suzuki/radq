@@ -1,6 +1,9 @@
 package com.aden.radq;
 
+import static com.aden.radq.utils.NotificationView.showSnackbar;
+
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -11,7 +14,6 @@ import com.aden.radq.model.Account;
 import com.aden.radq.utils.Base64CustomConverter;
 import com.aden.radq.utils.FirebaseConnector;
 import com.aden.radq.utils.SettingsStorage;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -26,6 +28,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText etCreateAccountName;
     private EditText etCreateAccountPassword;
     private EditText etCreateAccountEmail;
+    private View thisRootView;
 
     //Firebase
     private FirebaseAuth firebaseAuth;
@@ -44,6 +47,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         etCreateAccountEmail = findViewById(R.id.etCreateAccountEmail);
         etCreateAccountPassword = findViewById(R.id.etCreateAccountPassword);
         Button btSaveCreateAccount = findViewById(R.id.btSaveCreateAccount);
+        thisRootView = findViewById(R.id.clCreateContact);
 
         //Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
@@ -54,11 +58,11 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         btSaveCreateAccount.setOnClickListener(v -> {
             if(etCreateAccountName.getText().toString().isEmpty()){
-                showSnackbar(getString(R.string.error_empty_name_field));
+                showSnackbar(thisRootView, getString(R.string.error_empty_name_field));
             } else if (etCreateAccountEmail.getText().toString().isEmpty()){
-                showSnackbar(getString(R.string.snackbar_error_empty_email_field));
+                showSnackbar(thisRootView, getString(R.string.snackbar_error_empty_email_field));
             } else if (etCreateAccountPassword.getText().toString().isEmpty()){
-                showSnackbar(getString(R.string.snackbar_error_empty_password_field));
+                showSnackbar(thisRootView, getString(R.string.snackbar_error_empty_password_field));
             } else {
                 createAccount();
             }
@@ -87,7 +91,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 //Add current user key to Settings
                 settingsStorage.setIdentifierKey(accountIdentifier);
 
-                showSnackbar(getString(R.string.account_created));
+                showSnackbar(thisRootView, getString(R.string.account_created));
             } else {
                 String exceptionError;
                 try {
@@ -116,10 +120,5 @@ public class CreateAccountActivity extends AppCompatActivity {
         dialog.setPositiveButton(getString(R.string.positive_button), null);
         AlertDialog alertDialog = dialog.create();
         alertDialog.show();
-    }
-
-    private void showSnackbar(String message){
-        Snackbar.make(findViewById(R.id.clCreateContact), message, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 }

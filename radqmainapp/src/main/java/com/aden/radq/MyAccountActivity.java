@@ -1,5 +1,7 @@
 package com.aden.radq;
 
+import static com.aden.radq.utils.NotificationView.showSnackbar;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.aden.radq.utils.Base64CustomConverter;
 import com.aden.radq.utils.FirebaseConnector;
 import com.aden.radq.utils.SettingsStorage;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -32,6 +32,7 @@ public class MyAccountActivity extends AppCompatActivity {
     private Button btAccountLogin;
     private LinearLayout llPassword;
     private LinearLayout llLoginFields;
+    private View thisRootView;
 
     //Firebase
     private FirebaseAuth firebaseAuth;
@@ -51,6 +52,7 @@ public class MyAccountActivity extends AppCompatActivity {
         btAccountLogin = findViewById(R.id.btAccountLogin);
         llPassword = findViewById(R.id.llPassword);
         llLoginFields = findViewById(R.id.llLoginFields);
+        thisRootView = findViewById(R.id.clMyAccountActivity);
 
         //Initialize Firebase
         firebaseAuth = FirebaseConnector.getFirebaseAuth();
@@ -67,9 +69,9 @@ public class MyAccountActivity extends AppCompatActivity {
                 validateLogout();
             } else {
                 if (etAccountEmail.getText().toString().isEmpty()) {
-                    showSnackbar(getString(R.string.snackbar_error_empty_email_field));
+                    showSnackbar(thisRootView, getString(R.string.snackbar_error_empty_email_field));
                 } else if (etAccountPassword.getText().toString().isEmpty()) {
-                    showSnackbar(getString(R.string.snackbar_error_empty_password_field));
+                    showSnackbar(thisRootView, getString(R.string.snackbar_error_empty_password_field));
                 } else {
                     validateLogin();
                 }
@@ -105,7 +107,7 @@ public class MyAccountActivity extends AppCompatActivity {
                 .removeValue();
 
         firebaseAuth.signOut();
-        showSnackbar(getString(R.string.snackbar_logged_out));
+        showSnackbar(thisRootView, getString(R.string.snackbar_logged_out));
 
         etAccountEmail.setEnabled(true);
 
@@ -136,7 +138,7 @@ public class MyAccountActivity extends AppCompatActivity {
                         .child("phoneKey")
                         .setValue(settingsStorage.getPhoneKey());
 
-                showSnackbar(getString(R.string.snackbar_logged_in));
+                showSnackbar(thisRootView, getString(R.string.snackbar_logged_in));
             } else {
                 String exceptionError = ((FirebaseAuthException) Objects.requireNonNull(task.getException())).getErrorCode();
                 switch (exceptionError){
@@ -172,11 +174,6 @@ public class MyAccountActivity extends AppCompatActivity {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             Objects.requireNonNull(inputMethodManager).hideSoftInputFromWindow(view.getWindowToken(),0);
         }
-    }
-
-    private void showSnackbar(String message){
-        Snackbar.make(findViewById(R.id.clMyAccountActivity), message, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 
     private void alertDialogBox(String message){

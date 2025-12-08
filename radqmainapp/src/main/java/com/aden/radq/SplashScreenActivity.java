@@ -1,5 +1,7 @@
 package com.aden.radq;
 
+import static com.aden.radq.utils.NotificationView.showSnackbar;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,7 +9,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.aden.radq.utils.SettingsStorage;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
@@ -60,7 +61,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 inputStream.close();
             } catch (Exception e) {
                 Log.e("SplashScreen", "Error loading cfg: " + e);
-                showSnackbar("Error loading cfg");
+                showSnackbar(findViewById(android.R.id.content),"Error loading cfg");
             }
         }
 
@@ -78,14 +79,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 inputStream.close();
             } catch (Exception e) {
                 Log.e("SplashScreen", "Error loading weight: " + e);
-                showSnackbar("Error loading weight");
+                showSnackbar(findViewById(android.R.id.content),"Error loading weight");
             }
         }
-    }
-
-    private void showSnackbar(String message){
-        Snackbar.make(findViewById(R.id.clSettingsActivity), message, Snackbar.LENGTH_LONG)
-                .setBackgroundTint(getResources().getColor(R.color.colorPrimaryDark)).show();
     }
 
     private void createToken(){
@@ -104,6 +100,5 @@ public class SplashScreenActivity extends AppCompatActivity {
                 settingsStorage.setPhoneKey(token);
                 Log.d("SplashScreen", "FCM Token: " + token);
             });
-
     }
 }
