@@ -4,7 +4,6 @@ import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.Build;
 
 import com.aden.radq.R;
 
@@ -22,17 +21,13 @@ public class AlarmSound {
         setVolumeLevel();
 
         int alarmSound; //add settings
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
-            soundAlarmPool = new SoundPool.Builder()
-                    .setAudioAttributes(audioAttributes)
-                    .build();
-        } else {
-            soundAlarmPool = new SoundPool(1, AudioManager.STREAM_ALARM, 0);
-        }
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        soundAlarmPool = new SoundPool.Builder()
+                .setAudioAttributes(audioAttributes)
+                .build();
 
         alarmSound = soundAlarmPool.load(context, R.raw.alarm_sound, 1);
 

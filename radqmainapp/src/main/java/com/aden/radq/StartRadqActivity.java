@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.SurfaceView;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,7 +23,6 @@ import com.aden.radq.utils.NotificationSender;
 import com.aden.radq.utils.SettingsStorage;
 
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -82,7 +80,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //Camera initialization
-        cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
+        cameraBridgeViewBase = findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
 
@@ -92,12 +90,7 @@ public class StartRadqActivity extends AppCompatActivity implements CameraBridge
 
         //Close Detection Button
         Button button = findViewById(R.id.btClose);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        button.setOnClickListener(v -> finish());
 
         //Robot instructions
         isRobotInstructionsEnabled = settingsStorage.getRobotInstructions();
